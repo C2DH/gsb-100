@@ -14,7 +14,7 @@ import {
   compareDocumentsParams,
   compareMillerParams,
 } from './compare'
-import { useTranslator } from './translate'
+import { useTranslate } from './translate'
 import {
   StoriesState,
   StoryState,
@@ -147,8 +147,7 @@ export function useDocument(id, params, config = {}) {
       ...config,
     }
   )
-  const translate = useTranslator()
-  const translatedDoc = useMemo(() => translate(doc), [doc, translate])
+  const translatedDoc = useTranslate(doc)
   return [translatedDoc, { ...otherState, ...actions }]
 }
 
@@ -177,8 +176,7 @@ export function useCacheDocument(id, params, config = {}) {
     [documentID, memoParams],
     config
   )
-  const translate = useTranslator()
-  const translatedDoc = useMemo(() => translate(doc), [doc, translate])
+  const translatedDoc = useTranslate(doc)
   return [translatedDoc, { error, ...actions }]
 }
 
@@ -283,12 +281,7 @@ export function useDocuments(rawParams, config = {}) {
     }
   }, [params, run, next])
 
-  const translate = useTranslator()
-  const translatedDocuments = useMemo(() => translate(documents), [
-    documents,
-    translate,
-  ])
-
+  const translatedDocuments = useTranslate(documents)
   return [
     { documents: translatedDocuments, pagination, ...crossFacets, ...state },
     { ...actions, fetchMore },
@@ -310,11 +303,7 @@ export function useCacheDocuments(params, config = {}) {
     config
   )
 
-  const translate = useTranslator()
-  const translatedDocuments = useMemo(() => translate(documents), [
-    documents,
-    translate,
-  ])
+  const translatedDocuments = useTranslate(documents)
   return [{ documents: translatedDocuments, ...crossFacets, ...state }, actions]
 }
 
@@ -364,9 +353,7 @@ export function useStory(id, params, config = {}) {
     }
   )
 
-  const translate = useTranslator()
-  const translatedStory = useMemo(() => translate(story), [story, translate])
-
+  const translatedStory = useTranslate(story)
   return [translatedStory, { ...otherState, ...actions }]
 }
 
@@ -388,9 +375,7 @@ export function useCacheStory(id, params, config = {}) {
     config
   )
 
-  const translate = useTranslator()
-  const translatedStory = useMemo(() => translate(story), [story, translate])
-
+  const translatedStory = useTranslate(story)
   return [translatedStory, { error, ...actions }]
 }
 
@@ -425,11 +410,7 @@ export function useStories(rawParams, config = {}) {
       selectState,
     }
   )
-  const translate = useTranslator()
-  const translatedStories = useMemo(() => translate(stories), [
-    stories,
-    translate,
-  ])
+  const translatedStories = useTranslate(stories)
   return [{ stories: translatedStories, ...state }, actions]
 }
 
@@ -467,11 +448,7 @@ export function useCacheStories(rawParams, config = {}) {
     }
   }, [params, run, next])
 
-  const translate = useTranslator()
-  const translatedStories = useMemo(() => translate(stories), [
-    stories,
-    translate,
-  ])
+  const translatedStories = useTranslate(stories)
   return [
     { stories: translatedStories, pagination, ...state },
     { ...actions, fetchMore },

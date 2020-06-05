@@ -1,4 +1,4 @@
-import { useCallback, useContext } from 'react'
+import { useCallback, useContext, useMemo } from 'react'
 import { MillerContext } from './internal'
 
 function translateMiller(data, lang, langs, fallbackLang) {
@@ -50,5 +50,13 @@ export function useTranslator() {
   return useCallback(
     (data) => translateMiller(data, lang, langs, fallbackLang),
     [lang, langs, fallbackLang]
+  )
+}
+
+export function useTranslate(data) {
+  const { langs, lang, fallbackLang } = useContext(MillerContext)
+  return useMemo(
+    () => translateMiller(data, lang, langs, fallbackLang),
+    [lang, langs, fallbackLang, data]
   )
 }
