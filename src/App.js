@@ -1,8 +1,13 @@
-import React, { Suspense } from 'react'
+import React, { Suspense, useRef, useEffect } from 'react'
 import i18n from 'i18next'
 import { initReactI18next, useTranslation } from 'react-i18next'
 import { Miller } from './miller'
-import { BrowserRouter as Router, Route, Switch } from 'react-router-dom'
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  useLocation,
+} from 'react-router-dom'
 import Home from './pages/Home'
 import About from './pages/About'
 import Outline from './pages/Outline'
@@ -14,6 +19,8 @@ import Explorations from './pages/Explorations'
 import ExplorationsAll from './pages/ExplorationsAll'
 import ExplorationsAlternative from './pages/ExplorationsAlternative'
 import ExplorationsCategory from './pages/ExplorationsCategory'
+import DocumentDetail from './pages/DocumentDetail'
+import DocumentDetailModal from './pages/DocumentDetailModal'
 
 const LANGS = ['fr_FR', 'de_DE', 'en_US', 'nl_BE']
 
@@ -31,33 +38,62 @@ i18n
   })
 
 function AppRoutes() {
+  const location = useLocation()
+  const prevLocation = useRef(null)
+
+  let background
+  if (
+    location.state &&
+    location.state.background &&
+    prevLocation.current !== null
+  ) {
+    background = location.state.background
+  }
+
+  const previewDocument = location.state?.modalDocument
+
+  useEffect(() => {
+    prevLocation.current = location
+  }, [location])
+
   return (
-    <Switch>
-      <Route exact path="/">
-        <Home />
-      </Route>
-      <Route exact path="/about">
-        <About />
-      </Route>
-      <Route exact path="/outline">
-        <Outline />
-      </Route>
-      <Route exact path="/perspectives">
-        <Perspectives />
-      </Route>
-      <Route exact path="/explorations">
-        <Explorations />
-      </Route>
-      <Route exact path="/explorations/all">
-        <ExplorationsAll />
-      </Route>
-      <Route exact path="/explorations/alternative">
-        <ExplorationsAlternative />
-      </Route>
-      <Route exact path="/explorations/:category">
-        <ExplorationsCategory />
-      </Route>
-    </Switch>
+    <>
+      <Switch location={background || location}>
+        <Route exact path="/">
+          <Home />
+        </Route>
+        <Route exact path="/about">
+          <About />
+        </Route>
+        <Route exact path="/outline">
+          <Outline />
+        </Route>
+        <Route exact path="/perspectives">
+          <Perspectives />
+        </Route>
+        <Route exact path="/explorations">
+          <Explorations />
+        </Route>
+        <Route exact path="/explorations/all">
+          <ExplorationsAll />
+        </Route>
+        <Route exact path="/explorations/alternative">
+          <ExplorationsAlternative />
+        </Route>
+        <Route exact path="/explorations/:category">
+          <ExplorationsCategory />
+        </Route>
+        <Route exact path="/documents/:id">
+          <DocumentDetail />
+        </Route>
+      </Switch>
+      {/* MODAL DOC */}
+      {background && (
+        <Route exact path="/documents/:id">
+          <DocumentDetailModal previewDocument={previewDocument} />
+        </Route>
+      )}
+    </>
   )
 }
 

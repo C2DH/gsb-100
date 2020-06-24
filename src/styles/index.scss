@@ -3,3 +3,7 @@
 
 // Boostrap scss
 @import "~bootstrap/scss/bootstrap";
+
+body.no-overflow {
+  overflow: hidden;
+}
