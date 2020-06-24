@@ -60,7 +60,9 @@ function AppRoutes() {
     <>
       <Switch location={background || location}>
         <Route exact path="/">
-          <Home />
+          <Suspense fallback={<PageLoader />}>
+            <Home />
+          </Suspense>
         </Route>
         <Route exact path="/about">
           <About />
@@ -103,7 +105,7 @@ export default function App() {
     <Miller lang={i18n.language} langs={LANGS} apiUrl={'/api'} cache suspense>
       <Router>
         <PageError>
-          <Suspense fallback={<PageLoader />}>
+          <Suspense fallback={<PageLoader menu />}>
             <AppRoutes />
           </Suspense>
         </PageError>
