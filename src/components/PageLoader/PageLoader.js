@@ -4,7 +4,9 @@ import React from 'react'
 export default function FullPageLoader() {
   return (
     <div>
-      Loading your page...
+      <div>
+        Loading your page...
+      </div>
     </div>
   )
 }

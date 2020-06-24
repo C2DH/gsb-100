@@ -9,6 +9,8 @@ import Outline from './pages/Outline'
 import resources from './translations'
 import PageLoader from './components/PageLoader'
 import PageError from './components/PageError'
+import Perspectives from './pages/Perspectives'
+import Explorations from './pages/Explorations'
 
 const LANGS = ['fr_FR', 'de_DE', 'en_US', 'nl_BE']
 
@@ -37,6 +39,12 @@ function AppRoutes() {
       <Route exact path="/outline">
         <Outline />
       </Route>
+      <Route exact path="/perspectives">
+        <Perspectives />
+      </Route>
+      <Route exact path="/explorations">
+        <Explorations />
+      </Route>
     </Switch>
   )
 }
@@ -45,13 +53,13 @@ export default function App() {
   const { i18n } = useTranslation()
   return (
     <Miller lang={i18n.language} langs={LANGS} apiUrl={'/api'} cache suspense>
-      <PageError>
-        <Suspense fallback={<PageLoader />}>
-          <Router>
+      <Router>
+        <PageError>
+          <Suspense fallback={<PageLoader />}>
             <AppRoutes />
-          </Router>
-        </Suspense>
-      </PageError>
+          </Suspense>
+        </PageError>
+      </Router>
     </Miller>
   )
 }
