@@ -11,6 +11,9 @@ import PageLoader from './components/PageLoader'
 import PageError from './components/PageError'
 import Perspectives from './pages/Perspectives'
 import Explorations from './pages/Explorations'
+import ExplorationsAll from './pages/ExplorationsAll'
+import ExplorationsAlternative from './pages/ExplorationsAlternative'
+import ExplorationsCategory from './pages/ExplorationsCategory'
 
 const LANGS = ['fr_FR', 'de_DE', 'en_US', 'nl_BE']
 
@@ -44,6 +47,15 @@ function AppRoutes() {
       </Route>
       <Route exact path="/explorations">
         <Explorations />
+      </Route>
+      <Route exact path="/explorations/all">
+        <ExplorationsAll />
+      </Route>
+      <Route exact path="/explorations/alternative">
+        <ExplorationsAlternative />
+      </Route>
+      <Route exact path="/explorations/:category">
+        <ExplorationsCategory />
       </Route>
     </Switch>
   )
