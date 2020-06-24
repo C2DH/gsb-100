@@ -1,8 +1,6 @@
-import React, { useState } from 'react'
+import React from 'react'
 import {
-  Collapse,
   Navbar,
-  NavbarToggler,
   NavbarBrand,
   Nav,
   NavItem,
@@ -11,11 +9,15 @@ import {
   DropdownToggle,
   DropdownMenu,
   DropdownItem,
-  NavbarText,
 } from 'reactstrap'
 import { Link, NavLink as NavLinkRR } from 'react-router-dom'
+import { useTranslation } from 'react-i18next'
+import { useMiller } from '../../miller'
 
 export default function Menu() {
+  const { i18n } = useTranslation()
+  const { langs } = useMiller()
+
   return (
     <div>
       <Navbar color="light" light expand="md">
@@ -43,17 +45,23 @@ export default function Menu() {
               About
             </NavLink>
           </NavItem>
-          {/* <UncontrolledDropdown nav inNavbar>
+          <UncontrolledDropdown nav inNavbar>
             <DropdownToggle nav caret>
-              Options
+              {i18n.language}
             </DropdownToggle>
             <DropdownMenu right>
-              <DropdownItem>Option 1</DropdownItem>
-              <DropdownItem>Option 2</DropdownItem>
-              <DropdownItem divider />
-              <DropdownItem>Reset</DropdownItem>
+              {langs.map((lang) => (
+                <DropdownItem
+                  onClick={() => {
+                    i18n.changeLanguage(lang)
+                  }}
+                  key={lang}
+                >
+                  {lang}
+                </DropdownItem>
+              ))}
             </DropdownMenu>
-          </UncontrolledDropdown> */}
+          </UncontrolledDropdown>
         </Nav>
       </Navbar>
     </div>
