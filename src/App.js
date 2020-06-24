@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Suspense } from 'react'
 import i18n from 'i18next'
 import { initReactI18next, useTranslation } from 'react-i18next'
 import { Miller } from './miller'
@@ -7,6 +7,8 @@ import Home from './pages/Home'
 import About from './pages/About'
 import Outline from './pages/Outline'
 import resources from './translations'
+import PageLoader from './components/PageLoader'
+import PageError from './components/PageError'
 
 const LANGS = ['fr_FR', 'de_DE', 'en_US', 'nl_BE']
 
@@ -43,9 +45,13 @@ export default function App() {
   const { i18n } = useTranslation()
   return (
     <Miller lang={i18n.language} langs={LANGS} apiUrl={'/api'} cache suspense>
-      <Router>
-        <AppRoutes />
-      </Router>
+      <PageError>
+        <Suspense fallback={<PageLoader />}>
+          <Router>
+            <AppRoutes />
+          </Router>
+        </Suspense>
+      </PageError>
     </Miller>
   )
 }
