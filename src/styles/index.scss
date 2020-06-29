@@ -1,5 +1,25 @@
 // Override variables
+@import "fonts";
 @import "variables";
 
 // Boostrap scss
 @import "~bootstrap/scss/bootstrap";
+
+:root {
+  --transition: 0.3s ease-in-out;
+}
+
+body,
+html,
+#root {
+  height: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3 {
+  font-family: "Begum Sans", serif;
+}

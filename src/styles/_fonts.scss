@@ -1,0 +1,47 @@
+@font-face {
+  font-family: "Arimo";
+  src: local("Arimo Regular"), local("Arimo-Regular"),
+    url("./fonts/Arimo-Regular-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Arimo";
+  src: local("Arimo Italic"), local("Arimo-Italic"),
+    url("./fonts/Arimo-Italic-webfont.woff") format("woff");
+  font-weight: 400;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Arimo";
+  src: local("Arimo Bold"), local("Arimo-Bold"),
+    url("./fonts/Arimo-Bold-webfont.woff") format("woff");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Arimo";
+  src: local("Arimo Bold Italic"), local("Arimo-BoldItalic"),
+    url("./fonts/Arimo-BoldItalic-webfont.woff") format("woff");
+  font-weight: 700;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: "Begum Sans";
+  src: local("Begum Sans"), local("Begum-Sans"),
+    url("./fonts/BegumSans-Regular.otf") format("opentype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Begum Sans";
+  src: local("Begum Sans"), local("Begum-Sans"),
+    url("./fonts/BegumSans-Bold.otf") format("opentype");
+  font-weight: 700;
+  font-style: normal;
+}
