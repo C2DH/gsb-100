@@ -105,7 +105,7 @@ export default function App() {
     <Miller lang={i18n.language} langs={LANGS} apiUrl={"/api"} cache suspense>
       <Router>
         <PageError>
-          <Suspense fallback={<PageLoader menu />}>
+          <Suspense fallback={<PageLoader />}>
             <AppRoutes />
           </Suspense>
         </PageError>

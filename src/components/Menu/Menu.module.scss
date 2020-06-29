@@ -1,0 +1,39 @@
+#navbar {
+  border-bottom: 1px solid var(--border-color);
+}
+
+#navbarBrand {
+  font-family: "Begum Sans", serif;
+  color: white;
+  padding: 0.5rem 0;
+}
+
+#navbarBrand:hover {
+  text-decoration: none;
+}
+
+#navbarBrand h3 {
+  font-size: 1rem;
+}
+
+.navLinkCont {
+  border-right: 1px solid var(--border-color);
+  display: flex;
+}
+
+.navLinkCont:first-of-type {
+  border-left: 1px solid var(--border-color);
+}
+
+.navLink {
+  border-bottom: 4px solid var(--secondary);
+  border-top: 4px solid var(--secondary);
+  width: 100%;
+  line-height: 2rem;
+  text-transform: capitalize;
+}
+
+.navLink.active {
+  border-bottom: 4px solid var(--primary);
+  color: var(--primary) !important;
+}
