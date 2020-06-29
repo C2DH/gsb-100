@@ -106,7 +106,9 @@ export default function App() {
       <Router>
         <PageError>
           <Suspense fallback={<PageLoader />}>
-            <AppRoutes />
+            <Suspense fallback={<PageLoader menu />}>
+              <AppRoutes />
+            </Suspense>
           </Suspense>
         </PageError>
       </Router>
