@@ -18,6 +18,10 @@ html,
   text-rendering: optimizeLegibility;
 }
 
+body.no-overflow {
+  overflow: hidden;
+}
+
 h1,
 h2,
 h3 {

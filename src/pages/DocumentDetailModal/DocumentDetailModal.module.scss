@@ -1,0 +1,20 @@
+.DocModalContent {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  z-index: 90;
+  background: white;
+  overflow-y: auto;
+
+  .close {
+    position: absolute;
+    left: 10px;
+    top: 10px;
+    cursor: pointer;
+    color: blueviolet;
+  }
+
+}

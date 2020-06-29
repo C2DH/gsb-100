@@ -12,11 +12,12 @@ import {
 } from 'reactstrap'
 import { Link, NavLink as NavLinkRR } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
-import { useMiller } from '../../miller'
+import { useMiller, usePrefetchStory } from '../../miller'
 
 export default function Menu() {
   const { i18n } = useTranslation()
   const { langs } = useMiller()
+  const prefetchStory = usePrefetchStory()
 
   return (
     <div>
@@ -26,21 +27,33 @@ export default function Menu() {
         </NavbarBrand>
         <Nav className="mr-auto" navbar>
           <NavItem>
-            <NavLink tag={NavLinkRR} to="/outline">
+            <NavLink
+              onMouseEnter={() => prefetchStory('outline')}
+              tag={NavLinkRR}
+              to="/outline"
+            >
               01. Outline
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={NavLinkRR} to="/perspectives">
+            <NavLink
+              onMouseEnter={() => prefetchStory('perspectives')}
+              tag={NavLinkRR}
+              to="/perspectives"
+            >
               02. Perspectives
             </NavLink>
           </NavItem>
           <NavItem>
-            <NavLink tag={NavLinkRR} to="/explorations">
+            <NavLink
+              onMouseEnter={() => prefetchStory('explorations')}
+              tag={NavLinkRR}
+              to="/explorations"
+            >
               03. Explorations
             </NavLink>
           </NavItem>
-          <NavItem>
+          <NavItem onMouseEnter={() => prefetchStory('about')}>
             <NavLink tag={NavLinkRR} to="/about">
               About
             </NavLink>
