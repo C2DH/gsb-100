@@ -1,60 +1,66 @@
-import React, { Suspense, useRef, useEffect } from "react";
-import i18n from "i18next";
-import { initReactI18next, useTranslation } from "react-i18next";
-import { Miller } from "./miller";
+import React, { Suspense, useRef, useEffect } from 'react'
+import i18n from 'i18next'
+import { initReactI18next, useTranslation } from 'react-i18next'
+import { Miller } from './miller'
 import {
   BrowserRouter as Router,
   Route,
   Switch,
   useLocation,
-} from "react-router-dom";
-import Home from "./pages/Home";
-import About from "./pages/About";
-import Outline from "./pages/Outline";
-import resources from "./translations";
-import PageLoader from "./components/PageLoader";
-import PageError from "./components/PageError";
-import Perspectives from "./pages/Perspectives";
-import Explorations from "./pages/Explorations";
-import ExplorationsAll from "./pages/ExplorationsAll";
-import ExplorationsAlternative from "./pages/ExplorationsAlternative";
-import ExplorationsCategory from "./pages/ExplorationsCategory";
-import DocumentDetail from "./pages/DocumentDetail";
-import DocumentDetailModal from "./pages/DocumentDetailModal";
+} from 'react-router-dom'
+import qs from 'query-string'
+import Home from './pages/Home'
+import About from './pages/About'
+import Outline from './pages/Outline'
+import resources from './translations'
+import PageLoader from './components/PageLoader'
+import PageError from './components/PageError'
+import Perspectives from './pages/Perspectives'
+import Explorations from './pages/Explorations'
+import ExplorationsAll from './pages/ExplorationsAll'
+import ExplorationsAlternative from './pages/ExplorationsAlternative'
+import ExplorationsCategory from './pages/ExplorationsCategory'
+import DocumentDetail from './pages/DocumentDetail'
+import DocumentDetailModal from './pages/DocumentDetailModal'
 
-const LANGS = ["de_DE", "en_US", "fr_FR", "nl_BE"];
+const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
+
+let queryLang = qs.parse(window.location.search).lang
+if (!queryLang || LANGS.indexOf(queryLang) === -1) {
+  queryLang = 'de_DE'
+}
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: "de_DE",
+    lng: queryLang,
 
     keySeparator: false, // we do not use keys in form messages.welcome
 
     interpolation: {
       escapeValue: false, // react already safes from xss
     },
-  });
+  })
 
 function AppRoutes() {
-  const location = useLocation();
-  const prevLocation = useRef(null);
+  const location = useLocation()
+  const prevLocation = useRef(null)
 
-  let background;
+  let background
   if (
     location.state &&
     location.state.background &&
     prevLocation.current !== null
   ) {
-    background = location.state.background;
+    background = location.state.background
   }
 
-  const previewDocument = location.state?.modalDocument;
+  const previewDocument = location.state?.modalDocument
 
   useEffect(() => {
-    prevLocation.current = location;
-  }, [location]);
+    prevLocation.current = location
+  }, [location])
 
   return (
     <>
@@ -96,13 +102,13 @@ function AppRoutes() {
         </Route>
       )}
     </>
-  );
+  )
 }
 
 export default function App() {
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation()
   return (
-    <Miller lang={i18n.language} langs={LANGS} apiUrl={"/api"} cache suspense>
+    <Miller lang={i18n.language} langs={LANGS} apiUrl={'/api'} cache suspense>
       <Router>
         <PageError>
           <Suspense fallback={<PageLoader />}>
@@ -113,5 +119,5 @@ export default function App() {
         </PageError>
       </Router>
     </Miller>
-  );
+  )
 }

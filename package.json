@@ -9,6 +9,8 @@
     "@testing-library/user-event": "^7.1.2",
     "bootstrap": "^4.5.0",
     "i18next": "^19.4.5",
+    "magik-react-hooks": "^1.0.5",
+    "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
     "react-i18next": "^11.5.0",
