@@ -15,7 +15,7 @@ export default function SwitchLanguage() {
 
   return (
     <UncontrolledDropdown>
-      <DropdownToggle color="primary" className={styles.dropdownToggle} caret>
+      <DropdownToggle color="secondary" className={styles.dropdownToggle} caret>
         {i18n.language.split("_")[0]}
       </DropdownToggle>
       <DropdownMenu className={styles.dropdownMenu} right>
