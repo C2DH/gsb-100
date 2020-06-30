@@ -3,14 +3,13 @@ import classNames from 'classnames'
 import { useCacheStories, useCacheStory, usePrefetchStory } from '../../miller'
 import SwitchLanguage from '../SwitchLanguage'
 import styles from './Menu.module.scss'
-import LangNavLink from '../LangNavLink'
 import LangLink from '../LangLink'
+import LangNavLink from '../LangNavLink'
 
 const pagesId = ['outline', 'perspectives', 'explorations', 'about']
 const params = {
   limit: pagesId.length,
   orderby: 'priority',
-  nocache: true, // TODO: Only in DEV
   filters: { slug__in: pagesId },
 }
 
@@ -24,7 +23,7 @@ function Menu() {
       id={styles.navbar}
       className="navbar navbar-expand-lg navbar-dark bg-secondary"
     >
-      <LangLink id={styles.navbarBrand} className="navbar-brand" to='/'>
+      <LangLink id={styles.navbarBrand} className="navbar-brand" to="/">
         {[
           homeStory.data.title.replace(/\s.*/, ''),
           homeStory.data.title.replace(/\S+\s/, ''),
