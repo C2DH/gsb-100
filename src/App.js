@@ -9,7 +9,8 @@ import {
   useLocation,
   Redirect,
   matchPath,
-  useParams
+  useParams,
+  useRouteMatch,
 } from 'react-router-dom'
 import find from 'lodash/find'
 import Home from './pages/Home'
@@ -30,16 +31,16 @@ const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
 const DEFAULT_LANG = 'de_DE'
 
 const DEFAULT_LANG_SHORT = DEFAULT_LANG.split('_')[0]
-const LANG_PATH = `/:lang(${LANGS.map(l => l.split('_')[0]).join('|')})`
+const LANG_PATH = `/:lang(${LANGS.map((l) => l.split('_')[0]).join('|')})`
 const DEFAULT_LANG_PATH = `/${DEFAULT_LANG_SHORT}`
 
 const langMatch = matchPath(window.location.pathname, {
   path: LANG_PATH,
   exact: false,
-  strict: false
+  strict: false,
 })
 const startLangShort = langMatch?.params?.lang ?? DEFAULT_LANG_SHORT
-const startLang = find(LANGS, l => l.indexOf(startLangShort) === 0)
+const startLang = find(LANGS, (l) => l.indexOf(startLangShort) === 0)
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -63,7 +64,7 @@ function SyncLang() {
   useEffect(() => {
     const memoryLang = i18n.language.split('_')[0]
     if (memoryLang !== lang) {
-      const nextLang = find(LANGS, l => l.indexOf(lang) === 0)
+      const nextLang = find(LANGS, (l) => l.indexOf(lang) === 0)
       i18n.changeLanguage(nextLang)
     }
   }, [lang, i18n])
@@ -71,7 +72,8 @@ function SyncLang() {
   return null
 }
 
-function AppRoutes() {
+function LangRoutes() {
+  const { path } = useRouteMatch()
   const location = useLocation()
   const prevLocation = useRef(null)
 
@@ -93,38 +95,37 @@ function AppRoutes() {
   return (
     <>
       <Switch location={background || location}>
-        <Redirect from='/' exact to={DEFAULT_LANG_PATH} />
-        <Route exact path={`${LANG_PATH}`}>
+        <Route exact path={`${path}`}>
           <Suspense fallback={<PageLoader />}>
             <Home />
           </Suspense>
         </Route>
-        <Route exact path={`${LANG_PATH}/about`}>
+        <Route exact path={`${path}/about`}>
           <About />
         </Route>
-        <Route exact path={`${LANG_PATH}/outline`}>
+        <Route exact path={`${path}/outline`}>
           <Outline />
         </Route>
-        <Route exact path={`${LANG_PATH}/perspectives`}>
+        <Route exact path={`${path}/perspectives`}>
           <Perspectives />
         </Route>
-        <Route exact path={`${LANG_PATH}/explorations`}>
+        <Route exact path={`${path}/explorations`}>
           <Explorations />
         </Route>
-        <Route exact path={`${LANG_PATH}/explorations/all`}>
+        <Route exact path={`${path}/explorations/all`}>
           <ExplorationsAll />
         </Route>
-        <Route exact path={`${LANG_PATH}/explorations/alternative`}>
+        <Route exact path={`${path}/explorations/alternative`}>
           <ExplorationsAlternative />
         </Route>
-        <Route exact path={`${LANG_PATH}/explorations/:category`}>
+        <Route exact path={`${path}/explorations/:category`}>
           <ExplorationsCategory />
         </Route>
-        <Route exact path={`${LANG_PATH}/documents/:id`}>
+        <Route exact path={`${path}/documents/:id`}>
           <DocumentDetail />
         </Route>
       </Switch>
-      <Route path={LANG_PATH}>
+      <Route path={path}>
         <SyncLang />
       </Route>
       {/* MODAL DOC */}
@@ -137,6 +138,19 @@ function AppRoutes() {
   )
 }
 
+function AppRoutes() {
+  return (
+    <Switch>
+      <Redirect from="/" exact to={DEFAULT_LANG_PATH} />
+      <Route path={LANG_PATH}>
+        <Suspense fallback={<PageLoader menu />}>
+          <LangRoutes />
+        </Suspense>
+      </Route>
+    </Switch>
+  )
+}
+
 export default function App() {
   const { i18n } = useTranslation()
   return (
@@ -144,9 +158,7 @@ export default function App() {
       <Router>
         <PageError>
           <Suspense fallback={<PageLoader />}>
-            <Suspense fallback={<PageLoader menu />}>
-              <AppRoutes />
-            </Suspense>
+            <AppRoutes />
           </Suspense>
         </PageError>
       </Router>
