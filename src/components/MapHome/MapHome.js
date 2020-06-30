@@ -12,13 +12,11 @@ const Map = ReactMapboxGl({
 });
 
 export default function MapHome() {
-  const [mapInstance, setMapInstance] = useState(null);
   const [zoom, setZoom] = useState([5]);
   const center = [5.9714557, 50.4346632];
   const onStyleLoad = (map) => {
     //TODO: maybe manage opacity from here
     //console.log(map.getStyle());
-    setMapInstance(map); //what for?
     setZoom([11]);
   };
 

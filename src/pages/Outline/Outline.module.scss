@@ -1,0 +1,53 @@
+// 3X + 6X = 100
+// X = 100 / (3 + 6)
+
+.SeekContent {
+  flex-grow: 0;
+  display: flex;
+  align-items: flex-end;
+  margin: 0 10px;
+}
+.SeekContentSmall {
+  flex-basis: (100% / 9);
+}
+.SeekContentBig {
+  flex-basis: (100% / 9) * 2;
+}
+
+.PlayerPage {
+  position: relative;
+}
+
+.PlayerWrapper {
+  // TODO: Avoid hardcondig px values
+  height: calc(100vh - 58px);
+  overflow: hidden;
+}
+.Player {
+  height: 100%;
+  overflow: hidden;
+  video {
+    object-fit: cover;
+  }
+}
+
+.Controls {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+}
+
+.SeekLineContainer {
+  width: 100%;
+  .SeekLine {
+    cursor: pointer;
+    width: 100%;
+    height: 10px;
+    background-color: white;
+    .SeekProgress {
+      height: 100%;
+      background-color: var(--primary);
+    }
+  }
+}
