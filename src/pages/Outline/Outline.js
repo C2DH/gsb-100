@@ -21,7 +21,7 @@ const SeekLine = ({ index, progress, onSeek, title, subtitle }) => {
   }
 
   return (
-    <div>
+    <div className={styles.SeekLineContainer}>
       <div>{title}</div>
       <div ref={seekLineRef} onClick={handleClick} className={styles.SeekLine}>
         <div className={styles.SeekProgress} style={{ width }} />
@@ -80,14 +80,18 @@ export default function Outline() {
         />
       </div>
       <div className={styles.Controls}>
-        <div className='mb-4'>
+        <div className="mb-4">
           <Button onClick={togglePlay}>{playing ? 'STOP' : 'PLAY'}</Button>
         </div>
         <div className="d-flex">
           {chapters.map((chapter, i) => (
             <div
               key={i}
-              className={i > 2 ? styles.SeekContentBig : styles.SeekContent}
+              className={
+                styles.SeekContent +
+                ' ' +
+                (i > 2 ? styles.SeekContentBig : styles.SeekContentSmall)
+              }
             >
               <SeekLine
                 onSeek={handleSeek}
