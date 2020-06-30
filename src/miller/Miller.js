@@ -64,14 +64,15 @@ export default function Miller({
   lang,
   apiUrl,
   hashParams,
+  headers = () => {},
   children,
   ...props
 }) {
   const callMyMiller = useCallback(
     (apiCall, ...args) => {
-      return apiCall({ apiUrl, hashParams }, ...args)
+      return apiCall({ apiUrl, hashParams, addHeaders: headers }, ...args)
     },
-    [apiUrl, hashParams]
+    [apiUrl, hashParams, headers]
   )
 
   const millerChildren = (

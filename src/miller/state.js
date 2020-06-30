@@ -25,6 +25,20 @@ function encodeMillerParamas(params = {}, hashParams) {
   return apiParams
 }
 
+function getJSON(path, params, headers, { apiUrl, hashParams, addHeaders }) {
+  let url = `${apiUrl}${path}`
+  const qsstr = qs.stringify(encodeMillerParamas(params, hashParams))
+  if (qsstr !== '') {
+    url += `?${qsstr}`
+  }
+  let finalHeaders
+  const mergeHeaders = addHeaders(path, params, headers || {})
+  if (mergeHeaders) {
+    finalHeaders = { ...(headers || {}), ...mergeHeaders }
+  }
+  return ajax.getJSON(url, finalHeaders)
+}
+
 export const DocumentState = rj(
   rjCache({
     ns: 'millerDoc',
@@ -33,13 +47,8 @@ export const DocumentState = rj(
   {
     name: 'MillerDocument',
     effectCaller: rj.configured(),
-    effect: ({ apiUrl, hashParams }, id, params = {}) => {
-      return ajax.getJSON(
-        `${apiUrl}/document/${id}?${qs.stringify(
-          encodeMillerParamas(params, hashParams)
-        )}`
-      )
-    },
+    effect: (opts, id, params = {}) =>
+      getJSON(`/document/${id}`, params, null, opts),
     computed: {
       doc: 'getData',
       error: 'getError',
@@ -84,12 +93,8 @@ function mapDocs(facetsByKey) {
   }
 }
 
-function documentsApi({ apiUrl, hashParams }, params = {}) {
-  return ajax.getJSON(
-    `${apiUrl}/document/?${qs.stringify(
-      encodeMillerParamas(params, hashParams)
-    )}`
-  )
+function documentsApi(opts, params = {}) {
+  return getJSON(`/document/`, params, null, opts)
 }
 
 export const DocumentsState = rj(
@@ -180,24 +185,16 @@ export const DocumentsSuggestState = rj(
   {
     name: 'MillerSuggestDocument',
     effectCaller: rj.configured(),
-    effect: (apiUrl, q = '') => {
-      return ajax
-        .getJSON(
-          `${apiUrl}/document/suggest/?${qs.stringify(
-            encodeMillerParamas({ q })
-          )}`
-        )
-        .pipe(map((r) => r.results))
+    effect: (opts, q = '') => {
+      return getJSON(`/document/suggest/`, { q }, null, opts).pipe(
+        map((r) => r.results)
+      )
     },
   }
 )
 
-function storyApi({ apiUrl, hashParams }, id, params = {}) {
-  return ajax.getJSON(
-    `${apiUrl}/story/${id}?${qs.stringify(
-      encodeMillerParamas(params, hashParams)
-    )}`
-  )
+function storyApi(opts, id, params = {}) {
+  return getJSON(`/story/${id}`, params, null, opts)
 }
 
 export const StoryState = rj(
@@ -255,12 +252,7 @@ export const StoriesState = rj(
   {
     name: 'MillerStories',
     effectCaller: rj.configured(),
-    effect: ({ apiUrl, hashParams }, params = {}) =>
-      ajax.getJSON(
-        `${apiUrl}/story/?${qs.stringify(
-          encodeMillerParamas(params, hashParams)
-        )}`
-      ),
+    effect: (opts, params = {}) => getJSON(`/story/`, params, null, opts),
     computed: {
       count: 'getCount',
       stories: 'getList',
