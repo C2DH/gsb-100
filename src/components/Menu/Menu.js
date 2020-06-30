@@ -1,19 +1,21 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
 import classNames from "classnames";
-import { useCacheStories, useCacheStory } from "../../miller";
+import { useCacheStories, useCacheStory, usePrefetchStory } from "../../miller";
 import SwitchLanguage from "../SwitchLanguage";
 import styles from "./Menu.module.scss";
 
-export default function Menu() {
-  const pagesId = ["outline", "perspectives", "explorations", "about"];
-  const params = {
-    limit: pagesId.length,
-    orderby: "priority",
-    filters: { slug__in: pagesId },
-  };
+const pagesId = ["outline", "perspectives", "explorations", "about"];
+const params = {
+  limit: pagesId.length,
+  orderby: "priority",
+  filters: { slug__in: pagesId },
+};
+
+function Menu() {
   const [{ stories }] = useCacheStories(params);
   const [homeStory] = useCacheStory("home");
+  const prefetchStory = usePrefetchStory();
 
   return (
     <nav
@@ -42,6 +44,7 @@ export default function Menu() {
               >
                 <NavLink
                   to={d.slug}
+                  onMouseOver={() => prefetchStory(d.slug)}
                   activeClassName={styles.active}
                   className={`${styles.navLink} nav-item nav-link text-center`}
                 >
@@ -53,8 +56,10 @@ export default function Menu() {
             );
           })}
         </div>
-        <SwitchLanguage></SwitchLanguage>
+        <SwitchLanguage />
       </div>
     </nav>
   );
 }
+
+export default React.memo(Menu);
