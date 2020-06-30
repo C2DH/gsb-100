@@ -15,7 +15,11 @@ export default function Home() {
     >
       <div className="d-flex">
         <div>
-          <h1 className="w-75">{homeStory.data.title}</h1>
+          <h1>
+            {homeStory.data.title.replace(/\s.*/, "")}
+            <br></br>
+            {homeStory.data.title.replace(/\S+\s/, "")}
+          </h1>
           <h4 className={`text-primary`}>{homeStory.data.subtitle}</h4>
         </div>
         <div className="ml-auto">

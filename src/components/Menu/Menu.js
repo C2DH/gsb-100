@@ -10,7 +10,6 @@ export default function Menu() {
   const params = {
     limit: pagesId.length,
     orderby: "priority",
-    nocache: true, // TODO: remove for dev only
     filters: { slug__in: pagesId },
   };
   const [{ stories }] = useCacheStories(params);
@@ -58,64 +57,4 @@ export default function Menu() {
       </div>
     </nav>
   );
-  // return (
-  //   <div>
-  //     <Navbar color="light" light expand="md">
-  //       <NavbarBrand tag={Link} to="/">
-  //         Prospecting the In-Between
-  //       </NavbarBrand>
-  //       <Nav className="mr-auto" navbar>
-  //         <NavItem>
-  //           <NavLink
-  //             onMouseEnter={() => prefetchStory('outline')}
-  //             tag={NavLinkRR}
-  //             to="/outline"
-  //           >
-  //             01. Outline
-  //           </NavLink>
-  //         </NavItem>
-  //         <NavItem>
-  //           <NavLink
-  //             onMouseEnter={() => prefetchStory('perspectives')}
-  //             tag={NavLinkRR}
-  //             to="/perspectives"
-  //           >
-  //             02. Perspectives
-  //           </NavLink>
-  //         </NavItem>
-  //         <NavItem>
-  //           <NavLink
-  //             onMouseEnter={() => prefetchStory('explorations')}
-  //             tag={NavLinkRR}
-  //             to="/explorations"
-  //           >
-  //             03. Explorations
-  //           </NavLink>
-  //         </NavItem>
-  //         <NavItem onMouseEnter={() => prefetchStory('about')}>
-  //           <NavLink tag={NavLinkRR} to="/about">
-  //             About
-  //           </NavLink>
-  //         </NavItem>
-  //         <UncontrolledDropdown nav inNavbar>
-  //           <DropdownToggle nav caret>
-  //             {i18n.language}
-  //           </DropdownToggle>
-  //           <DropdownMenu right>
-  //             {langs.map((lang) => (
-  //               <DropdownItem
-  //                 onClick={() => {
-  //                   i18n.changeLanguage(lang)
-  //                 }}
-  //                 key={lang}
-  //               >
-  //                 {lang}
-  //               </DropdownItem>
-  //             ))}
-  //           </DropdownMenu>
-  //         </UncontrolledDropdown>
-  //       </Nav>
-  //     </Navbar>
-  //   </div>
-  // )
 }
