@@ -194,7 +194,11 @@ export const DocumentsSuggestState = rj(
 )
 
 function storyApi(opts, id, params = {}) {
-  return getJSON(`/story/${id}`, params, null, opts)
+  const storyParams = {
+    parser: 'yaml',
+    ...params,
+  }
+  return getJSON(`/story/${id}`, storyParams, null, opts)
 }
 
 export const StoryState = rj(
