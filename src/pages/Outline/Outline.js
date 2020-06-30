@@ -6,7 +6,7 @@ import ReactPlayer from 'react-player'
 import styles from './Outline.module.scss'
 import { Button } from 'reactstrap'
 
-const SeekLine = ({ index, progress, onSeek }) => {
+const SeekLine = ({ index, progress, onSeek, title, subtitle }) => {
   const width = progress === null ? 0 : progress * 100 + '%'
   const seekLineRef = useRef()
 
@@ -21,8 +21,12 @@ const SeekLine = ({ index, progress, onSeek }) => {
   }
 
   return (
-    <div ref={seekLineRef} onClick={handleClick} className={styles.SeekLine}>
-      <div className={styles.SeekProgress} style={{ width }} />
+    <div>
+      <div>{title}</div>
+      <div ref={seekLineRef} onClick={handleClick} className={styles.SeekLine}>
+        <div className={styles.SeekProgress} style={{ width }} />
+      </div>
+      <div>{subtitle}</div>
     </div>
   )
 }
@@ -36,7 +40,7 @@ export default function Outline() {
 
   const [chapterIndex, setChapterIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
-  const togglePlay = () => setPlaying(a => !a)
+  const togglePlay = () => setPlaying((a) => !a)
   const [progress, setProgress] = useState(0)
   const playerRef = useRef()
 
@@ -55,37 +59,46 @@ export default function Outline() {
   }
 
   return (
-    <div>
+    <div className={styles.PlayerPage}>
       <Menu />
-      <h1>Outline</h1>
-      <Button onClick={togglePlay}>{playing ? 'STOP' : 'PLAY'}</Button>
-      <ReactPlayer
-        ref={playerRef}
-        onProgress={p => setProgress(p.played)}
-        onEnded={() => {
-          if (chapterIndex + 1 < chapters.length) {
-            setChapterIndex(chapterIndex + 1)
-            playerRef.current.seekTo(0, 'fraction')
-            setProgress(0)
-          }
-        }}
-        playing={playing}
-        url={playingVideoUrl}
-      />
-
-      <div className="d-flex">
-        {chapters.map((chapter, i) => (
-          <div
-            key={i}
-            className={i > 2 ? styles.SeekContentBig : styles.SeekContent}
-          >
-            <SeekLine
-              onSeek={handleSeek}
-              index={i}
-              progress={i === chapterIndex ? progress : null}
-            />
-          </div>
-        ))}
+      <div className={styles.PlayerWrapper}>
+        <ReactPlayer
+          className={styles.Player}
+          ref={playerRef}
+          onProgress={(p) => setProgress(p.played)}
+          onEnded={() => {
+            if (chapterIndex + 1 < chapters.length) {
+              setChapterIndex(chapterIndex + 1)
+              playerRef.current.seekTo(0, 'fraction')
+              setProgress(0)
+            }
+          }}
+          width="100%"
+          height="100%"
+          playing={playing}
+          url={playingVideoUrl}
+        />
+      </div>
+      <div className={styles.Controls}>
+        <div className='mb-4'>
+          <Button onClick={togglePlay}>{playing ? 'STOP' : 'PLAY'}</Button>
+        </div>
+        <div className="d-flex">
+          {chapters.map((chapter, i) => (
+            <div
+              key={i}
+              className={i > 2 ? styles.SeekContentBig : styles.SeekContent}
+            >
+              <SeekLine
+                onSeek={handleSeek}
+                index={i}
+                title={chapter.data.title}
+                subtitle={'1970-1977'}
+                progress={i === chapterIndex ? progress : null}
+              />
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   )

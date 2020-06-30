@@ -7,6 +7,30 @@
   margin: 0 10px;
 }
 
+.PlayerPage {
+  position: relative;
+}
+
+.PlayerWrapper {
+  // TODO: Avoid hardcondig px values
+  height: calc(100vh - 58px);
+  overflow: hidden;
+}
+.Player {
+  height: 100%;
+  overflow: hidden;
+  video {
+    object-fit: cover;
+  }
+}
+
+.Controls {
+  position: absolute;
+  bottom: 30px;
+  left: 0;
+  right: 0;
+}
+
 .SeekLine {
   cursor: pointer;
   width: 100%;
