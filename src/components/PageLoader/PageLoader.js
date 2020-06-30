@@ -1,13 +1,14 @@
 import React from 'react'
 import Menu from '../Menu'
+import styles from './PageLoader.module.scss'
 
 // Used as placeholder while loading a page
-export default function FullPageLoader({ menu = false }) {
+export default function PageLoader({ menu = false }) {
   return (
     <div>
       {menu && <Menu />}
-      <div>
-        Loading your page...
+      <div className={styles.DelayedSpinner}>
+        Loading your page... You Spin Me Round
       </div>
     </div>
   )
