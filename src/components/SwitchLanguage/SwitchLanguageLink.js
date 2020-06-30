@@ -1,15 +1,19 @@
 import React, { useMemo } from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, matchPath } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 
-const langRegex = /(lang=)\w+/i
 
 function makeLangLink(location, lang) {
-  let url = location.pathname + (location.search || '?').replace(langRegex, '')
-  if (url.indexOf('?') !== url.length - 1) {
-    url += '&'
+  const match = matchPath(location.pathname, {
+    path: '/:lang/:where*',
+    exact: false,
+    strict: false
+  })
+  let url = `/${lang.split('_')[0]}`
+  if (match && match.params.where) {
+    url += '/' + match.params.where
   }
-  return url + `lang=${lang}`
+  return url
 }
 
 export default function SwitchLanguageLink({ lang, onClick, ...props }) {

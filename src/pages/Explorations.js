@@ -1,7 +1,7 @@
 import React from 'react'
 import Menu from '../components/Menu'
-import { Link } from 'react-router-dom'
 import { useCacheStory } from '../miller'
+import LangLink from '../components/LangLink'
 
 export default function Explorations() {
   const [explorationsStory] = useCacheStory('explorations')
@@ -13,18 +13,18 @@ export default function Explorations() {
 
       <div>
         <p>
-          <Link to="/explorations/all">ALL</Link>
+          <LangLink to="/explorations/all">ALL</LangLink>
         </p>
         <p>
-          <Link to="/explorations/alternative">ALTERNATIVE</Link>
+          <LangLink to="/explorations/alternative">ALTERNATIVE</LangLink>
         </p>
         <p>
-          <Link to="/explorations/gender">GENDER</Link>
+          <LangLink to="/explorations/gender">GENDER</LangLink>
         </p>
         <p>
-          <Link to="/explorations/the-idea-of-borders">
+          <LangLink to="/explorations/the-idea-of-borders">
             THE IDEA OF BORDERS
-          </Link>
+          </LangLink>
         </p>
       </div>
     </div>

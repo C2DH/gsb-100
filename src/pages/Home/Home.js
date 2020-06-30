@@ -1,9 +1,9 @@
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { Link } from "react-router-dom";
 import { useCacheStory } from "../../miller";
 import SwitchLanguage from "../../components/SwitchLanguage";
 import styles from "./Home.module.scss";
+import LangLink from "../../components/LangLink";
 
 export default function Home() {
   const { t } = useTranslation();
@@ -23,13 +23,13 @@ export default function Home() {
         </div>
       </div>
       <div className="d-flex justify-content-center">
-        <Link id={styles.startLink} to="/outline">
+        <LangLink id={styles.startLink} to="/outline">
           <div id={styles.start}>
             <p className="m-0 text-center text-uppercase">
               {t("click to start")}
             </p>
           </div>
-        </Link>
+        </LangLink>
       </div>
     </div>
   );

@@ -1,9 +1,10 @@
 import React from 'react'
-import { Link, NavLink } from 'react-router-dom'
 import classNames from 'classnames'
 import { useCacheStories, useCacheStory, usePrefetchStory } from '../../miller'
 import SwitchLanguage from '../SwitchLanguage'
 import styles from './Menu.module.scss'
+import LangNavLink from '../LangNavLink'
+import LangLink from '../LangLink'
 
 const pagesId = ['outline', 'perspectives', 'explorations', 'about']
 const params = {
@@ -23,7 +24,7 @@ function Menu() {
       id={styles.navbar}
       className="navbar navbar-expand-lg navbar-dark bg-secondary"
     >
-      <Link id={styles.navbarBrand} className="navbar-brand" to="/">
+      <LangLink id={styles.navbarBrand} className="navbar-brand" to='/'>
         {[
           homeStory.data.title.replace(/\s.*/, ''),
           homeStory.data.title.replace(/\S+\s/, ''),
@@ -32,7 +33,7 @@ function Menu() {
             {d}
           </h3>
         ))}
-      </Link>
+      </LangLink>
       <div className="collapse navbar-collapse align-self-stretch">
         <div className="navbar-nav flex-grow-1 h-100">
           {stories.map((d, i) => {
@@ -43,7 +44,7 @@ function Menu() {
                   'flex-fill': d.slug !== 'about',
                 })}
               >
-                <NavLink
+                <LangNavLink
                   to={d.slug}
                   onMouseOver={() => prefetchStory(d.slug)}
                   activeClassName={styles.active}
@@ -52,7 +53,7 @@ function Menu() {
                   {d.slug !== 'about' &&
                     (i + 1).toString().padStart(2, '0') + '. '}
                   {d.data.title}
-                </NavLink>
+                </LangNavLink>
               </div>
             )
           })}

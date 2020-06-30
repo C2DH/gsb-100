@@ -7,8 +7,11 @@ import {
   Route,
   Switch,
   useLocation,
+  Redirect,
+  matchPath,
+  useParams
 } from 'react-router-dom'
-import qs from 'query-string'
+import find from 'lodash/find'
 import Home from './pages/Home'
 import About from './pages/About'
 import Outline from './pages/Outline'
@@ -24,17 +27,25 @@ import DocumentDetail from './pages/DocumentDetail'
 import DocumentDetailModal from './pages/DocumentDetailModal'
 
 const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
+const DEFAULT_LANG = 'de_DE'
 
-let queryLang = qs.parse(window.location.search).lang
-if (!queryLang || LANGS.indexOf(queryLang) === -1) {
-  queryLang = 'de_DE'
-}
+const DEFAULT_LANG_SHORT = DEFAULT_LANG.split('_')[0]
+const LANG_PATH = `/:lang(${LANGS.map(l => l.split('_')[0]).join('|')})`
+const DEFAULT_LANG_PATH = `/${DEFAULT_LANG_SHORT}`
+
+const langMatch = matchPath(window.location.pathname, {
+  path: LANG_PATH,
+  exact: false,
+  strict: false
+})
+const startLangShort = langMatch?.params?.lang ?? DEFAULT_LANG_SHORT
+const startLang = find(LANGS, l => l.indexOf(startLangShort) === 0)
 
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
     resources,
-    lng: queryLang,
+    lng: startLang,
 
     keySeparator: false, // we do not use keys in form messages.welcome
 
@@ -42,6 +53,23 @@ i18n
       escapeValue: false, // react already safes from xss
     },
   })
+
+// NOTE: This is only need for keep the lang in sync
+// when user go back / forwoard in the history manually
+function SyncLang() {
+  const { i18n } = useTranslation()
+  const { lang } = useParams()
+
+  useEffect(() => {
+    const memoryLang = i18n.language.split('_')[0]
+    if (memoryLang !== lang) {
+      const nextLang = find(LANGS, l => l.indexOf(lang) === 0)
+      i18n.changeLanguage(nextLang)
+    }
+  }, [lang, i18n])
+
+  return null
+}
 
 function AppRoutes() {
   const location = useLocation()
@@ -65,39 +93,43 @@ function AppRoutes() {
   return (
     <>
       <Switch location={background || location}>
-        <Route exact path="/">
+        <Redirect from='/' exact to={DEFAULT_LANG_PATH} />
+        <Route exact path={`${LANG_PATH}`}>
           <Suspense fallback={<PageLoader />}>
             <Home />
           </Suspense>
         </Route>
-        <Route exact path="/about">
+        <Route exact path={`${LANG_PATH}/about`}>
           <About />
         </Route>
-        <Route exact path="/outline">
+        <Route exact path={`${LANG_PATH}/outline`}>
           <Outline />
         </Route>
-        <Route exact path="/perspectives">
+        <Route exact path={`${LANG_PATH}/perspectives`}>
           <Perspectives />
         </Route>
-        <Route exact path="/explorations">
+        <Route exact path={`${LANG_PATH}/explorations`}>
           <Explorations />
         </Route>
-        <Route exact path="/explorations/all">
+        <Route exact path={`${LANG_PATH}/explorations/all`}>
           <ExplorationsAll />
         </Route>
-        <Route exact path="/explorations/alternative">
+        <Route exact path={`${LANG_PATH}/explorations/alternative`}>
           <ExplorationsAlternative />
         </Route>
-        <Route exact path="/explorations/:category">
+        <Route exact path={`${LANG_PATH}/explorations/:category`}>
           <ExplorationsCategory />
         </Route>
-        <Route exact path="/documents/:id">
+        <Route exact path={`${LANG_PATH}/documents/:id`}>
           <DocumentDetail />
         </Route>
       </Switch>
+      <Route path={LANG_PATH}>
+        <SyncLang />
+      </Route>
       {/* MODAL DOC */}
       {background && (
-        <Route exact path="/documents/:id">
+        <Route exact path={`${LANG_PATH}/documents/:id`}>
           <DocumentDetailModal previewDocument={previewDocument} />
         </Route>
       )}

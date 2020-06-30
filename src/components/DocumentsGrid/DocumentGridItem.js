@@ -1,6 +1,7 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { useLocation } from 'react-router-dom'
 import { usePrefetchDocument } from '../../miller'
+import LangLink from '../LangLink'
 
 function DocumentGridItem({ doc }) {
   const location = useLocation()
@@ -11,7 +12,7 @@ function DocumentGridItem({ doc }) {
   return (
     <div className="p-3">
       <div style={{ height: 67, width: 67 }}>
-        <Link
+        <LangLink
           to={{
             pathname: `/documents/${doc.id}`,
             state: { background: location, modalDocument: doc },
@@ -26,7 +27,7 @@ function DocumentGridItem({ doc }) {
             alt={doc.title}
             src={imageUrl}
           />
-        </Link>
+        </LangLink>
       </div>
     </div>
   )
