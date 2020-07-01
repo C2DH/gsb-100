@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import NotFound from '../NotFound'
 
 // Rendered when an error occured both "runtime" and "api" errors
 export default class PageError extends Component {
@@ -12,12 +13,16 @@ export default class PageError extends Component {
   }
 
   render() {
-    if (this.state.error) {
+    const { error } = this.state
+    if (error) {
       // API Error
-      if (this.state.error.name === 'AjaxError') {
+      if (error.name === 'AjaxError') {
+        if (error.status === 404) {
+          return <NotFound />
+        }
         return (
           <h1 className='text-danger'>
-            API Error, status {this.state.error.status}
+            API Error, status {error.status}
           </h1>
         )
       }
