@@ -1,12 +1,61 @@
-import React, { useState, useMemo, useRef } from 'react'
+import React, { useState, useMemo, useRef, useCallback } from 'react'
+import classNames from 'classnames'
 import find from 'lodash/find'
-import { useCacheStory } from '../../miller'
+import { useCacheStory, usePrefetchDocument } from '../../miller'
 import Menu from '../../components/Menu'
 import ReactPlayer from 'react-player'
 import styles from './Outline.module.scss'
 import { Button } from 'reactstrap'
+import LangLink from '../../components/LangLink'
+import { useLocation } from 'react-router-dom'
 
-const SeekLine = ({ index, progress, onSeek, title, subtitle }) => {
+// Time Str 02:30 -> 150 seconds
+function convertStrToSeconds(str) {
+  const [mins, secs] = str.split(':')
+  return parseInt(mins) * 60 + parseInt(secs)
+}
+
+// Give me a story and a time in seconds and i give
+// you the current document now "playing"
+function usePlayingDocument(story, playedSeconds) {
+  // Memo the list of objects with from and to normalize as seconds
+  const seekObjectsSeconds = useMemo(() => {
+    const seekObjects = story.contents.modules[0].objects
+    return seekObjects.map((o) => ({
+      ...o,
+      from: convertStrToSeconds(o.from),
+      to: convertStrToSeconds(o.to),
+    }))
+  }, [story])
+
+  // Memo only the id by searching from seeks array
+  const playingDocuementId = useMemo(() => {
+    if (playedSeconds === null) {
+      return null
+    }
+    const objInTime = find(
+      seekObjectsSeconds,
+      (o) => playedSeconds >= o.from && playedSeconds <= o.to
+    )
+    if (objInTime) {
+      return objInTime.id
+    }
+    return null
+  }, [seekObjectsSeconds, playedSeconds])
+
+  // Memo the doc: re find them only when id changes
+  const playingDocuement = useMemo(() => {
+    if (playingDocuementId === null) {
+      return null
+    }
+    return find(story.documents, { document_id: playingDocuementId })
+  }, [playingDocuementId, story])
+
+  // Finally my doc
+  return playingDocuement
+}
+
+const SeekLine = React.memo(({ index, progress, onSeek, title, subtitle }) => {
   const width = progress === null ? 0 : progress * 100 + '%'
   const seekLineRef = useRef()
 
@@ -21,15 +70,44 @@ const SeekLine = ({ index, progress, onSeek, title, subtitle }) => {
   }
 
   return (
-    <div className={styles.SeekLineContainer}>
-      <div>{title}</div>
-      <div ref={seekLineRef} onClick={handleClick} className={styles.SeekLine}>
-        <div className={styles.SeekProgress} style={{ width }} />
+    <div
+      className={classNames(
+        styles.SeekContent,
+        index > 2 ? styles.SeekContentBig : styles.SeekContentSmall
+      )}
+    >
+      <div className={styles.SeekLineContainer}>
+        <div>{title}</div>
+        <div
+          ref={seekLineRef}
+          onClick={handleClick}
+          className={styles.SeekLine}
+        >
+          <div className={styles.SeekProgress} style={{ width }} />
+        </div>
+        <div>{subtitle}</div>
       </div>
-      <div>{subtitle}</div>
     </div>
   )
-}
+})
+
+const PlayingDocuement = React.memo(({ document }) => {
+  const location = useLocation()
+  const prefetchDocument = usePrefetchDocument()
+  return (
+    <LangLink
+      to={{
+        pathname: `/documents/${document.document_id}`,
+        state: { background: location, modalDocument: document },
+      }}
+      onClick={() => prefetchDocument(document.document_id)}
+    >
+      <div className={styles.PlayingDocument}>
+        <img src={document.data.translated_urls} alt={document.title} />
+      </div>
+    </LangLink>
+  )
+})
 
 export default function Outline() {
   const [outlineStory] = useCacheStory('outline')
@@ -41,22 +119,31 @@ export default function Outline() {
   const [chapterIndex, setChapterIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
-  const [progress, setProgress] = useState(0)
+  const [progress, setProgress] = useState({
+    played: 0,
+    playedSeconds: 0,
+  })
   const playerRef = useRef()
 
+  const chapter = chapters[chapterIndex]
+
   const playingVideoUrl = useMemo(() => {
-    const chapter = chapters[chapterIndex]
     const documentId = chapter.contents.modules[0].object.id
     const docVideo = find(chapter.documents, { document_id: documentId })
-    const videoUrl = docVideo.data.translated_urls
-    return videoUrl
-  }, [chapterIndex, chapters])
+    return docVideo.data.translated_urls
+  }, [chapter])
 
-  function handleSeek(index, progress) {
+  const playingDocument = usePlayingDocument(chapter, progress.playedSeconds)
+  console.log(playingDocument, chapter, progress)
+
+  const handleSeek = useCallback((index, progressFraction) => {
     setChapterIndex(index)
-    setProgress(progress)
-    playerRef.current.seekTo(progress, 'fraction')
-  }
+    setProgress({
+      played: progressFraction,
+      playedSeconds: null, // Will auto set by my player
+    })
+    playerRef.current.seekTo(progressFraction, 'fraction')
+  }, [])
 
   return (
     <div className={styles.PlayerPage}>
@@ -65,12 +152,15 @@ export default function Outline() {
         <ReactPlayer
           className={styles.Player}
           ref={playerRef}
-          onProgress={(p) => setProgress(p.played)}
+          onProgress={setProgress}
           onEnded={() => {
             if (chapterIndex + 1 < chapters.length) {
               setChapterIndex(chapterIndex + 1)
               playerRef.current.seekTo(0, 'fraction')
-              setProgress(0)
+              setProgress({
+                played: 0,
+                playedSeconds: null,
+              })
             }
           }}
           width="100%"
@@ -79,28 +169,21 @@ export default function Outline() {
           url={playingVideoUrl}
         />
       </div>
+      {playingDocument && <PlayingDocuement document={playingDocument} />}
       <div className={styles.Controls}>
         <div className="mb-4">
           <Button onClick={togglePlay}>{playing ? 'STOP' : 'PLAY'}</Button>
         </div>
         <div className="d-flex">
           {chapters.map((chapter, i) => (
-            <div
+            <SeekLine
               key={i}
-              className={
-                styles.SeekContent +
-                ' ' +
-                (i > 2 ? styles.SeekContentBig : styles.SeekContentSmall)
-              }
-            >
-              <SeekLine
-                onSeek={handleSeek}
-                index={i}
-                title={chapter.data.title}
-                subtitle={'1970-1977'}
-                progress={i === chapterIndex ? progress : null}
-              />
-            </div>
+              onSeek={handleSeek}
+              index={i}
+              title={chapter.data.title}
+              subtitle={'1970-1977'}
+              progress={i === chapterIndex ? progress.played : null}
+            />
           ))}
         </div>
       </div>

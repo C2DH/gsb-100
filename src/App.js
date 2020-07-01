@@ -26,6 +26,7 @@ import ExplorationsAlternative from './pages/ExplorationsAlternative'
 import ExplorationsCategory from './pages/ExplorationsCategory'
 import DocumentDetail from './pages/DocumentDetail'
 import DocumentDetailModal from './pages/DocumentDetailModal'
+import NotFound from './components/NotFound'
 
 const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
 const DEFAULT_LANG = 'de_DE'
@@ -124,6 +125,9 @@ function LangRoutes() {
         <Route exact path={`${path}/documents/:id`}>
           <DocumentDetail />
         </Route>
+        <Route path="*">
+          <NotFound />
+        </Route>
       </Switch>
       <Route path={path}>
         <SyncLang />
@@ -146,6 +150,9 @@ function AppRoutes() {
         <Suspense fallback={<PageLoader menu />}>
           <LangRoutes />
         </Suspense>
+      </Route>
+      <Route path="*">
+        <NotFound />
       </Route>
     </Switch>
   )
