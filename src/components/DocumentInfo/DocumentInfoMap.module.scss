@@ -1,9 +1,9 @@
-.DocumentInfoMap {
+.MapImageContainer {
   height: 100%;
   width: 100%;
   display: flex;
   flex-direction: column;
-  .DocumentInfoMapImageContainer {
+  .MapImageWrapper {
     flex: 1;
     overflow: hidden;
     flex-basis: 0;
@@ -22,17 +22,18 @@
   }
 }
 
-.DocumentInfoMapTextContainer {
+.InfoBoxContainer {
   height: 100%;
   display: flex;
   align-items: center;
 
-  .DocumentInfoMapLabel {
+  .InfoLabel {
     color: var(--primary);
   }
-  .DocumentInfoMapLabel::before {
+  .InfoLabel::before {
     content: '─ ';
   }
+
 
   h2 {
     padding-bottom: 20px;
