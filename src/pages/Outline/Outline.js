@@ -97,10 +97,10 @@ const PlayingDocuement = React.memo(({ document }) => {
   return (
     <LangLink
       to={{
-        pathname: `/documents/${document.id}`,
+        pathname: `/documents/${document.document_id}`,
         state: { background: location, modalDocument: document },
       }}
-      onClick={() => prefetchDocument(document.id)}
+      onClick={() => prefetchDocument(document.document_id)}
     >
       <div className={styles.PlayingDocument}>
         <img src={document.data.translated_urls} alt={document.title} />
