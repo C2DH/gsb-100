@@ -1,0 +1,45 @@
+.DocumentInfoMap {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  .DocumentInfoMapImageContainer {
+    flex: 1;
+    overflow: hidden;
+    flex-basis: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    img {
+      border: 4px solid white;
+      max-width: 100%;
+      width: auto;
+      height: auto;
+      max-height: 100%;
+      vertical-align: middle;
+    }
+  }
+}
+
+.DocumentInfoMapTextContainer {
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  .DocumentInfoMapLabel {
+    color: var(--primary);
+  }
+  .DocumentInfoMapLabel::before {
+    content: '─ ';
+  }
+
+  h2 {
+    padding-bottom: 20px;
+  }
+
+  p {
+    border-top: 1px solid white;
+    padding-top: 30px;
+  }
+}

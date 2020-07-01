@@ -2,6 +2,7 @@ import React, { useMemo, useEffect } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { useCacheDocument } from '../../miller'
 import DocumentInfo from '../../components/DocumentInfo'
+import { X } from 'react-feather'
 import styles from './DocumentDetailModal.module.scss'
 
 export default function DocumentDetailModal({ previewDocument }) {
@@ -36,7 +37,7 @@ export default function DocumentDetailModal({ previewDocument }) {
         onClick={() => history.goBack()}
         className={styles.close}
       >
-        {`X`}
+        <X size={30} />
       </div>
       <DocumentInfo doc={doc} />
     </div>

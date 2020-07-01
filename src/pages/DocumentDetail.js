@@ -9,9 +9,11 @@ export default function DocumentDetail() {
   const [doc] = useCacheDocument(id)
 
   return (
-    <div>
+    <div className='h-100 d-flex flex-column'>
       <Menu />
-      <DocumentInfo doc={doc} />
+      <div style={{ flex: 1 }}>
+        <DocumentInfo doc={doc} />
+      </div>
     </div>
   )
 }
