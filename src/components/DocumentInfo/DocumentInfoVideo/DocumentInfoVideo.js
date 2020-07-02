@@ -16,8 +16,8 @@ export default function DocumentInfoVideo({ doc }) {
       <div className={styles.PlayerContainer}>
         <ReactPlayer
           wrapper={WrapPlayer}
-          width="80%"
-          height="80%"
+          width={null}
+          height={null}
           url={doc.url}
           controls
         />
