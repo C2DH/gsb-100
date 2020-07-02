@@ -1,18 +1,18 @@
-import React, { useState, useMemo, useRef, useCallback } from 'react'
-import classNames from 'classnames'
-import find from 'lodash/find'
-import { useCacheStory } from '../../miller'
-import Menu from '../../components/Menu'
-import ReactPlayer from 'react-player'
-import styles from './Outline.module.scss'
-import { Button } from 'reactstrap'
-import { Play, Pause, VolumeX, Volume2 } from 'react-feather'
-import OutlineDocumentModal from '../../components/OutlineDocumentModal'
+import React, { useState, useMemo, useRef, useCallback } from "react";
+import classNames from "classnames";
+import find from "lodash/find";
+import { useCacheStory } from "../../miller";
+import Menu from "../../components/Menu";
+import ReactPlayer from "react-player";
+import styles from "./Outline.module.scss";
+import { Button } from "reactstrap";
+import { Play, Pause, VolumeX, Volume2 } from "react-feather";
+import OutlineDocumentModal from "../../components/OutlineDocumentModal";
 
 // Time Str 02:30 -> 150 seconds
 function convertStrToSeconds(str) {
-  const [mins, secs] = str.split(':')
-  return parseInt(mins) * 60 + parseInt(secs)
+  const [mins, secs] = str.split(":");
+  return parseInt(mins) * 60 + parseInt(secs);
 }
 
 // Give me a story and a time in seconds and i give
@@ -20,53 +20,53 @@ function convertStrToSeconds(str) {
 function usePlayingDocument(story, playedSeconds) {
   // Memo the list of objects with from and to normalize as seconds
   const seekObjectsSeconds = useMemo(() => {
-    const seekObjects = story.contents.modules[0].objects
+    const seekObjects = story.contents.modules[0].objects;
     return seekObjects.map((o) => ({
       ...o,
       from: convertStrToSeconds(o.from),
       to: convertStrToSeconds(o.to),
-    }))
-  }, [story])
+    }));
+  }, [story]);
 
   // Memo only the id by searching from seeks array
   const playingDocuementId = useMemo(() => {
     if (playedSeconds === null) {
-      return null
+      return null;
     }
     const objInTime = find(
       seekObjectsSeconds,
       (o) => playedSeconds >= o.from && playedSeconds <= o.to
-    )
+    );
     if (objInTime) {
-      return objInTime.id
+      return objInTime.id;
     }
-    return null
-  }, [seekObjectsSeconds, playedSeconds])
+    return null;
+  }, [seekObjectsSeconds, playedSeconds]);
 
   // Memo the doc: re find them only when id changes
   const playingDocuement = useMemo(() => {
     if (playingDocuementId === null) {
-      return null
+      return null;
     }
-    return find(story.documents, { document_id: playingDocuementId })
-  }, [playingDocuementId, story])
+    return find(story.documents, { document_id: playingDocuementId });
+  }, [playingDocuementId, story]);
 
   // Finally my doc
-  return playingDocuement
+  return playingDocuement;
 }
 
 const SeekLine = React.memo(({ index, progress, onSeek, title, subtitle }) => {
-  const width = progress === null ? 0 : progress * 100 + '%'
-  const seekLineRef = useRef()
+  const width = progress === null ? 0 : progress * 100 + "%";
+  const seekLineRef = useRef();
 
   function handleClick(e) {
-    const clientX = e.clientX
-    const { left, width } = seekLineRef.current.getBoundingClientRect()
+    const clientX = e.clientX;
+    const { left, width } = seekLineRef.current.getBoundingClientRect();
     const nextProgress = Math.min(
       Math.max(clientX - parseInt(left), 0) / width,
       1
-    )
-    onSeek(index, nextProgress)
+    );
+    onSeek(index, nextProgress);
   }
 
   return (
@@ -88,12 +88,12 @@ const SeekLine = React.memo(({ index, progress, onSeek, title, subtitle }) => {
         <div>{subtitle}</div>
       </div>
     </div>
-  )
-})
+  );
+});
 
 const PlayingDocuement = React.memo(({ document }) => {
-  const [showModal, setShowModal] = useState(false)
-  const toggleModal = useCallback(() => setShowModal((a) => !a), [])
+  const [showModal, setShowModal] = useState(false);
+  const toggleModal = useCallback(() => setShowModal((a) => !a), []);
   return (
     <>
       <div className={styles.PlayingDocument} onClick={toggleModal}>
@@ -103,46 +103,46 @@ const PlayingDocuement = React.memo(({ document }) => {
         <OutlineDocumentModal doc={document} onClose={toggleModal} />
       )}
     </>
-  )
-})
+  );
+});
 
 export default function Outline() {
-  const [outlineStory] = useCacheStory('outline')
-  const [outlineTheme] = useCacheStory('outline-1', {
+  const [outlineStory] = useCacheStory("outline");
+  const [outlineTheme] = useCacheStory("outline-1", {
     withChapters: true,
-  })
-  const chapters = outlineTheme.data.chapters
+  });
+  const chapters = outlineTheme.data.chapters;
 
-  const [chapterIndex, setChapterIndex] = useState(0)
-  const [playing, setPlaying] = useState(false)
-  const togglePlay = () => setPlaying((a) => !a)
-  const [volume, setVolume] = useState(1)
-  const toggleMute = () => setVolume((v) => (v === 0 ? 1 : 0))
+  const [chapterIndex, setChapterIndex] = useState(0);
+  const [playing, setPlaying] = useState(false);
+  const togglePlay = () => setPlaying((a) => !a);
+  const [volume, setVolume] = useState(1);
+  const toggleMute = () => setVolume((v) => (v === 0 ? 1 : 0));
   const [progress, setProgress] = useState({
     played: 0,
     playedSeconds: 0,
-  })
-  const playerRef = useRef()
+  });
+  const playerRef = useRef();
 
-  const chapter = chapters[chapterIndex]
+  const chapter = chapters[chapterIndex];
 
   const playingVideoUrl = useMemo(() => {
-    const documentId = chapter.contents.modules[0].object.id
-    const docVideo = find(chapter.documents, { document_id: documentId })
-    return docVideo.data.translated_urls
-  }, [chapter])
+    const documentId = chapter.contents.modules[0].object.id;
+    const docVideo = find(chapter.documents, { document_id: documentId });
+    return docVideo.data.translated_urls;
+  }, [chapter]);
 
-  const playingDocument = usePlayingDocument(chapter, progress.playedSeconds)
-  console.log(playingDocument, chapter, progress)
+  const playingDocument = usePlayingDocument(chapter, progress.playedSeconds);
+  console.log(playingDocument, chapter, progress);
 
   const handleSeek = useCallback((index, progressFraction) => {
-    setChapterIndex(index)
+    setChapterIndex(index);
     setProgress({
       played: progressFraction,
       playedSeconds: null, // Will auto set by my player
-    })
-    playerRef.current.seekTo(progressFraction, 'fraction')
-  }, [])
+    });
+    playerRef.current.seekTo(progressFraction, "fraction");
+  }, []);
 
   return (
     <div className={styles.PlayerPage}>
@@ -154,12 +154,12 @@ export default function Outline() {
           onProgress={setProgress}
           onEnded={() => {
             if (chapterIndex + 1 < chapters.length) {
-              setChapterIndex(chapterIndex + 1)
-              playerRef.current.seekTo(0, 'fraction')
+              setChapterIndex(chapterIndex + 1);
+              playerRef.current.seekTo(0, "fraction");
               setProgress({
                 played: 0,
                 playedSeconds: null,
-              })
+              });
             }
           }}
           volume={volume}
@@ -167,29 +167,34 @@ export default function Outline() {
           height="100%"
           playing={playing}
           url={playingVideoUrl}
+          playsinline
         />
-      </div>
-      {playingDocument && <PlayingDocuement document={playingDocument} />}
-      <div className={styles.Controls}>
-        <div className="p-4 d-flex">
-          <Button onClick={togglePlay}>{playing ? <Pause /> : <Play />}</Button>
-          <Button className="ml-2" onClick={toggleMute}>
-            {volume === 0 ? <VolumeX /> : <Volume2 />}
-          </Button>
-        </div>
-        <div className="d-flex">
-          {chapters.map((chapter, i) => (
-            <SeekLine
-              key={i}
-              onSeek={handleSeek}
-              index={i}
-              title={chapter.data.title}
-              subtitle={'1970-1977'}
-              progress={i === chapterIndex ? progress.played : null}
-            />
-          ))}
+        {playingDocument && <PlayingDocuement document={playingDocument} />}
+        <div className={`${styles.Controls} pb-3 px-5 position-relative`}>
+          <div className="p-4 d-flex">
+            <Button onClick={togglePlay}>
+              {playing ? <Pause /> : <Play />}
+            </Button>
+            <Button className="ml-2" onClick={toggleMute}>
+              {volume === 0 ? <VolumeX /> : <Volume2 />}
+            </Button>
+          </div>
+          <div className="d-flex">
+            {chapters.map((chapter, i) => (
+              <SeekLine
+                key={i}
+                onSeek={handleSeek}
+                index={i}
+                title={chapter.data.title}
+                subtitle={
+                  chapter.data.subtitle ? chapter.data.subtitle : "1970-1977"
+                }
+                progress={i === chapterIndex ? progress.played : null}
+              />
+            ))}
+          </div>
         </div>
       </div>
     </div>
-  )
+  );
 }
