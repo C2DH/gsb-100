@@ -1,0 +1,21 @@
+.Waves {
+  margin: 0;
+  padding: 0;
+  :global {
+    .waveform {
+      position: relative !important;
+    }
+  }
+}
+
+.AudioTrack {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.WavesProgress {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
