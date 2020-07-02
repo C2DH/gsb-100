@@ -1,6 +1,6 @@
 .ModalContainer {
   position: fixed;
-  background-color: var(--secondary);
+  background-color: rgba(var(--secondary-rgb), 0.98);
   z-index: var(--modal-z-index);
   top: 0;
   bottom: 0;

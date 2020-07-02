@@ -5,11 +5,16 @@
 // Boostrap scss
 @import '~bootstrap/scss/bootstrap';
 
+@function hexToRGB($hex) {
+  @return red($hex), green($hex), blue($hex);
+}
+
 :root {
   --transition: 0.3s ease-in-out;
   --border-color: rgba(255, 255, 255, 0.5);
   --modal-z-index: 90;
   --modal-close-z-index: 91;
+  --secondary-rgb: #{hexToRGB(map-get($theme-colors, 'secondary'))};
 }
 
 body,
