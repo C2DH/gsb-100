@@ -1,9 +1,9 @@
 // Override variables
-@import "fonts";
-@import "variables";
+@import 'fonts';
+@import 'variables';
 
 // Boostrap scss
-@import "~bootstrap/scss/bootstrap";
+@import '~bootstrap/scss/bootstrap';
 
 :root {
   --transition: 0.3s ease-in-out;
@@ -28,5 +28,17 @@ body.no-overflow {
 h1,
 h2,
 h3 {
-  font-family: "Begum Sans", serif;
+  font-family: 'Begum Sans', serif;
+}
+
+.btn-icon-round {
+  padding: 0.75rem !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 100% !important;
+}
+
+.opacity-75 {
+  opacity: 0.75;
 }
