@@ -1,10 +1,18 @@
 import React from 'react'
-import { useCacheStory } from '../miller'
+import { useCacheStory, useCacheStories } from '../miller'
 import Menu from '../components/Menu'
 
 export default function Perspectives() {
+  const params = {
+    limit: 50,
+    orderby: 'priority',
+    filters: { tags__slug: 'theme' },
+    exclude: { slug: 'outline-1' },
+  }
+
   const [perspectivesStory] = useCacheStory('perspectives')
-  console.log('Perspectives', perspectivesStory)
+  const [themes] = useCacheStories(params)
+  console.log(themes)
 
   return (
     <div>
