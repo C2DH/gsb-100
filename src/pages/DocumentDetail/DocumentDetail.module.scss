@@ -1,0 +1,12 @@
+.close {
+  z-index: 5;
+  position: absolute;
+  color: white;
+  left: 20px;
+  top: 20px;
+  cursor: pointer;
+  color: white;
+  &:hover, &:active, &:visited {
+    color: white;
+  }
+}

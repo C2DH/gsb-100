@@ -1,13 +1,13 @@
 import React, { useState, useMemo, useRef, useCallback } from 'react'
 import classNames from 'classnames'
 import find from 'lodash/find'
-import { useCacheStory, usePrefetchDocument } from '../../miller'
+import { useCacheStory } from '../../miller'
 import Menu from '../../components/Menu'
 import ReactPlayer from 'react-player'
 import styles from './Outline.module.scss'
 import { Button } from 'reactstrap'
-import LangLink from '../../components/LangLink'
-import { useLocation } from 'react-router-dom'
+import { Play, Pause, VolumeX, Volume2 } from 'react-feather'
+import OutlineDocumentModal from '../../components/OutlineDocumentModal'
 
 // Time Str 02:30 -> 150 seconds
 function convertStrToSeconds(str) {
@@ -92,20 +92,17 @@ const SeekLine = React.memo(({ index, progress, onSeek, title, subtitle }) => {
 })
 
 const PlayingDocuement = React.memo(({ document }) => {
-  const location = useLocation()
-  const prefetchDocument = usePrefetchDocument()
+  const [showModal, setShowModal] = useState(false)
+  const toggleModal = useCallback(() => setShowModal((a) => !a), [])
   return (
-    <LangLink
-      to={{
-        pathname: `/documents/${document.document_id}`,
-        state: { background: location, modalDocument: document },
-      }}
-      onClick={() => prefetchDocument(document.document_id)}
-    >
-      <div className={styles.PlayingDocument}>
+    <>
+      <div className={styles.PlayingDocument} onClick={toggleModal}>
         <img src={document.data.translated_urls} alt={document.title} />
       </div>
-    </LangLink>
+      {showModal && (
+        <OutlineDocumentModal doc={document} onClose={toggleModal} />
+      )}
+    </>
   )
 })
 
@@ -119,6 +116,8 @@ export default function Outline() {
   const [chapterIndex, setChapterIndex] = useState(0)
   const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
+  const [volume, setVolume] = useState(1)
+  const toggleMute = () => setVolume((v) => (v === 0 ? 1 : 0))
   const [progress, setProgress] = useState({
     played: 0,
     playedSeconds: 0,
@@ -163,6 +162,7 @@ export default function Outline() {
               })
             }
           }}
+          volume={volume}
           width="100%"
           height="100%"
           playing={playing}
@@ -171,8 +171,11 @@ export default function Outline() {
       </div>
       {playingDocument && <PlayingDocuement document={playingDocument} />}
       <div className={styles.Controls}>
-        <div className="mb-4">
-          <Button onClick={togglePlay}>{playing ? 'STOP' : 'PLAY'}</Button>
+        <div className="p-4 d-flex">
+          <Button onClick={togglePlay}>{playing ? <Pause /> : <Play />}</Button>
+          <Button className="ml-2" onClick={toggleMute}>
+            {volume === 0 ? <VolumeX /> : <Volume2 />}
+          </Button>
         </div>
         <div className="d-flex">
           {chapters.map((chapter, i) => (

@@ -5,11 +5,12 @@
   left: 0;
   right: 0;
   height: 100%;
-  z-index: 90;
+  z-index: var(--modal-z-index);
   overflow-y: auto;
   background-color: var(--secondary);
 
   .close {
+    z-index: var(--modal-close-z-index);
     position: absolute;
     left: 20px;
     top: 20px;
