@@ -1,9 +1,10 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import { useParams, useHistory } from 'react-router-dom'
 import { useCacheDocument } from '../../miller'
 import DocumentInfo from '../../components/DocumentInfo'
 import { X } from 'react-feather'
 import styles from './DocumentDetailModal.module.scss'
+import { useBodyNoOverflow } from '../../hooks'
 
 export default function DocumentDetailModal({ previewDocument }) {
   const { id } = useParams()
@@ -13,13 +14,7 @@ export default function DocumentDetailModal({ previewDocument }) {
     suspense: false,
   })
 
-  useEffect(() => {
-    const body = document.getElementsByTagName('body')[0]
-    body.classList.add('no-overflow')
-    return () => {
-      body.classList.remove('no-overflow')
-    }
-  }, [])
+  useBodyNoOverflow()
 
   const doc = useMemo(() => {
     if (fullDocument === null) {

@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   height: 100%;
-  z-index: 90;
+  z-index: var(--modal-z-index);
   overflow-y: auto;
   background-color: var(--secondary);
 
