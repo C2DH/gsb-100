@@ -1,0 +1,32 @@
+.InfoBoxContainer {
+  border-top: 1px solid white;
+  padding-top: 20px;
+}
+.InfoBox {
+  // TODO: Maybe media query px- are too small
+  margin: 0 10%;
+}
+
+.InfoRow {
+  border-bottom: 1px solid white;
+  padding: 10px;
+}
+
+.InfoRowsGroup {
+  border-top: 1px solid white;
+  padding-top: 10px;
+  padding-bottom: 30px;
+}
+
+.InfoRows {
+  .InfoRow:last-child {
+    border-bottom: 0 solid white;
+  }
+}
+
+.Label {
+  color: var(--primary);
+}
+.Label::before {
+  content: '─ ';
+}
