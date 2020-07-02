@@ -1,36 +1,34 @@
-import React, { useState } from "react";
-import ReactMapboxGl from "react-mapbox-gl";
+import React, { useRef, useEffect } from 'react'
+import mapboxgl from 'mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
 
-// TODO: maybe refactor without using ReactMapboxGl but just a basic component https://sparkgeo.com/blog/build-a-react-mapboxgl-component-with-hooks/
-const ACCESS_TOKEN = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN;
-const Map = ReactMapboxGl({
-  accessToken: ACCESS_TOKEN,
-  maxZoom: 11,
-  minZoom: 5,
-  interactive: false,
-  attributionControl: false,
-});
+const zoom = 5
+const center = [5.9714557, 50.4346632]
 
 export default function MapHome() {
-  const [zoom, setZoom] = useState([5]);
-  const center = [5.9714557, 50.4346632];
-  const onStyleLoad = (map) => {
-    //TODO: maybe manage opacity from here
-    //console.log(map.getStyle());
-    setZoom([11]);
-  };
+  const mapContainer = useRef(null)
 
-  return (
-    <Map
-      style="mapbox://styles/mapbox/satellite-v9"
-      containerStyle={{
-        height: "100%",
-        width: "100%",
-      }}
-      center={center}
-      zoom={zoom}
-      onStyleLoad={onStyleLoad}
-      flyToOptions={{ speed: 0.2, curve: 1 }}
-    ></Map>
-  );
+  useEffect(() => {
+    mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
+    const map = new mapboxgl.Map({
+      container: mapContainer.current,
+      style: 'mapbox://styles/mapbox/satellite-v9', // stylesheet location
+      center: center,
+      zoom: zoom,
+    })
+
+    map.on('load', () => {
+      map.flyTo({
+        zoom: 10,
+        speed: 0.2, // make the flying slow
+        curve: 1, // change the speed at which it zooms out
+      })
+    })
+
+    return () => {
+      map.remove()
+    }
+  }, [])
+
+  return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
 }

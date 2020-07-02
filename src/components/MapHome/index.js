@@ -1,1 +1,1 @@
-export { default } from "./MapHomePure";
+export { default } from './MapHome'
