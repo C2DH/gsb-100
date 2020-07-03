@@ -1,21 +1,38 @@
 // Override HERE
 // https://getbootstrap.com/docs/4.0/getting-started/theming/
 $theme-colors: (
-  "primary": #00b37f,
-  "secondary": #222322,
+  'primary': #00b37f,
+  'secondary': #222322,
 );
 
-$body-bg: map-get($theme-colors, "secondary");
+$grid-breakpoints: (
+  xs: 0,
+  sm: 567px,
+  md: 768px,
+  lg: 992px,
+  xl: 1200px,
+  xxl: 1400px,
+);
+
+$container-max-widths: (
+  sm: 540px,
+  md: 720px,
+  lg: 960px,
+  xl: 1140px,
+  xxl: 1320px,
+);
+
+$body-bg: map-get($theme-colors, 'secondary');
 $body-color: white;
 
-$font-family-sans-serif: "Arimo", system-ui, -apple-system, "Segoe UI", Roboto,
-  "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji",
-  "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji" !default;
+$font-family-sans-serif: 'Arimo', system-ui, -apple-system, 'Segoe UI', Roboto,
+  'Helvetica Neue', Arial, 'Noto Sans', sans-serif, 'Apple Color Emoji',
+  'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji' !default;
 
 $border-radius: 0;
 
 $navbar-dark-color: white;
-$navbar-dark-hover-color: map-get($theme-colors, "primary");
-$navbar-dark-active-color: map-get($theme-colors, "primary");
+$navbar-dark-hover-color: map-get($theme-colors, 'primary');
+$navbar-dark-active-color: map-get($theme-colors, 'primary');
 $navbar-padding-y: 0;
 $navbar-nav-link-padding-x: 1rem;

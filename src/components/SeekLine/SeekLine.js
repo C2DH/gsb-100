@@ -2,7 +2,7 @@ import React, { useRef } from 'react'
 import classNames from 'classnames'
 import styles from './SeekLine.module.scss'
 
-function SeekLine({ index, progress, onSeek, title, subtitle }) {
+function SeekLine({ index, progress, onSeek, title, abstract }) {
   const width = progress === null ? 0 : progress * 100 + '%'
   const seekLineRef = useRef()
 
@@ -33,7 +33,7 @@ function SeekLine({ index, progress, onSeek, title, subtitle }) {
         >
           <div className={styles.SeekProgress} style={{ width }} />
         </div>
-        <p className={styles.SeekLineText}>{subtitle}</p>
+        <p className={styles.SeekLineText}>{abstract}</p>
       </div>
     </div>
   )
