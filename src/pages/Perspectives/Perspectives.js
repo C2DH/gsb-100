@@ -15,7 +15,7 @@ const themesParams = {
 function ThemeListItem({ theme, ...props }) {
   return (
     <div {...props}>
-      <LangLink to={'/'}>
+      <LangLink to={`/perspectives/${theme.slug}`}>
         <h3>{theme.data.title}</h3>
         <img
           alt={theme.data.title}
