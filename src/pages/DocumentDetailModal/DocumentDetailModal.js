@@ -10,7 +10,7 @@ export default function DocumentDetailModal({ previewDocument }) {
   const { id } = useParams()
   const history = useHistory()
 
-  const [fullDocument] = useCacheDocument(id, null, {
+  const [fullDocument] = useCacheDocument(id, undefined, {
     suspense: false,
   })
 
