@@ -1,7 +1,6 @@
 import React, { useState, useMemo, useRef, useCallback } from 'react'
 import find from 'lodash/find'
 import ReactPlayer from 'react-player'
-import { Button } from 'reactstrap'
 import { Play, Pause, VolumeX, Volume2 } from 'react-feather'
 import { useCacheStory } from '../../miller'
 import Menu from '../../components/Menu'
@@ -142,9 +141,7 @@ export default function Outline() {
                 onSeek={handleSeek}
                 index={i}
                 title={chapter.data.title}
-                subtitle={
-                  chapter.data.subtitle ? chapter.data.subtitle : '1970-1977'
-                }
+                abstract={chapter.data.abstract}
                 progress={i === chapterIndex ? progress.played : null}
               />
             ))}

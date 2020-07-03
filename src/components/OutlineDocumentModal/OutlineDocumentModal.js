@@ -10,25 +10,25 @@ export default function OutlineDocumentModal({ doc, onClose }) {
       <div className={styles.close} onClick={onClose}>
         <X size={30} />
       </div>
-      <div className="row no-gutters h-100 py-4">
-        <div className="col-md-5 offset-md-2">
-          <div className={styles.ImageContainer}>
-            <div className={styles.ImageWrapper}>
-              <img
-                title={doc.title}
-                alt={doc.title}
-                src={doc.data.translated_urls}
-              />
+      <div className="container h-100">
+        <div className="row h-100 align-items-center">
+          <div className="col-md-7 h-100">
+            <div className={styles.ImageContainer}>
+              <div className={styles.ImageWrapper}>
+                <img
+                  title={doc.title}
+                  alt={doc.title}
+                  src={doc.data.translated_urls}
+                />
+              </div>
             </div>
           </div>
-        </div>
-        <div className="col-md-3">
-          <div className={styles.InfoBoxContainer}>
-            <div>
-              <div className={styles.InfoLabel}>Map</div>
-              <h2>{doc.data.title}</h2>
-              <p>{doc.data.description}</p>
-            </div>
+          <div className={`${styles.colOverflow} col-md-3`}>
+            <div className={styles.InfoLabel}>{doc.data.type}</div>
+            <h2 className="pb-3 mb-3 border-bottom border-light">
+              {doc.data.title}
+            </h2>
+            <p className="text-white-50">{doc.data.description}</p>
           </div>
         </div>
       </div>

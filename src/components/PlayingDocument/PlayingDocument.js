@@ -4,7 +4,9 @@ import styles from './PlayingDocument.module.scss'
 
 function PlayingDocument({ document }) {
   const [showModal, setShowModal] = useState(false)
-  const toggleModal = useCallback(() => setShowModal((a) => !a), [])
+  const toggleModal = useCallback(() => {
+    setShowModal((a) => !a)
+  }, [])
   return (
     <>
       <div className={`${styles.PlayingDocument} m-5`} onClick={toggleModal}>
