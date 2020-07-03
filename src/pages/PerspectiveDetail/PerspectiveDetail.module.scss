@@ -1,0 +1,9 @@
+.Chapters {
+  display: flex;
+  overflow: auto;
+  .Chapter {
+    flex-shrink: 0;
+    border: 1px solid coral;
+    width: 40%;
+  }
+}
