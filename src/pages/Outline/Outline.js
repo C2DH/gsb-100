@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef, useCallback } from 'react'
 import find from 'lodash/find'
 import ReactPlayer from 'react-player'
-import { Play, Pause, VolumeX, Volume2 } from 'react-feather'
+import { Play, Pause, VolumeX, Volume2, SkipForward } from 'react-feather'
 import { useCacheStory } from '../../miller'
 import Menu from '../../components/Menu'
 import PlayingDocument from '../../components/PlayingDocument'
@@ -95,6 +95,17 @@ export default function Outline() {
     setPlaying(false)
   }, [])
 
+  const skipNext = () => {
+    if (chapterIndex + 1 < chapters.length) {
+      setChapterIndex(chapterIndex + 1)
+      playerRef.current.seekTo(0, 'fraction')
+      setProgress({
+        played: 0,
+        playedSeconds: null,
+      })
+    }
+  }
+
   return (
     <div className={styles.PlayerPage}>
       <Menu />
@@ -103,16 +114,7 @@ export default function Outline() {
           className={styles.Player}
           ref={playerRef}
           onProgress={setProgress}
-          onEnded={() => {
-            if (chapterIndex + 1 < chapters.length) {
-              setChapterIndex(chapterIndex + 1)
-              playerRef.current.seekTo(0, 'fraction')
-              setProgress({
-                played: 0,
-                playedSeconds: null,
-              })
-            }
-          }}
+          onEnded={skipNext}
           volume={volume}
           width="100%"
           height="100%"
@@ -120,10 +122,12 @@ export default function Outline() {
           url={playingVideoUrl}
           playsinline
         />
-        {playingDocument && <PlayingDocument
-          onClick={handlePlayingDocClick}
-          document={playingDocument}
-        />}
+        {playingDocument && (
+          <PlayingDocument
+            onClick={handlePlayingDocClick}
+            document={playingDocument}
+          />
+        )}
         <div className={`${styles.Controls} pb-3 px-5 position-relative`}>
           <div className="py-4 d-flex">
             <button
@@ -132,6 +136,13 @@ export default function Outline() {
               onClick={togglePlay}
             >
               {playing ? <Pause /> : <Play />}
+            </button>
+            <button
+              type="button"
+              className="ml-3 btn btn-light btn-icon-round opacity-75"
+              onClick={skipNext}
+            >
+              <SkipForward />
             </button>
             <button
               type="button"
