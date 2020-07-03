@@ -1,0 +1,32 @@
+.ThemeListContainer {
+  display: flex;
+  flex-wrap: wrap;
+  padding: 0 20px;
+}
+
+// TODO: MEDIA EM' ALL
+.ThemeListItem {
+  flex-basis: 50%;
+  padding: 0 20px;
+  margin-top: 80px;
+  // border: 1px solid coral;
+  a, a:hover {
+    text-decoration: none;
+  }
+  h3 {
+    margin-bottom: 20px;
+  }
+  img {
+    width: 100%;
+    object-fit: cover;
+    height: auto;
+    max-height: 450px;
+  }
+  &.first {
+    margin-top: 30px;
+  }
+  &.shifted {
+    margin-top: 0;
+    // transform: translateY(150px);
+  }
+}
