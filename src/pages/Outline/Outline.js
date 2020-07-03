@@ -91,6 +91,10 @@ export default function Outline() {
     playerRef.current.seekTo(progressFraction, 'fraction')
   }, [])
 
+  const handlePlayingDocClick = useCallback(() => {
+    setPlaying(false)
+  }, [])
+
   return (
     <div className={styles.PlayerPage}>
       <Menu />
@@ -116,7 +120,10 @@ export default function Outline() {
           url={playingVideoUrl}
           playsinline
         />
-        {playingDocument && <PlayingDocument document={playingDocument} />}
+        {playingDocument && <PlayingDocument
+          onClick={handlePlayingDocClick}
+          document={playingDocument}
+        />}
         <div className={`${styles.Controls} pb-3 px-5 position-relative`}>
           <div className="py-4 d-flex">
             <button

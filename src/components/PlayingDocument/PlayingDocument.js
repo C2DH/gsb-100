@@ -2,11 +2,12 @@ import React, { useState, useCallback } from 'react'
 import OutlineDocumentModal from '../OutlineDocumentModal'
 import styles from './PlayingDocument.module.scss'
 
-function PlayingDocument({ document }) {
+function PlayingDocument({ document, onClick }) {
   const [showModal, setShowModal] = useState(false)
-  const toggleModal = useCallback(() => {
+  const toggleModal = useCallback((e) => {
     setShowModal((a) => !a)
-  }, [])
+    onClick && onClick(e)
+  }, [onClick])
   return (
     <>
       <div className={`${styles.PlayingDocument} m-5`} onClick={toggleModal}>
