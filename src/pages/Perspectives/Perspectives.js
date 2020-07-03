@@ -19,15 +19,12 @@ function ThemeListItem({ theme, ...props }) {
         <h3>{theme.data.title}</h3>
         <img
           alt={theme.data.title}
-          src={theme.covers?.[0]?.data?.resolutions?.preview?.url ?? theme.img}
+          src={theme.covers?.[0]?.data?.resolutions?.preview?.url}
         />
       </LangLink>
     </div>
   )
 }
-
-const BASE_Y_SHIFT = 150
-const DELTA_Y_SHIFT = 150
 
 export default function Perspectives() {
   const [perspectivesStory] = useCacheStory('perspectives')
@@ -38,18 +35,11 @@ export default function Perspectives() {
       <Menu />
       <div className={styles.ThemeListContainer}>
         {themes.map((theme, i) => {
-          let transform
-          if (i % 2 === 1) {
-            const y = BASE_Y_SHIFT + (Math.ceil(i / 2) - 1) * DELTA_Y_SHIFT
-            transform = `translateY(${y}px)`
-          }
           return (
             <ThemeListItem
               key={theme.id}
               theme={theme}
-              style={{ transform }}
               className={classNames(styles.ThemeListItem, {
-                [styles.first]: i === 0,
                 [styles.shifted]: i % 2 === 1,
               })}
             />
