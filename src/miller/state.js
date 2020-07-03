@@ -201,6 +201,37 @@ function storyApi(opts, id, params = {}) {
   return getJSON(`/story/${id}`, storyParams, null, opts)
 }
 
+function fillRelatedChapterObjects(chapter) {
+  const documentsById = chapter.documents.reduce((all, doc) => ({
+    ...all,
+    [doc.document_id]: doc,
+  }), {})
+  const modules = chapter.contents.modules.map(mod => {
+    if (mod.object?.id) {
+      const document = documentsById[mod.object.id] ?? null
+      return {
+        ...mod,
+        object: {
+          ...mod.object,
+          document
+        }
+      }
+    }
+    return mod
+  })
+  return {
+    ...chapter,
+    contents: {
+      ...chapter.contents,
+      modules,
+    }
+  }
+}
+
+function fillRelatedChaptersObjects(chapters) {
+  return chapters.map(fillRelatedChapterObjects)
+}
+
 export const StoryState = rj(
   rjCache({
     ns: 'millerStory',
@@ -225,7 +256,7 @@ export const StoryState = rj(
                     ...response,
                     data: {
                       ...response.data,
-                      chapters: chaptersData,
+                      chapters: fillRelatedChaptersObjects(chaptersData),
                     },
                   }
                 })
