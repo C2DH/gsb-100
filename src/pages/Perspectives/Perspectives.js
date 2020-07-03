@@ -1,6 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
-import { useCacheStory, useCacheStories } from '../../miller'
+import { useCacheStory, useCacheStories, usePrefetchStory } from '../../miller'
 import Menu from '../../components/Menu'
 import styles from './Perspectives.module.scss'
 import LangLink from '../../components/LangLink'
@@ -13,9 +13,17 @@ const themesParams = {
 }
 
 function ThemeListItem({ theme, ...props }) {
+  const prefetchTheme = usePrefetchStory()
   return (
     <div {...props}>
-      <LangLink to={`/perspectives/${theme.slug}`}>
+      <LangLink
+        onClick={() => {
+          prefetchTheme(theme.slug, {
+            withChapters: true,
+          })
+        }}
+        to={`/perspectives/${theme.slug}`}
+      >
         <h3>{theme.data.title}</h3>
         <img
           alt={theme.data.title}
