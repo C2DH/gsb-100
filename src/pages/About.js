@@ -11,6 +11,7 @@ export default function About() {
   const [imageDoc] = useCacheDocument(129)
   const [audioDoc] = useCacheDocument(5)
   const [videoDoc] = useCacheDocument(6)
+  const [pdfDoc] = useCacheDocument(21)
 
   return (
     <div>
@@ -37,6 +38,13 @@ export default function About() {
             state: { background: location, modalDocument: videoDoc },
           }}
         >VIDEO DOC</LangLink>
+        <br />
+        <LangLink
+          to={{
+            pathname: `/documents/${pdfDoc.id}`,
+            state: { background: location, modalDocument: pdfDoc },
+          }}
+        >PDF DOC</LangLink>
       </div>
     </div>
   )

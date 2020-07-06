@@ -21,6 +21,7 @@
     "react-feather": "^2.0.8",
     "react-hammerjs": "^1.0.1",
     "react-i18next": "^11.5.0",
+    "react-pdf": "^4.1.0",
     "react-player": "^2.4.0",
     "react-rocketjump": "^3.0.0-rc4",
     "react-router-dom": "^5.2.0",

@@ -22,7 +22,7 @@ export default function PerspectiveDetail() {
       <p>{theme.data.abstract}</p>
 
       <div className={styles.Chapters}>
-        {chapters.map(chapter => (
+        {chapters.map((chapter) => (
           <div key={chapter.id} className={styles.Chapter}>
             <PerspectiveChapter chapter={chapter} />
           </div>

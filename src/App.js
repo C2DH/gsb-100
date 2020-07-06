@@ -162,10 +162,32 @@ function AppRoutes() {
   )
 }
 
+// KILL MILLER CACHE IN DEV
+let hashParams
+let headers
+
+if (process.env.NODE_ENV !== 'production') {
+  hashParams = (params) => ({
+      ...params,
+      nocache: 1,
+  })
+  headers = () => ({
+    'Cache-Control': 'no-cache'
+  })
+}
+
 export default function App() {
   const { i18n } = useTranslation()
   return (
-    <Miller lang={i18n.language} langs={LANGS} apiUrl={'/api'} cache suspense>
+    <Miller
+      hashParams={hashParams}
+      headers={headers}
+      lang={i18n.language}
+      langs={LANGS}
+      apiUrl={'/api'}
+      cache
+      suspense
+    >
       <Router>
         <PageError>
           <Suspense fallback={<PageLoader />}>
