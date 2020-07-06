@@ -11,12 +11,12 @@ export default function DocumentDetail() {
   const [doc] = useCacheDocument(id)
 
   return (
-    <div className='h-100'>
-      <DocumentInfo doc={doc} />
-      <LangLink to='/explorations/all' className={styles.close}>
+    <div className="h-100 position-relative">
+      <LangLink to="/explorations/all" className={styles.close}>
         <ArrowLeft />
         All sources
       </LangLink>
+      <DocumentInfo doc={doc} />
     </div>
   )
 }

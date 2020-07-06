@@ -1,33 +1,36 @@
 import React from 'react'
 import classNames from 'classnames'
+import { useTranslation } from 'react-i18next'
+import DocumentInfoMetadata from '../DocumentInfoMetadata'
 import styles from './DocumentInfoBox.module.scss'
 
-const InfoRow = ({ label, value }) => (
-  <div className={classNames(styles.InfoRow, 'd-flex justify-content-between')}>
-    <div className="text-primary">{label}</div>
-    <div className={'text-white'}>{value}</div>
-  </div>
-)
-
 export default function DocumentInfoBox({ doc }) {
+  const { t } = useTranslation()
   return (
-    <div className={styles.InfoBoxContainer}>
-      <div className={styles.InfoBox}>
-        <div className={classNames(styles.Label, 'text-capitalize')}>
-          {doc.type}
-        </div>
-        <h2>{doc.title}</h2>
-        <div className={classNames('row no-gutters', styles.InfoRowsGroup)}>
-          <div className="col-md-8 d-flex justify-content-between">
-            <div className="text-primary">Desription</div>
-            <div className="flex-grow-1 pl-4">
-              {doc.data.description || 'hahahaaha'}
-            </div>
+    <div className={classNames('py-3', styles.InfoBoxContainer)}>
+      <div className="container">
+        <div className="row">
+          <div className="col-10 offset-md-1 pl-0">
+            <p
+              className={classNames(
+                'text-capitalize text-primary mb-1',
+                styles.label
+              )}
+            >
+              {t(doc.data.type)}
+            </p>
+            <h2>{doc.data.title}</h2>
           </div>
-          <div className={classNames('col-md-4', styles.InfoRows)}>
-            <InfoRow label="Date" value={doc.data.date} />
-            <InfoRow label="Provenance" value={doc.data.date} />
-            <InfoRow label="Copyright" value={doc.data.copyright} />
+        </div>
+        <div className={`row mt-2`}>
+          <div className={`${styles.rowBorder} col-2 offset-md-1 pt-3 pl-0`}>
+            <div className="text-primary">{t('Description')}</div>
+          </div>
+          <div className={`${styles.rowBorder} col-md-5 pt-3`}>
+            {doc.data.description}
+          </div>
+          <div className={`${styles.rowBorder} col-md-3 pr-0`}>
+            <DocumentInfoMetadata data={doc.data}></DocumentInfoMetadata>
           </div>
         </div>
       </div>

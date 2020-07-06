@@ -1,0 +1,13 @@
+.tableBorders th,
+.tableBorders td {
+  border-top: 1px solid var(--border-color);
+}
+
+.tableBorders th {
+  border-right: 1px solid var(--border-color);
+}
+
+.tableBorders tr:first-of-type th,
+.tableBorders tr:first-of-type td {
+  border-top: none;
+}

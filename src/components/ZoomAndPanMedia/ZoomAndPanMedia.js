@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { withTranslation } from 'react-i18next'
 import ReactHammer from 'react-hammerjs'
 import Hammer from 'hammerjs'
+import { ZoomIn, ZoomOut, Minimize2 } from 'react-feather'
 import styles from './ZoomAndPanMedia.module.scss'
 
 const PINCH_TIMEOUT = 300
@@ -204,24 +205,24 @@ class ZoomAndPanMedia extends Component {
           <div className="p-3 d-flex flex-column">
             <button
               type="button"
-              className="btn btn-dark bg-transparent"
-              onClick={this.handleZoomNew(-0.1)}
-            >
-              <i className="material-icons">zoom_out</i>
-            </button>
-            <button
-              type="button"
-              className="btn btn-dark bg-transparent"
-              onClick={this.resetZoom}
-            >
-              {t('reset')}
-            </button>
-            <button
-              type="button"
-              className="btn btn-dark bg-transparent"
+              className="btn btn-light btn-icon-round opacity-75 mb-2"
               onClick={this.handleZoomNew(0.1)}
             >
-              <i className="material-icons">zoom_in</i>
+              <ZoomIn></ZoomIn>
+            </button>
+            <button
+              type="button"
+              className="btn btn-light btn-icon-round opacity-75 mb-2"
+              onClick={this.resetZoom}
+            >
+              <Minimize2></Minimize2>
+            </button>
+            <button
+              type="button"
+              className="btn btn-light btn-icon-round opacity-75 mb-2"
+              onClick={this.handleZoomNew(-0.1)}
+            >
+              <ZoomOut></ZoomOut>
             </button>
           </div>
           {/*    <input
