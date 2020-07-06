@@ -18,14 +18,12 @@ export default function AudioTrack({ url }) {
   const [progress, setProgress] = useState(null)
   const [volume, setVolume] = useState(1)
 
-  // FIXME: https://github.com/dschoon/react-waves
-  // https://github.com/dschoon/react-waves/blob/master/src/components/Waveform/index.js#L93
-  // The onPosChange callback was callback both for SEEK and AUDIO_PROCESS
-  // so pos can assume a value of a portion between 0 and 1
-  // and a value in seconds ....
   function handlePosChange(pos, wave) {
     const duration = wave.getDuration()
-    const played = duration * pos
+    const played = wave.getCurrentTime()
+    if (parseInt(duration) === parseInt(played)) {
+      setPlaying(false)
+    }
     setProgress({
       duration: fromSecondsToProgressStr(duration),
       played: fromSecondsToProgressStr(played),
