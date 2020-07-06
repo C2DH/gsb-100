@@ -38,7 +38,7 @@ class ZoomAndPanMedia extends Component {
 
   handleWheel = (e) => {
     e.preventDefault()
-    this.handleZoomNew(e.deltaY * 0.01)()
+    this.handleZoomNew(e.deltaY * -0.01)()
   }
 
   boundsDeltas = (deltaX, deltaY, zoom) => {
