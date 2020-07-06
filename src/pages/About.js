@@ -6,7 +6,6 @@ import LangLink from '../components/LangLink'
 
 export default function About() {
   const [aboutStory] = useCacheStory('about')
-  console.log('About Story', aboutStory)
   const location = useLocation()
   const [imageDoc] = useCacheDocument(129)
   const [audioDoc] = useCacheDocument(5)
@@ -23,28 +22,36 @@ export default function About() {
             pathname: `/documents/${imageDoc.id}`,
             state: { background: location, modalDocument: imageDoc },
           }}
-        >IMAGE DOC</LangLink>
+        >
+          IMAGE DOC
+        </LangLink>
         <br />
         <LangLink
           to={{
             pathname: `/documents/${audioDoc.id}`,
             state: { background: location, modalDocument: audioDoc },
           }}
-        >AUDIO DOC</LangLink>
+        >
+          AUDIO DOC
+        </LangLink>
         <br />
         <LangLink
           to={{
             pathname: `/documents/${videoDoc.id}`,
             state: { background: location, modalDocument: videoDoc },
           }}
-        >VIDEO DOC</LangLink>
+        >
+          VIDEO DOC
+        </LangLink>
         <br />
         <LangLink
           to={{
             pathname: `/documents/${pdfDoc.id}`,
             state: { background: location, modalDocument: pdfDoc },
           }}
-        >PDF DOC</LangLink>
+        >
+          PDF DOC
+        </LangLink>
       </div>
     </div>
   )
