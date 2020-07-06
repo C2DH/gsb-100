@@ -1,5 +1,6 @@
 import React from 'react'
 import LangLink from '../LangLink'
+import AudioTrack from '../AudioTrack'
 import { useLocation } from 'react-router-dom'
 import { usePrefetchDocument } from '../../miller'
 
@@ -44,6 +45,16 @@ export default function DocumentObject({ document, caption }) {
     return (
       <div>
         <video style={{ width: 300 }} src={videoUrl} controls />
+        <DocLink>
+          <p className="text-primary">{caption}</p>
+        </DocLink>
+      </div>
+    )
+  } else if (document.type === 'audio' && document.url) {
+    const audioUrl = document.url
+    return (
+      <div>
+        <AudioTrack url={audioUrl} />
         <DocLink>
           <p className="text-primary">{caption}</p>
         </DocLink>
