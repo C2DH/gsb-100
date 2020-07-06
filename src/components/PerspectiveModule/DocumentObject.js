@@ -3,38 +3,52 @@ import LangLink from '../LangLink'
 import { useLocation } from 'react-router-dom'
 import { usePrefetchDocument } from '../../miller'
 
-export default function DocumentObject({ obj }) {
+export default function DocumentObject({ document, caption }) {
   const location = useLocation()
   const prefetchDocument = usePrefetchDocument()
 
-  if (obj.document.type === 'image') {
-    const image = obj.document.data.resolutions?.preview?.url
+  const DocLink = ({ children }) => (
+    <LangLink
+      onClick={() => {
+        prefetchDocument(document.document_id)
+      }}
+      to={{
+        pathname: `/documents/${document.document_id}`,
+        state: { background: location, modalDocument: document },
+      }}
+    >
+      {children}
+    </LangLink>
+  )
+
+  if (document.type === 'image' || document.type === 'pdf') {
+    const imagePreviewUrl = document.data.resolutions?.preview?.url
     return (
       <div>
-        <LangLink
-          onClick={() => {
-            prefetchDocument(obj.document.document_id)
-          }}
-          to={{
-            pathname: `/documents/${obj.document.document_id}`,
-            state: { background: location, modalDocument: obj.document },
-          }}
-        >
+        <DocLink>
           <img
-            alt={obj.document.data.title}
-            src={image}
+            alt={document.data.title}
+            src={imagePreviewUrl}
             style={{
               width: '100%',
               height: 'auto',
             }}
           />
-        </LangLink>
-        <p className="text-primary">{obj.caption}</p>
+          <p className="text-primary">{caption}</p>
+        </DocLink>
       </div>
     )
-  } else if (obj.document.type === 'video') {
-    // TODO: Fix object video
-    return null
+  } else if (document.type === 'video' && document.url) {
+    const videoUrl = document.url
+    // TODO: Fix object video with good dimension.....
+    return (
+      <div>
+        <video style={{ width: 300 }} src={videoUrl} controls />
+        <DocLink>
+          <p className="text-primary">{caption}</p>
+        </DocLink>
+      </div>
+    )
   }
   return null
 }

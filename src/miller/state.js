@@ -202,19 +202,28 @@ function storyApi(opts, id, params = {}) {
 }
 
 function fillRelatedChapterObjects(chapter) {
-  const documentsById = chapter.documents.reduce((all, doc) => ({
-    ...all,
-    [doc.document_id]: doc,
-  }), {})
-  const modules = chapter.contents.modules.map(mod => {
-    if (mod.object?.id) {
+  const documentsById = chapter.documents.reduce(
+    (all, doc) => ({
+      ...all,
+      [doc.document_id]: doc,
+    }),
+    {}
+  )
+  const modules = chapter.contents.modules.map((mod) => {
+    if (mod.id) {
+      const document = documentsById[mod.id] ?? null
+      return {
+        ...mod,
+        document,
+      }
+    } else if (mod.object?.id) {
       const document = documentsById[mod.object.id] ?? null
       return {
         ...mod,
         object: {
           ...mod.object,
-          document
-        }
+          document,
+        },
       }
     }
     return mod
@@ -224,7 +233,7 @@ function fillRelatedChapterObjects(chapter) {
     contents: {
       ...chapter.contents,
       modules,
-    }
+    },
   }
 }
 

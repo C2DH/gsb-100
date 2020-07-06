@@ -5,7 +5,10 @@ import DocumentObject from './DocumentObject'
 export default function ModuleTextObject({ module }) {
   return (
     <div>
-      <DocumentObject obj={module.object} />
+      <DocumentObject
+        document={module.object.document}
+        caption={module.object.caption}
+      />
       <Markdown>{module.text.content}</Markdown>
     </div>
   )
