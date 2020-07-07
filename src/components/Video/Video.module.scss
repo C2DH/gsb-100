@@ -1,16 +1,25 @@
 .Player {
-  position: relative;
+  // position: relative;
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 100%;
+  width: auto;
+  margin: auto;
+  video {
+    max-width: 100%;
+    max-height: 100%;
+    outline: none;
+  }
 }
 
 .Controls {
-  position: absolute;
   color: white;
-  bottom: 2px;
-  left: 10px;
-  right: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
+  width: 100%;
+  background: black;
+  padding: 10px;
 }
 .PlayPause {
   cursor: pointer;

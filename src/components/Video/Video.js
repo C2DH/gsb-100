@@ -118,7 +118,7 @@ export default function Video({
   }
 
   return (
-    <div>
+    <React.Fragment>
       <ControlsContext.Provider
         value={{
           playing,
@@ -147,6 +147,6 @@ export default function Video({
           {...props}
         />
       </ControlsContext.Provider>
-    </div>
+    </React.Fragment>
   )
 }
