@@ -1,6 +1,7 @@
 import React from 'react'
 import LangLink from '../LangLink'
 import AudioTrack from '../AudioTrack'
+import Video from '../Video'
 import { useLocation } from 'react-router-dom'
 import { usePrefetchDocument } from '../../miller'
 
@@ -44,7 +45,7 @@ export default function DocumentObject({ document, caption }) {
     // TODO: Fix object video with good dimension.....
     return (
       <div>
-        <video style={{ width: 300 }} src={videoUrl} controls />
+        <Video width={500} url={videoUrl} />
         <DocLink>
           <p className="text-primary">{caption}</p>
         </DocLink>

@@ -6,13 +6,8 @@ import { useCacheStory } from '../../miller'
 import Menu from '../../components/Menu'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
+import { convertStrToSeconds } from '../../utils'
 import styles from './Outline.module.scss'
-
-// Time Str 02:30 -> 150 seconds
-function convertStrToSeconds(str) {
-  const [mins, secs] = str.split(':')
-  return parseInt(mins) * 60 + parseInt(secs)
-}
 
 // Give me a story and a time in seconds and i give
 // you the current document now "playing"

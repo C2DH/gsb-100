@@ -15,6 +15,7 @@ const Controls = ({ show }) => {
     goFullScreen,
     volume,
     setVolume,
+    extraProgress,
   } = useContext(ControlsContext)
   const seekLineRef = useRef()
 
@@ -56,12 +57,18 @@ const Controls = ({ show }) => {
           className={styles.ProggressPlayed}
           style={{ width: `${played * 100}%` }}
         />
+        {extraProgress}
       </div>
       <div className={styles.fullScreen} onClick={goFullScreen}>
         <Maximize />
       </div>
     </div>
   )
+}
+
+const ExtraVideoOverlay = () => {
+  const { extraVideoOverlay } = useContext(ControlsContext)
+  return extraVideoOverlay || null
 }
 
 const Wrapper = React.forwardRef(
@@ -75,13 +82,19 @@ const Wrapper = React.forwardRef(
         onMouseLeave={() => setShowControls(false)}
       >
         {children}
-        <Controls show={showControls} />
+        <Controls show={showControls || true} />
+        <ExtraVideoOverlay />
       </div>
     )
   }
 )
 
-export default function Video({ ...props }) {
+export default function Video({
+  onReady,
+  extraProgress = null,
+  extraVideoOverlay = null,
+  ...props
+}) {
   const playerRef = useRef()
   const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
@@ -100,6 +113,10 @@ export default function Video({ ...props }) {
     screenfull.request(videoElement)
   }
 
+  const handleOnReady = () => {
+    onReady && onReady(playerRef.current)
+  }
+
   return (
     <div>
       <ControlsContext.Provider
@@ -111,9 +128,12 @@ export default function Video({ ...props }) {
           goFullScreen,
           volume,
           setVolume,
+          extraProgress,
+          extraVideoOverlay,
         }}
       >
         <ReactPlayer
+          onReady={handleOnReady}
           ref={playerRef}
           volume={volume}
           progressInterval={200}
