@@ -17,11 +17,17 @@ export default function ModuleVideoInterview({ module }) {
     }
     console.log(duration)
     return module.objects.map((o) => {
-      const fromPercent = (convertStrToSeconds(o.from) / duration) * 100
-      const toPercent = (convertStrToSeconds(o.to) / duration) * 100
+      const fromSeconds = convertStrToSeconds(o.from)
+      const fromPercent = (fromSeconds / duration) * 100
+
+      const toSeconds = convertStrToSeconds(o.to)
+      const toPercent = (toSeconds / duration) * 100
+
       return {
         ...o,
+        fromSeconds,
         fromPercent,
+        toSeconds,
         toPercent,
       }
     })

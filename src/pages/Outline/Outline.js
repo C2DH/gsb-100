@@ -6,8 +6,8 @@ import { useCacheStory } from '../../miller'
 import Menu from '../../components/Menu'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
-import { convertStrToSeconds } from '../../utils'
 import styles from './Outline.module.scss'
+import { convertStrToSeconds } from '../../utils'
 
 // Give me a story and a time in seconds and i give
 // you the current document now "playing"
@@ -22,8 +22,8 @@ function usePlayingDocument(story, playedSeconds) {
     }))
   }, [story])
 
-  // Memo only the id by searching from seeks array
-  const playingDocuementId = useMemo(() => {
+  // Memo the doc searching from seeks array
+  const playingDocuement = useMemo(() => {
     if (playedSeconds === null) {
       return null
     }
@@ -32,18 +32,10 @@ function usePlayingDocument(story, playedSeconds) {
       (o) => playedSeconds >= o.from && playedSeconds <= o.to
     )
     if (objInTime) {
-      return objInTime.id
+      return objInTime.document
     }
     return null
   }, [seekObjectsSeconds, playedSeconds])
-
-  // Memo the doc: re find them only when id changes
-  const playingDocuement = useMemo(() => {
-    if (playingDocuementId === null) {
-      return null
-    }
-    return find(story.documents, { document_id: playingDocuementId })
-  }, [playingDocuementId, story])
 
   // Finally my doc
   return playingDocuement
