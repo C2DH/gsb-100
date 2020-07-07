@@ -1,24 +1,47 @@
 .InfoPdfContainer {
-  height: 90%;
+  height: 80%;
 }
 .PdfContainer {
-  padding: 20px;
+  padding: 1.5rem;
   height: 100%;
   display: flex;
   align-items: center;
   flex-direction: column;
+}
 
-  .PdfDocumentContainer {
-    height: 90%;
-  }
-  .PdfControls {
-    flex-grow: 1;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    input {
-      width: 50px;
-      text-align: center;
-    }
+.PdfDocumentContainer {
+  flex-grow: 1;
+  min-height: 0;
+}
+
+.pdfDocument {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.pdfPage {
+  height: 100%;
+}
+
+.pdfPage > canvas {
+  max-width: 100%;
+  height: auto !important;
+  max-height: 100%;
+  width: auto !important;
+  margin: auto;
+}
+
+.PdfControls {
+  padding-top: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  input {
+    background: #d8d8d8;
+    border: none;
+    border-radius: 5px;
+    width: 50px;
+    text-align: center;
   }
 }

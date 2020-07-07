@@ -1,13 +1,12 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
-import styles from './DocumentInfoPdf.module.scss'
+import { ArrowLeft, ArrowRight } from 'react-feather'
 import DocumentInfoBox from '../DocumentInfoBox'
+import styles from './DocumentInfoPdf.module.scss'
 
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`
 
 export default function DocumentInfoPdf({ doc }) {
-  const container = useRef()
-  const [height, setHeight] = useState(null)
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
 
@@ -29,31 +28,25 @@ export default function DocumentInfoPdf({ doc }) {
     }
   }
 
-  useEffect(() => {
-    setHeight(container.current.clientHeight)
-  }, [])
-
   return (
     <div className={styles.InfoPdfContainer}>
       <div className={styles.PdfContainer}>
-        <div className={styles.PdfDocumentContainer} ref={container}>
-          {!!height && (
-            <Document
-              file={pdfUrl}
-              height={height}
-              onLoadSuccess={onDocumentLoadSuccess}
-            >
-              <Page height={height} pageNumber={pageNumber || 1} />
-            </Document>
-          )}
+        <div className={styles.PdfDocumentContainer}>
+          <Document
+            className={styles.pdfDocument}
+            file={pdfUrl}
+            onLoadSuccess={onDocumentLoadSuccess}
+          >
+            <Page className={styles.pdfPage} pageNumber={pageNumber || 1} />
+          </Document>
         </div>
         <div className={styles.PdfControls}>
           <button
             onClick={() => setPageNumber((p) => p - 1)}
             disabled={pageNumber <= 1}
-            className="btn btn-dark bg-transparent mr-2"
+            className="btn btn-link btn-icon-round mr-2"
           >
-            {'←'}
+            <ArrowLeft color="white"></ArrowLeft>
           </button>
           <input
             className="page-input mr-2"
@@ -61,16 +54,17 @@ export default function DocumentInfoPdf({ doc }) {
             onChange={handlePageChange}
             value={pageNumber}
             min="1"
-            max="numPages"
+            max={numPages}
+            step="1"
           />
           {' of '}
           {numPages}
           <button
             onClick={() => setPageNumber((p) => p + 1)}
             disabled={pageNumber >= numPages}
-            className="btn btn-dark bg-transparent ml-2"
+            className="btn btn-link btn-icon-round ml-2"
           >
-            {'→'}
+            <ArrowRight color="white"></ArrowRight>
           </button>
         </div>
       </div>
