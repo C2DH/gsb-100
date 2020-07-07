@@ -210,23 +210,40 @@ function fillRelatedChapterObjects(chapter) {
     {}
   )
   const modules = chapter.contents.modules.map((mod) => {
-    if (mod.id) {
-      const document = documentsById[mod.id] ?? null
-      return {
-        ...mod,
+    let mappedModule = mod
+    if (mappedModule.id) {
+      const document = documentsById[mappedModule.id] ?? null
+      mappedModule = {
+        ...mappedModule,
         document,
       }
-    } else if (mod.object?.id) {
-      const document = documentsById[mod.object.id] ?? null
-      return {
-        ...mod,
+    }
+    if (mappedModule.object?.id) {
+      const document = documentsById[mappedModule.object.id] ?? null
+      mappedModule = {
+        ...mappedModule,
         object: {
-          ...mod.object,
+          ...mappedModule.object,
           document,
         },
       }
     }
-    return mod
+    if (Array.isArray(mappedModule.objects)) {
+      mappedModule = {
+        ...mappedModule,
+        objects: mappedModule.objects.map((obj) => {
+          if (obj.id) {
+            const document = documentsById[obj.id] ?? null
+            return {
+              ...obj,
+              document,
+            }
+          }
+          return obj
+        })
+      }
+    }
+    return mappedModule
   })
   return {
     ...chapter,
