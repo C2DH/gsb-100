@@ -27,6 +27,7 @@
     "react-scripts": "3.4.1",
     "react-waypoint": "^9.0.3",
     "reactstrap": "^8.5.0",
+    "screenfull": "^5.0.2",
     "shallow-equal": "^1.2.1"
   },
   "scripts": {
