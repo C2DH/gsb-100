@@ -5,24 +5,25 @@ import LocaleList from './LocaleList'
 import styles from './DocumentInfoMetadata.module.scss'
 
 const METATADA_KEYS = ['date', 'creator', 'provenance', 'copyright']
+const DATE_FORMAT = '%d %B %Y'
 
 const getDate = (data, formatter) => {
   if (data.date) {
     return data.date
   } else if (data.start_date && !data.end_date) {
-    return formatter.timeFormat('%d %B %Y')(new Date(data.start_date))
+    return formatter(new Date(data.start_date))
   } else if (data.year) {
     return data.year
   } else if (data.start_date && data.end_date) {
     if (data.start_date === data.end_date) {
-      return formatter.timeFormat('%d %B %Y')(new Date(data.start_date))
+      return formatter(new Date(data.start_date))
     } else {
-      return `${formatter.timeFormat('%d %B %Y')(
-        new Date(data.start_date)
-      )} - ${formatter.timeFormat('%d %B %Y')(new Date(data.end_date))}`
+      return `${formatter(new Date(data.start_date))} - ${formatter(
+        new Date(data.end_date)
+      )}`
     }
   } else {
-    return '-'
+    return null
   }
 }
 
@@ -35,12 +36,12 @@ export default function DocumentInfoMetadata({ data }) {
       let value
 
       if (m === 'date') {
-        value = getDate(data, d3TimeFormat)
+        value = getDate(data, d3TimeFormat.timeFormat(DATE_FORMAT))
       } else {
-        value = data[m] ? data[m] : '-'
+        value = data[m] ? data[m] : null
       }
       return { label: m, value: value }
-    }).filter((d) => d.value !== '-')
+    }).filter((d) => d.value)
   }, [data, i18n])
 
   return (
@@ -49,7 +50,10 @@ export default function DocumentInfoMetadata({ data }) {
         {metadata.map((d) => {
           return (
             <tr key={d.label}>
-              <th scope="row" className="text-primary text-capitalize">
+              <th
+                scope="row"
+                className="text-primary text-capitalize font-weight-normal"
+              >
                 {t(d.label)}
               </th>
               <td>{d.value}</td>
