@@ -202,7 +202,7 @@ class ZoomAndPanMedia extends Component {
           </ReactHammer>
         </div>
         <div className={styles.ZoomAndPanMediaControls}>
-          <div className="p-3 d-flex flex-column">
+          <div className="d-flex flex-column">
             <button
               type="button"
               className="btn btn-light btn-icon-round opacity-75 mb-2"

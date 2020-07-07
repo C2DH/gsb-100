@@ -2,19 +2,14 @@
   position: relative;
   width: 100%;
   height: 100%;
-  display: flex;
-  flex-direction: column;
   padding: 1.5rem;
   overflow: hidden;
   .ZoomAndPanMediaContainer {
-    flex: 1 1 0;
     overflow: visible;
     display: flex;
-    flex-direction: column;
     align-items: center;
     justify-content: center;
     height: 100%;
-    flex-basis: 0;
   }
 
   .ZoomAndPanMediaContainer .Zoomable {
@@ -29,11 +24,9 @@
   .ZoomAndPanMediaContainer .Zoomable:active {
     cursor: grabbing;
   }
-  .btn .material-icons {
-    line-height: unset;
-  }
   .ZoomAndPanMediaControls {
     position: absolute;
-    right: 0;
+    right: 1.5rem;
+    top: 1.5rem;
   }
 }
