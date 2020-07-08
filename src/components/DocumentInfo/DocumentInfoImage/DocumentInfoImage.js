@@ -5,9 +5,11 @@ import styles from './DocumentInfoImage.module.scss'
 
 export default function DocumentInfoImage({ doc }) {
   return (
-    <div className={styles.InfoImageContainer}>
-      <ZoomAndPanMedia src={doc.attachment} />
+    <React.Fragment>
+      <div className={styles.InfoImageContainer}>
+        <ZoomAndPanMedia src={doc.attachment} />
+      </div>
       <DocumentInfoBox doc={doc} />
-    </div>
+    </React.Fragment>
   )
 }

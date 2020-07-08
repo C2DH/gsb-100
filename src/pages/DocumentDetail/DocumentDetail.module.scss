@@ -1,6 +1,6 @@
 .close {
   z-index: var(--modal-close-z-index);
-  position: absolute;
+  position: fixed;
   color: white;
   left: 1.5rem;
   top: 1.5rem;

@@ -29,46 +29,48 @@ export default function DocumentInfoPdf({ doc }) {
   }
 
   return (
-    <div className={styles.InfoPdfContainer}>
-      <div className={styles.PdfContainer}>
-        <div className={styles.PdfDocumentContainer}>
-          <Document
-            className={styles.pdfDocument}
-            file={pdfUrl}
-            onLoadSuccess={onDocumentLoadSuccess}
-          >
-            <Page className={styles.pdfPage} pageNumber={pageNumber || 1} />
-          </Document>
-        </div>
-        <div className={styles.PdfControls}>
-          <button
-            onClick={() => setPageNumber((p) => p - 1)}
-            disabled={pageNumber <= 1}
-            className="btn btn-link btn-icon-round mr-2"
-          >
-            <ArrowLeft color="white"></ArrowLeft>
-          </button>
-          <input
-            className="page-input mr-2"
-            type="number"
-            onChange={handlePageChange}
-            value={pageNumber}
-            min="1"
-            max={numPages}
-            step="1"
-          />
-          {' of '}
-          {numPages}
-          <button
-            onClick={() => setPageNumber((p) => p + 1)}
-            disabled={pageNumber >= numPages}
-            className="btn btn-link btn-icon-round ml-2"
-          >
-            <ArrowRight color="white"></ArrowRight>
-          </button>
+    <React.Fragment>
+      <div className={styles.InfoPdfContainer}>
+        <div className={styles.PdfContainer}>
+          <div className={styles.PdfDocumentContainer}>
+            <Document
+              className={styles.pdfDocument}
+              file={pdfUrl}
+              onLoadSuccess={onDocumentLoadSuccess}
+            >
+              <Page className={styles.pdfPage} pageNumber={pageNumber || 1} />
+            </Document>
+          </div>
+          <div className={styles.PdfControls}>
+            <button
+              onClick={() => setPageNumber((p) => p - 1)}
+              disabled={pageNumber <= 1}
+              className="btn btn-link btn-icon-round mr-2"
+            >
+              <ArrowLeft color="white"></ArrowLeft>
+            </button>
+            <input
+              className="page-input mr-2"
+              type="number"
+              onChange={handlePageChange}
+              value={pageNumber}
+              min="1"
+              max={numPages}
+              step="1"
+            />
+            {' of '}
+            {numPages}
+            <button
+              onClick={() => setPageNumber((p) => p + 1)}
+              disabled={pageNumber >= numPages}
+              className="btn btn-link btn-icon-round ml-2"
+            >
+              <ArrowRight color="white"></ArrowRight>
+            </button>
+          </div>
         </div>
       </div>
       <DocumentInfoBox doc={doc} />
-    </div>
+    </React.Fragment>
   )
 }
