@@ -1,10 +1,11 @@
 .Player {
-  // position: relative;
+  position: relative;
   display: inline-flex;
   flex-direction: column;
   max-width: 100%;
   width: auto;
   margin: auto;
+  background: black;
   video {
     max-width: 100%;
     max-height: 100%;
