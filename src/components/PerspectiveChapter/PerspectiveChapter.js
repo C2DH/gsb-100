@@ -6,7 +6,7 @@ function PerspectiveChapter({ chapter }) {
   const { modules } = chapter.contents
   return (
     <div className={styles.Chapter}>
-      <h4>{chapter.title} {chapter.id}</h4>
+      <h4>{chapter.title}</h4>
       {modules.map((module, index) => (
         <PerspectiveModule key={index} module={module} />
       ))}

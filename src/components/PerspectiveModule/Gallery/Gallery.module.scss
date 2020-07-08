@@ -1,0 +1,31 @@
+.Gallery {
+  padding: 0 5px;
+  // margin-bottom: 30px;
+  * {
+    outline: none;
+  }
+  :global {
+    .slick-next {
+      right: -20px;
+    }
+    .slick-prev {
+      left: -20px;
+    }
+    .slick-arrow:before {
+      color: var(--secondary);
+    }
+  }
+  .GalleryItem {
+    position: relative;
+    a {
+      position: absolute;
+      right: 10px;
+      top: 10px;
+    }
+    img {
+      width: 100%;
+      max-height: 400px;
+      object-fit: contain;
+    }
+  }
+}

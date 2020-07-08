@@ -93,6 +93,9 @@ export default function Video({
   onReady,
   extraProgress = null,
   extraVideoOverlay = null,
+  width = null,
+  height = null,
+  onProgress,
   ...props
 }) {
   const playerRef = useRef()
@@ -118,35 +121,38 @@ export default function Video({
   }
 
   return (
-    <React.Fragment>
-      <ControlsContext.Provider
-        value={{
-          playing,
-          played: progress.played,
-          togglePlay,
-          seekTo,
-          goFullScreen,
-          volume,
-          setVolume,
-          extraProgress,
-          extraVideoOverlay,
+    <ControlsContext.Provider
+      value={{
+        playing,
+        played: progress.played,
+        togglePlay,
+        seekTo,
+        goFullScreen,
+        volume,
+        setVolume,
+        extraProgress,
+        extraVideoOverlay,
+      }}
+    >
+      <ReactPlayer
+        onReady={handleOnReady}
+        ref={playerRef}
+        volume={volume}
+        progressInterval={200}
+        className={styles.Player}
+        onPause={() => setPlaying(false)}
+        onPlay={() => setPlaying(true)}
+        wrapper={Wrapper}
+        playing={playing}
+        onProgress={(progress) => {
+          setProgress(progress)
+          onProgress && onProgress(progress)
         }}
-      >
-        <ReactPlayer
-          onReady={handleOnReady}
-          ref={playerRef}
-          volume={volume}
-          progressInterval={200}
-          className={styles.Player}
-          onPause={() => setPlaying(false)}
-          onPlay={() => setPlaying(true)}
-          wrapper={Wrapper}
-          playing={playing}
-          onProgress={setProgress}
-          playsinline
-          {...props}
-        />
-      </ControlsContext.Provider>
-    </React.Fragment>
+        width={null}
+        height={null}
+        playsinline
+        {...props}
+      />
+    </ControlsContext.Provider>
   )
 }

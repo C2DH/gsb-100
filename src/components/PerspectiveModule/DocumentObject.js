@@ -45,7 +45,7 @@ export default function DocumentObject({ document, caption }) {
     // TODO: Fix object video with good dimension.....
     return (
       <div>
-        <Video width={500} url={videoUrl} />
+        <Video url={videoUrl} />
         <DocLink>
           <p className="text-primary">{caption}</p>
         </DocLink>
