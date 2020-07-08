@@ -46,7 +46,6 @@ export default function ModuleVideoInterview({ module }) {
     if (duration === null) {
       return null
     }
-    console.log(duration)
     return module.objects.map((o) => {
       const fromSeconds = convertStrToSeconds(o.from)
       const fromPercent = (fromSeconds / duration) * 100

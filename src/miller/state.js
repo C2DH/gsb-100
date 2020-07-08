@@ -209,38 +209,37 @@ function fillRelatedChapterObjects(chapter) {
     }),
     {}
   )
-  const modules = chapter.contents.modules.map((mod) => {
-    let mappedModule = mod
-    if (mappedModule.id) {
-      const document = documentsById[mappedModule.id] ?? null
-      mappedModule = {
-        ...mappedModule,
+  const mapId = obj => {
+    if (obj.id) {
+      const document = documentsById[obj.id] ?? null
+      return {
+        ...obj,
         document,
       }
     }
-    if (mappedModule.object?.id) {
-      const document = documentsById[mappedModule.object.id] ?? null
+    return obj
+  }
+  const modules = chapter.contents.modules.map((mod) => {
+    let mappedModule = mapId(mod)
+    if (mappedModule.object) {
       mappedModule = {
         ...mappedModule,
-        object: {
-          ...mappedModule.object,
-          document,
-        },
+        object: mapId(mappedModule.object),
       }
     }
     if (Array.isArray(mappedModule.objects)) {
       mappedModule = {
         ...mappedModule,
-        objects: mappedModule.objects.map((obj) => {
-          if (obj.id) {
-            const document = documentsById[obj.id] ?? null
-            return {
-              ...obj,
-              document,
-            }
-          }
-          return obj
-        })
+        objects: mappedModule.objects.map(mapId)
+      }
+    }
+    if (Array.isArray(mappedModule.gallery?.objects)) {
+      mappedModule = {
+        ...mappedModule,
+        gallery: {
+          ...mappedModule.gallery,
+          objects: mappedModule.gallery.objects.map(mapId),
+        }
       }
     }
     return mappedModule
