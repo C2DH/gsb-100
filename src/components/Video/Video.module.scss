@@ -1,14 +1,14 @@
 .Player {
-  // position: relative;
+  position: relative;
   display: inline-flex;
   flex-direction: column;
-  max-width: 100%;
+
   width: auto;
   margin: auto;
   video {
     max-width: 100%;
-    max-height: 100%;
     outline: none;
+    max-height: calc(100vh - 20vh - 3rem);
   }
 }
 
@@ -17,16 +17,28 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  background: black;
+  left: 0;
+  right: 0;
   padding: 10px;
+  position: absolute;
+  bottom: 0px;
 }
+
+.Controls > div {
+  margin-right: 10px;
+}
+
+.Controls > div:last-of-type {
+  margin-right: 0px;
+}
+
 .PlayPause {
   cursor: pointer;
 }
+
 .ProggressLine {
   position: relative;
-  margin: 0 5px;
+  // margin: 0 5px;
   height: 8px;
   width: 100%;
   background: white;
@@ -34,26 +46,31 @@
   .ProggressPlayed {
     height: 100%;
     background: var(--primary);
+    transition: width 0.3s linear;
   }
 }
+
 .fullScreen {
   cursor: pointer;
 }
 
 .Volume {
-  margin: 0 2px;
   display: flex;
   justify-content: center;
   align-items: center;
   input {
-    display: none;
-    width: 50px;
+    margin-left: 0px;
+    opacity: 0;
+    width: 00px;
     height: 5px;
+    transition: width var(--transition), opacity var(--transition);
   }
 }
 
 .Volume:hover {
   input {
-    display: initial;
+    margin-left: 10px;
+    opacity: 1;
+    width: 100px;
   }
 }
