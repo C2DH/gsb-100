@@ -23,9 +23,16 @@
     object-fit: cover;
     height: auto;
     max-height: 450px;
+    position: relative;
+    filter: saturate(30%);
+    transition: filter var(--transition);
   }
   &.shifted {
     margin-top: 60px;
     transform: translateY(70px);
+  }
+
+  a:hover img {
+    filter: saturate(100%);
   }
 }
