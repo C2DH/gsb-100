@@ -7,19 +7,21 @@ export default function ModuleTextObject({ module }) {
     return (
       <div>
         <Markdown>{module.text.content}</Markdown>
-        <DocumentObject
-          document={module.object.document}
-          caption={module.object.caption}
-        />
+        {module.document && (
+          <DocumentObject
+            document={module.object.document}
+            caption={module.object.caption}
+          />
+        )}
       </div>
     )
   } else {
     return (
       <div>
-        <DocumentObject
+        {module.document && <DocumentObject
           document={module.object.document}
           caption={module.object.caption}
-        />
+        />}
         <Markdown>{module.text.content}</Markdown>
       </div>
     )
