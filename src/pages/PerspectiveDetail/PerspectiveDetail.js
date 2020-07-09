@@ -8,12 +8,10 @@ import { ArrowLeft, ArrowRight } from 'react-feather'
 
 export default function PerspectiveDetail() {
   const { slug } = useParams()
-  const [theme] = useCacheStory(slug, {
-    withChapters: true,
-  })
+  const [theme] = useCacheStory(slug)
   const chaptersRef = useRef()
 
-  const { chapters } = theme.data
+  const { chapters: chaptersIds } = theme.data
 
   function getChapterWidth() {
     const container = chaptersRef.current
@@ -32,7 +30,7 @@ export default function PerspectiveDetail() {
     const chapterWidth = getChapterWidth()
     const currentChapterIndex = Math.floor(container.scrollLeft / chapterWidth)
     container.scrollTo(
-      Math.min(currentChapterIndex + 1, chapters.length - 1) * chapterWidth,
+      Math.min(currentChapterIndex + 1, chaptersIds.length - 1) * chapterWidth,
       0
     )
   }
@@ -60,9 +58,9 @@ export default function PerspectiveDetail() {
         </div>
       </div>
       <div className={styles.Chapters} ref={chaptersRef}>
-        {chapters.map((chapter) => (
-          <div key={chapter.id} className={styles.Chapter}>
-            <PerspectiveChapter chapter={chapter} />
+        {chaptersIds.map((chapterId) => (
+          <div key={chapterId} className={styles.Chapter}>
+            <PerspectiveChapter chapterId={chapterId} />
           </div>
         ))}
       </div>

@@ -169,10 +169,10 @@ let headers
 if (process.env.NODE_ENV !== 'production') {
   hashParams = (params) => ({
     ...params,
-    nocache: 1,
+    // nocache: 1,
   })
   headers = () => ({
-    'Cache-Control': 'no-cache',
+    // 'Cache-Control': 'no-cache',
   })
 }
 

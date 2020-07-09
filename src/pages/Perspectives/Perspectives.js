@@ -13,14 +13,12 @@ const themesParams = {
 }
 
 function ThemeListItem({ theme, ...props }) {
-  const prefetchTheme = usePrefetchStory()
+  const prefetchStory = usePrefetchStory()
   return (
     <div {...props}>
       <LangLink
         onClick={() => {
-          prefetchTheme(theme.slug, {
-            withChapters: true,
-          })
+          prefetchStory(theme.slug)
         }}
         to={`/perspectives/${theme.slug}`}
       >

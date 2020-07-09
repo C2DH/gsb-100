@@ -198,11 +198,19 @@ function storyApi(opts, id, params = {}) {
     parser: 'yaml',
     ...params,
   }
-  return getJSON(`/story/${id}`, storyParams, null, opts)
+  return getJSON(`/story/${id}`, storyParams, null, opts).pipe(
+    map(mapStoryWithRelatedModulesDocs)
+  )
 }
 
-function fillRelatedChapterObjects(chapter) {
-  const documentsById = chapter.documents.reduce(
+function mapStoryWithRelatedModulesDocs(story) {
+  // No modules for this story!
+  if (!Array.isArray(story.contents?.modules)) {
+    return story
+  }
+
+  // Index docs by id
+  const documentsById = story.documents.reduce(
     (all, doc) => ({
       ...all,
       [doc.document_id]: doc,
@@ -219,7 +227,7 @@ function fillRelatedChapterObjects(chapter) {
     }
     return obj
   }
-  const modules = chapter.contents.modules.map((mod) => {
+  const modules = story.contents.modules.map((mod) => {
     let mappedModule = mapId(mod)
     if (mappedModule.object) {
       mappedModule = {
@@ -245,16 +253,12 @@ function fillRelatedChapterObjects(chapter) {
     return mappedModule
   })
   return {
-    ...chapter,
+    ...story,
     contents: {
-      ...chapter.contents,
+      ...story.contents,
       modules,
     },
   }
-}
-
-function fillRelatedChaptersObjects(chapters) {
-  return chapters.map(fillRelatedChapterObjects)
 }
 
 export const StoryState = rj(
@@ -271,17 +275,17 @@ export const StoryState = rj(
       if (withChapters) {
         return ajaxObservable.pipe(
           mergeMap((response) => {
-            const chapters = response?.data?.chapters
-            if (chapters) {
+            const chaptersIds = response?.data?.chapters
+            if (chaptersIds) {
               return forkJoin(
-                chapters.map((id) => storyApi(millerEffectConfig, id))
+                chaptersIds.map((id) => storyApi(millerEffectConfig, id))
               ).pipe(
-                map((chaptersData) => {
+                map((chapters) => {
                   return {
                     ...response,
                     data: {
                       ...response.data,
-                      chapters: fillRelatedChaptersObjects(chaptersData),
+                      chapters,
                     },
                   }
                 })
