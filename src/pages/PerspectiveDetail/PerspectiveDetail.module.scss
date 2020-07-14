@@ -1,14 +1,19 @@
-.Chapters {
-  display: flex;
+.title {
+  font-size: 3rem;
+}
+
+.description {
+  font-size: 1.5rem;
+}
+
+.chapters {
+  // display: flex;
   overflow-x: auto;
   overflow-y: hidden;
-  .Chapter {
-    flex-shrink: 0;
-    border: 1px solid coral;
-    max-height: 800px;
-    overflow-x: hidden;
-    overflow-y: auto;
-    background: white;
-    width: 40%;
-  }
+  // flex-grow: 1;
+}
+
+.chapter {
+  overflow-y: auto;
+  flex: 0 0 40%;
 }

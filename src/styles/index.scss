@@ -48,6 +48,10 @@ h3 {
   opacity: 0.75;
 }
 
+.line-before::before {
+  content: '– ';
+}
+
 input[type='range'] {
   // width: 100%;
   margin: 7px 0;
