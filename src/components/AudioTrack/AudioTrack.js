@@ -11,7 +11,7 @@ function fromSecondsToProgressStr(time) {
     .padStart(2, '0')}`
 }
 
-export default function AudioTrack({ url }) {
+export default function AudioTrack({ url, module }) {
   const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
   const [progress, setProgress] = useState({
@@ -82,19 +82,21 @@ export default function AudioTrack({ url }) {
           ></ReactWaves>
         </div>
       </div>
-      <div className="w-100 d-flex align-items-center justify-content-center mt-3 opacity-75">
-        <Volume />
-        <input
-          value={volume}
-          onChange={(e) => setVolume(parseFloat(e.target.value))}
-          type="range"
-          step="0.1"
-          min={0}
-          max={1}
-          className="mx-1"
-        />
-        <Volume2 />
-      </div>
+      {!module && (
+        <div className="w-100 d-flex align-items-center justify-content-center mt-3 opacity-75">
+          <Volume />
+          <input
+            value={volume}
+            onChange={(e) => setVolume(parseFloat(e.target.value))}
+            type="range"
+            step="0.1"
+            min={0}
+            max={1}
+            className="mx-1"
+          />
+          <Volume2 />
+        </div>
+      )}
     </div>
   )
 }

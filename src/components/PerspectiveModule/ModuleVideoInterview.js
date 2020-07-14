@@ -1,38 +1,48 @@
 import React, { useState, useMemo } from 'react'
+import { useLocation } from 'react-router-dom'
 import find from 'lodash/find'
+import { usePrefetchDocument } from '../../miller'
+import LangLink from '../LangLink'
 import Video from '../Video'
 import { convertStrToSeconds } from '../../utils'
+import { Caption, DocLink } from './ModuleUtils'
+import styles from './PerspectiveModule.module.scss'
 
 const Segments = React.memo(({ segments }) => {
   return segments.map((segment, i) => (
     <div
       key={i}
       style={{
-        top: 0,
-        position: 'absolute',
         left: `${segment.fromPercent}%`,
-        right: `${100 - segment.toPercent}%`,
-        height: '100%',
-        borderLeft: '1px solid purple',
-        borderRight: '1px solid purple',
       }}
+      className={styles.segment}
     ></div>
   ))
 })
 
-const MiniPlayingDocument = React.memo(({ document }) => (
-  <div
-    style={{
-      position: 'absolute',
-      right: 20,
-      top: 20,
-      height: 200,
-      width: 200,
-      backgroundImage: `url(${document.data.resolutions.preview.url})`,
-      backgroundSize: 'cover',
-    }}
-  />
-))
+const MiniPlayingDocument = React.memo(({ document }) => {
+  const location = useLocation()
+  const prefetchDocument = usePrefetchDocument()
+  return (
+    <LangLink
+      onClick={() => {
+        prefetchDocument(document.document_id)
+      }}
+      to={{
+        pathname: `/documents/${document.document_id}`,
+        state: { background: location, modalDocument: document },
+      }}
+      className={styles.miniDocLink}
+    >
+      <div
+        style={{
+          backgroundImage: `url(${document.data.resolutions.preview.url})`,
+        }}
+        className={styles.miniDoc}
+      />
+    </LangLink>
+  )
+})
 
 export default function ModuleVideoInterview({ module }) {
   const [duration, setDuration] = useState(null)
@@ -63,7 +73,7 @@ export default function ModuleVideoInterview({ module }) {
     })
   }, [module, duration])
 
-  const playingDocuement = useMemo(() => {
+  const playingDocument = useMemo(() => {
     if (playedSeconds === null) {
       return null
     }
@@ -78,17 +88,23 @@ export default function ModuleVideoInterview({ module }) {
   }, [segments, playedSeconds])
 
   return (
-    <Video
-      width={500}
-      url={module.object.document.url}
-      onReady={handleOnReady}
-      onProgress={(p) => setPlayedSeconds(p.playedSeconds)}
-      extraVideoOverlay={
-        playingDocuement ? (
-          <MiniPlayingDocument document={playingDocuement} />
-        ) : null
-      }
-      extraProgress={segments ? <Segments segments={segments} /> : null}
-    />
+    <React.Fragment>
+      <Video
+        url={module.object.document.url}
+        onReady={handleOnReady}
+        onProgress={(p) => setPlayedSeconds(p.playedSeconds)}
+        extraVideoOverlay={
+          playingDocument ? (
+            <MiniPlayingDocument document={playingDocument} />
+          ) : null
+        }
+        extraProgress={segments ? <Segments segments={segments} /> : null}
+      />
+      {module.title && (
+        <DocLink document={module.object.document}>
+          <Caption caption={module.title}></Caption>
+        </DocLink>
+      )}
+    </React.Fragment>
   )
 }

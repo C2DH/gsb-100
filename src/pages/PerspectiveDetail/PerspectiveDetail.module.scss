@@ -7,13 +7,12 @@
 }
 
 .chapters {
-  // display: flex;
   overflow-x: auto;
   overflow-y: hidden;
-  // flex-grow: 1;
 }
 
 .chapter {
   overflow-y: auto;
   flex: 0 0 40%;
+  max-width: 600px;
 }

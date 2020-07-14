@@ -1,0 +1,38 @@
+.docLink {
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+.docLink:hover {
+  text-decoration: none;
+}
+
+.docLink:hover svg {
+  stroke: var(--primary);
+}
+
+.segment {
+  top: -1px;
+  position: absolute;
+  width: 5px;
+  bottom: -1px;
+  border: 1px solid white;
+  background-color: var(--primary);
+  box-sizing: border-box;
+}
+
+.miniDocLink {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  height: 135px;
+  width: 135px;
+  border: 1px solid white;
+}
+
+.miniDoc {
+  height: 100%;
+  width: 100%;
+  background-size: cover;
+}

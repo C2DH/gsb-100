@@ -1,16 +1,18 @@
 import React, { Suspense } from 'react'
 import PerspectiveModule from '../PerspectiveModule'
-import styles from './PerspectiveChapter.module.scss'
 import { useCacheStory } from '../../miller'
+import styles from './PerspectiveChapter.module.scss'
 
 function PerspectiveChapterContent({ chapterId }) {
   const [chapter] = useCacheStory(chapterId)
   const { modules } = chapter.contents
   return (
     <>
-      <h4>{chapter.title}</h4>
+      <h3 className={`${styles.title} m-0 py-4`}>{chapter.data.title}</h3>
       {modules.map((module, index) => (
-        <PerspectiveModule key={index} module={module} />
+        <div className="my-4" key={index}>
+          <PerspectiveModule module={module} />
+        </div>
       ))}
     </>
   )
@@ -18,7 +20,9 @@ function PerspectiveChapterContent({ chapterId }) {
 
 function PerspectiveChapter({ chapterId }) {
   return (
-    <div className={styles.Chapter}>
+    <div
+      className={`${styles.chapter} text-secondary px-4 pb-4 position-relative`}
+    >
       <Suspense
         fallback={<h3 className="text-secondary">Loading ma chapter....</h3>}
       >

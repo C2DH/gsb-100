@@ -1,42 +1,26 @@
 import React from 'react'
-import LangLink from '../LangLink'
 import AudioTrack from '../AudioTrack'
 import Video from '../Video'
-import { useLocation } from 'react-router-dom'
-import { usePrefetchDocument } from '../../miller'
+import { Caption, DocLink } from './ModuleUtils'
+import styles from './PerspectiveModule.module.scss'
 
-export default function DocumentObject({ document, caption }) {
-  const location = useLocation()
-  const prefetchDocument = usePrefetchDocument()
-
-  const DocLink = ({ children }) => (
-    <LangLink
-      onClick={() => {
-        prefetchDocument(document.document_id)
-      }}
-      to={{
-        pathname: `/documents/${document.document_id}`,
-        state: { background: location, modalDocument: document },
-      }}
-    >
-      {children}
-    </LangLink>
-  )
-
+export default function DocumentObject({ document, caption, className }) {
   if (document.type === 'image' || document.type === 'pdf') {
     const imagePreviewUrl = document.data.resolutions?.preview?.url
     return (
-      <div>
-        <DocLink>
+      <div className={className}>
+        <DocLink document={document}>
           <img
             alt={document.data.title}
             src={imagePreviewUrl}
             style={{
-              width: '100%',
+              width: 'auto',
               height: 'auto',
+              maxHeight: '70vh',
+              maxWidth: '100%',
             }}
           />
-          <p className="text-primary">{caption}</p>
+          <Caption caption={caption}></Caption>
         </DocLink>
       </div>
     )
@@ -44,20 +28,20 @@ export default function DocumentObject({ document, caption }) {
     const videoUrl = document.url
     // TODO: Fix object video with good dimension.....
     return (
-      <div>
+      <div className={className}>
         <Video url={videoUrl} />
-        <DocLink>
-          <p className="text-primary">{caption}</p>
+        <DocLink document={document}>
+          <Caption caption={caption}></Caption>
         </DocLink>
       </div>
     )
   } else if (document.type === 'audio' && document.url) {
     const audioUrl = document.url
     return (
-      <div>
-        <AudioTrack url={audioUrl} />
-        <DocLink>
-          <p className="text-primary">{caption}</p>
+      <div className={className}>
+        <AudioTrack url={audioUrl} module />
+        <DocLink document={document}>
+          <Caption caption={caption}></Caption>
         </DocLink>
       </div>
     )

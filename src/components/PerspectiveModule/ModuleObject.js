@@ -3,11 +3,10 @@ import DocumentObject from './DocumentObject'
 
 export default function ModuleObject({ module }) {
   return (
-    <div>
-      <DocumentObject
-        document={module.document}
-        caption={module.caption}
-      />
-    </div>
+    <DocumentObject
+      document={module.document}
+      caption={module.caption ? module.caption : module.document.data.title}
+      className="mt-3"
+    />
   )
 }
