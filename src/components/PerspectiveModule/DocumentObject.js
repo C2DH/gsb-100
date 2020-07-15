@@ -2,7 +2,6 @@ import React from 'react'
 import AudioTrack from '../AudioTrack'
 import Video from '../Video'
 import { Caption, DocLink } from './ModuleUtils'
-import styles from './PerspectiveModule.module.scss'
 
 export default function DocumentObject({ document, caption, className }) {
   if (document.type === 'image' || document.type === 'pdf') {

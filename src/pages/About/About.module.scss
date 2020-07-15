@@ -1,0 +1,23 @@
+.pageContent {
+  h6 {
+    color: var(--primary);
+  }
+  h6::before {
+    content: '– ';
+  }
+  p {
+    font-size: 1.3rem;
+  }
+  a {
+    color: white;
+    border-bottom: 1px solid var(--primary);
+    text-decoration: none;
+  }
+  a:hover {
+    text-decoration: none;
+  }
+}
+
+.titleContainer {
+  border-bottom: 1px solid var(--border-color);
+}
