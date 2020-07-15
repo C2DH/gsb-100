@@ -47,6 +47,9 @@ const MiniPlayingDocument = React.memo(({ document }) => {
 export default function ModuleVideoInterview({ module }) {
   const [duration, setDuration] = useState(null)
   const [playedSeconds, setPlayedSeconds] = useState(null)
+  const videoUrl = module.object.document.data.translated_urls
+    ? module.object.document.data.translated_urls
+    : module.object.document.url
 
   function handleOnReady(player) {
     setDuration(player.getDuration())
@@ -90,7 +93,7 @@ export default function ModuleVideoInterview({ module }) {
   return (
     <React.Fragment>
       <Video
-        url={module.object.document.url}
+        url={videoUrl}
         onReady={handleOnReady}
         onProgress={(p) => setPlayedSeconds(p.playedSeconds)}
         extraVideoOverlay={

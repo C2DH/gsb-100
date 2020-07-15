@@ -1,5 +1,4 @@
 import React from 'react'
-import Markdown from 'markdown-to-jsx'
 import classNames from 'classnames'
 import DocumentObject from './DocumentObject'
 import ModuleText from './ModuleText'
@@ -7,13 +6,12 @@ import ModuleText from './ModuleText'
 export default function ModuleTextObject({ module }) {
   return (
     <div className="d-flex flex-column">
-      <Markdown
-        className={classNames('indent my-2', {
+      <ModuleText
+        module={module}
+        className={classNames({
           'order-1': module.layout === 'object-text',
         })}
-      >
-        {module.text.content}
-      </Markdown>
+      ></ModuleText>
       {module.object.document && (
         <DocumentObject
           document={module.object.document}

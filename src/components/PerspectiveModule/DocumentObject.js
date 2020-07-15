@@ -24,22 +24,22 @@ export default function DocumentObject({ document, caption, className }) {
         </DocLink>
       </div>
     )
-  } else if (document.type === 'video' && document.url) {
-    const videoUrl = document.url
-    // TODO: Fix object video with good dimension.....
+  } else if (document.type === 'video') {
+    const videoUrl = document.url ? document.url : document.data.translated_urls
+
     return (
       <div className={className}>
-        <Video url={videoUrl} />
+        {videoUrl && <Video url={videoUrl} />}
         <DocLink document={document}>
           <Caption caption={caption}></Caption>
         </DocLink>
       </div>
     )
-  } else if (document.type === 'audio' && document.url) {
+  } else if (document.type === 'audio') {
     const audioUrl = document.url
     return (
       <div className={className}>
-        <AudioTrack url={audioUrl} module />
+        {audioUrl && <AudioTrack url={audioUrl} module />}
         <DocLink document={document}>
           <Caption caption={caption}></Caption>
         </DocLink>
