@@ -1,53 +1,63 @@
 import React from 'react'
-import Slider from 'react-slick'
-import 'slick-carousel/slick/slick.css'
-import 'slick-carousel/slick/slick-theme.css'
-import { Info } from 'react-feather'
+import Carousel from 'nuka-carousel'
 import { useLocation } from 'react-router-dom'
+import { ArrowLeft, ArrowRight } from 'react-feather'
 import { usePrefetchDocument } from '../../../miller'
+import { Caption } from '../ModuleUtils'
 import LangLink from '../../LangLink'
-import styles from './Gallery.module.scss'
+import styles from '../PerspectiveModule.module.scss'
+import './Gallery.css'
 
 const GalleryItem = React.memo(({ document }) => {
   const location = useLocation()
   const prefetchDocument = usePrefetchDocument()
+
   return (
-    <div key={document.id} className={styles.GalleryItem}>
-      <img
-        src={document.data.resolutions.preview.url}
-        alt={document.data.title}
-      />
-      <LangLink
-        onClick={() => {
-          prefetchDocument(document.document_id)
-        }}
-        to={{
-          pathname: `/documents/${document.document_id}`,
-          state: { background: location, modalDocument: document },
-        }}
-      >
-        <Info />
-      </LangLink>
-    </div>
+    <img
+      src={document.data.resolutions.preview.url}
+      alt={document.data.title}
+    />
   )
 })
 
 export default function Gallery({ objects, caption }) {
   const settings = {
-    dots: false,
-    infinite: true,
-    speed: 500,
-    slidesToShow: 1,
-    slidesToScroll: 1,
+    heightMode: 'max',
+    slideWidth: 0.8,
+    cellSpacing: 15,
+    wrapAround: true,
   }
   return (
-    <div>
-      <Slider className={styles.Gallery} {...settings}>
+    <div className="my-4">
+      <Carousel
+        {...settings}
+        renderCenterLeftControls={({ previousSlide }) => (
+          <button
+            className="btn btn-icon-round btn-primary ml-2"
+            onClick={previousSlide}
+          >
+            <ArrowLeft></ArrowLeft>
+          </button>
+        )}
+        renderCenterRightControls={({ nextSlide }) => (
+          <button
+            className="btn btn-icon-round btn-primary mr-2"
+            onClick={nextSlide}
+          >
+            <ArrowRight></ArrowRight>
+          </button>
+        )}
+        renderBottomCenterControls={null}
+      >
         {objects.map((o) => (
           <GalleryItem key={o.document.id} document={o.document} />
         ))}
-      </Slider>
-      {caption && <p className='text-primary'>{caption}</p>}
+      </Carousel>
+      {caption && (
+        <div className={styles.docLink}>
+          <Caption caption={caption}></Caption>
+        </div>
+      )}
     </div>
   )
 }

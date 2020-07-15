@@ -15,6 +15,7 @@
     "magik-react-hooks": "^1.0.5",
     "mapbox-gl": "^1.11.0",
     "markdown-to-jsx": "^6.11.4",
+    "nuka-carousel": "^4.7.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
     "react-dom": "^16.13.1",
