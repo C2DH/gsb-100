@@ -36,7 +36,7 @@ export default function DocumentObject({ document, caption, className }) {
       </div>
     )
   } else if (document.type === 'audio') {
-    const audioUrl = document.url
+    const audioUrl = document.url ? document.url : document.attachment
     return (
       <div className={className}>
         {audioUrl && <AudioTrack url={audioUrl} module />}

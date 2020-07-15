@@ -67,7 +67,8 @@ export default function AudioTrack({ url, module }) {
             onReady={handleLoaded}
             options={{
               fillParent: true,
-              barHeight: 10,
+              barHeight: 8,
+              height: module ? 50 : 100,
               barWidth: 3,
               cursorWidth: 0,
               cursorColor: 'rgba(0,0,0,0.2)',
