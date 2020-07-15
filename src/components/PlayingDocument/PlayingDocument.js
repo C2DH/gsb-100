@@ -4,15 +4,24 @@ import styles from './PlayingDocument.module.scss'
 
 function PlayingDocument({ document, onClick }) {
   const [showModal, setShowModal] = useState(false)
-  const toggleModal = useCallback((e) => {
-    setShowModal((a) => !a)
-    onClick && onClick(e)
-  }, [onClick])
+  const toggleModal = useCallback(
+    (e) => {
+      setShowModal((a) => !a)
+      onClick && onClick(e)
+    },
+    [onClick]
+  )
   return (
     <>
-      <div className={`${styles.PlayingDocument} m-5`} onClick={toggleModal}>
+      {/*<div className={`${styles.PlayingDocument} m-5`} onClick={toggleModal}>
         <img src={document.data.translated_thumb_urls} alt={document.title} />
-      </div>
+      </div>*/}
+      <img
+        className={`${styles.PlayingDocument}`}
+        src={document.data.translated_thumb_urls}
+        onClick={toggleModal}
+        alt={document.data.title}
+      />
       {showModal && (
         <OutlineDocumentModal doc={document} onClose={toggleModal} />
       )}
