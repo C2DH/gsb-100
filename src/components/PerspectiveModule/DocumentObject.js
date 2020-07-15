@@ -14,10 +14,8 @@ export default function DocumentObject({ document, caption, className }) {
             alt={document.data.title}
             src={imagePreviewUrl}
             style={{
-              width: 'auto',
+              width: '100%',
               height: 'auto',
-              maxHeight: '70vh',
-              maxWidth: '100%',
             }}
           />
           <Caption caption={caption}></Caption>
