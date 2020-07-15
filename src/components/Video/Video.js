@@ -82,6 +82,7 @@ const Wrapper = React.forwardRef(
         onMouseLeave={() => setShowControls(false)}
       >
         {children}
+        {/*TODO: show when player is ready*/}
         <Controls show={showControls || true} />
         <ExtraVideoOverlay />
       </div>
