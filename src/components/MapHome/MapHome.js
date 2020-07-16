@@ -12,14 +12,14 @@ export default function MapHome() {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
     const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/giorgiouboldi/ckcp21z5501qw1imwvmd6wyxo/draft', // stylesheet location
+      style: 'mapbox://styles/giorgiouboldi/ckcp2ku8202851ip2tdid4lxv', // stylesheet location
       center: center,
       zoom: zoom,
     })
 
     map.on('load', () => {
       map.flyTo({
-        zoom: 15,
+        zoom: 14,
         speed: 0.3, // make the flying slow
         curve: 1, // change the speed at which it zooms out
       })
