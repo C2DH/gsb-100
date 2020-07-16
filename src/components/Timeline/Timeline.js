@@ -1,9 +1,7 @@
 import React, { useMemo } from 'react'
-import classNames from 'classnames'
 import * as d3Array from 'd3-array'
 import * as d3Scale from 'd3-scale'
 import { AxisBottom } from '@vx/axis'
-import { Grid } from '@vx/grid'
 import styles from './Timeline.module.scss'
 
 const dodge = (data, radius, x) => {
@@ -97,6 +95,7 @@ function Timeline({ documents, width }) {
       </g>
       <AxisBottom
         top={vizHeight}
+        left={margin.left}
         scale={xScale}
         tickStroke={'rgba(255,255,255,0.5)'}
         tickLength={-vizHeight}

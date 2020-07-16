@@ -9,7 +9,6 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "@vx/axis": "^0.0.198",
-    "@vx/grid": "^0.0.198",
     "@vx/responsive": "^0.0.198",
     "bootstrap": "^4.5.0",
     "classnames": "^2.2.6",
