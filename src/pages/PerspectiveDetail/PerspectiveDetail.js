@@ -87,10 +87,7 @@ export default function PerspectiveDetail() {
           ref={chaptersRef}
         >
           {chaptersIds.map((chapterId) => (
-            <div
-              key={chapterId}
-              className={`${styles.chapter} bg-white h-100 border-right`}
-            >
+            <div key={chapterId} className={`${styles.chapter} bg-gray h-100`}>
               <PerspectiveChapter chapterId={chapterId} />
             </div>
           ))}

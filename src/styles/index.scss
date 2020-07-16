@@ -15,6 +15,7 @@
   --modal-z-index: 90;
   --modal-close-z-index: 91;
   --secondary-rgb: #{hexToRGB(map-get($theme-colors, 'secondary'))};
+  --gray-rgb: #{hexToRGB(map-get($theme-colors, 'gray'))};
 }
 
 body,
