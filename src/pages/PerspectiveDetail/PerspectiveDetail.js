@@ -73,15 +73,17 @@ export default function PerspectiveDetail() {
         <div className="container">
           <div className="row">
             <div className="col-12">
-              <ParentSize debounceTime={10}>
-                {({ width, height }) => (
-                  <Timeline
-                    documents={timelineDocs}
-                    width={width}
-                    height={height}
-                  ></Timeline>
-                )}
-              </ParentSize>
+              {timelineDocs.length > 0 && (
+                <ParentSize debounceTime={10}>
+                  {({ width, height }) => (
+                    <Timeline
+                      documents={timelineDocs}
+                      width={width}
+                      height={height}
+                    ></Timeline>
+                  )}
+                </ParentSize>
+              )}
             </div>
           </div>
         </div>
