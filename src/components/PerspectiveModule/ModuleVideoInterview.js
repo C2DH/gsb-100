@@ -38,7 +38,7 @@ const MiniPlayingDocument = React.memo(({ document }) => {
         style={{
           backgroundImage: `url(${document.data.resolutions.preview.url})`,
         }}
-        className={styles.miniDoc}
+        className={`${styles.miniDoc} customCursor`}
       />
     </LangLink>
   )

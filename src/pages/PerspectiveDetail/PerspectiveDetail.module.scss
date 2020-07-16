@@ -15,4 +15,45 @@
   overflow-y: auto;
   flex: 0 0 40%;
   max-width: 600px;
+  border-right: 2px solid var(--secondary);
+  border-radius: 10px;
+}
+
+.chapter:first-of-type {
+  border-left: 2px solid var(--secondary);
+}
+
+.timelineContainer {
+  background: #2f322f;
+  margin: 10px 0;
+}
+
+@media (min-width: 576px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-sm) / 2));
+  }
+}
+
+@media (min-width: 768px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-md) / 2));
+  }
+}
+
+@media (min-width: 992px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-lg) / 2));
+  }
+}
+
+@media (min-width: 1200px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-xl) / 2));
+  }
+}
+
+@media (min-width: 1400px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-xxl) / 2));
+  }
 }

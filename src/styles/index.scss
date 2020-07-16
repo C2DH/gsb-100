@@ -15,6 +15,11 @@
   --modal-z-index: 90;
   --modal-close-z-index: 91;
   --secondary-rgb: #{hexToRGB(map-get($theme-colors, 'secondary'))};
+  --gray-rgb: #{hexToRGB(map-get($theme-colors, 'gray'))};
+
+  @each $bp, $value in $container-max-widths {
+    --max-width-#{$bp}: #{$value};
+  }
 }
 
 body,
@@ -52,12 +57,8 @@ h3 {
   content: '– ';
 }
 
-.indent p {
-  text-indent: 1rem;
-}
-
-.indent p:first-of-type {
-  text-indent: 0;
+.customCursor {
+  cursor: url('./plus.svg') 48 48, auto;
 }
 
 input[type='range'] {
