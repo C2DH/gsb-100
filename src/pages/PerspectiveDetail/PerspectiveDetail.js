@@ -59,7 +59,7 @@ export default function PerspectiveDetail() {
         </div>
       </div>
       <div className="h-100 d-flex flex-column overflow-hidden">
-        <div className="container-fluid flex-shrink-0">
+        <div className="container flex-shrink-0">
           <div className="row">
             <div className="col-12 d-flex justify-content-between align-items-center">
               <p className={`m-0 text-primary text-capitalize line-before`}>

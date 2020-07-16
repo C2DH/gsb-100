@@ -16,6 +16,10 @@
   --modal-close-z-index: 91;
   --secondary-rgb: #{hexToRGB(map-get($theme-colors, 'secondary'))};
   --gray-rgb: #{hexToRGB(map-get($theme-colors, 'gray'))};
+
+  @each $bp, $value in $container-max-widths {
+    --max-width-#{$bp}: #{$value};
+  }
 }
 
 body,

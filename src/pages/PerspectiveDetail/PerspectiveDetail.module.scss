@@ -22,3 +22,33 @@
 .chapter:first-of-type {
   border-left: 2px solid var(--secondary);
 }
+
+@media (min-width: 576px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-sm) / 2));
+  }
+}
+
+@media (min-width: 768px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-md) / 2));
+  }
+}
+
+@media (min-width: 992px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-lg) / 2));
+  }
+}
+
+@media (min-width: 1200px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-xl) / 2));
+  }
+}
+
+@media (min-width: 1400px) {
+  .chapters {
+    padding-left: calc(50vw - (var(--max-width-xxl) / 2));
+  }
+}
