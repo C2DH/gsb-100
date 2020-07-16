@@ -23,6 +23,11 @@
   border-left: 2px solid var(--secondary);
 }
 
+.timelineContainer {
+  background: #2f322f;
+  margin: 10px 0;
+}
+
 @media (min-width: 576px) {
   .chapters {
     padding-left: calc(50vw - (var(--max-width-sm) / 2));

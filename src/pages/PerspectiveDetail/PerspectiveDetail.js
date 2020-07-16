@@ -2,10 +2,12 @@ import React, { useRef } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import { ArrowLeft, ArrowRight } from 'react-feather'
+import { ParentSize } from '@vx/responsive'
 import { useCacheStory } from '../../miller'
 import PerspectiveChapter from '../../components/PerspectiveChapter'
 import Menu from '../../components/Menu'
 import LangLink from '../../components/LangLink'
+import Timeline from '../../components/Timeline'
 import styles from './PerspectiveDetail.module.scss'
 
 export default function PerspectiveDetail() {
@@ -15,6 +17,8 @@ export default function PerspectiveDetail() {
   const chaptersRef = useRef()
 
   const { chapters: chaptersIds } = theme.data
+
+  const timelineDocs = theme.documents
 
   function getChapterWidth() {
     const container = chaptersRef.current
@@ -55,6 +59,30 @@ export default function PerspectiveDetail() {
         <div className="row">
           <div className="offset-md-4 col-md-7">
             <p className={styles.description}>{theme.data.abstract}</p>
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-12">
+            <p className={`m-0 text-primary text-capitalize line-before`}>
+              {t('thematic timeline')}
+            </p>
+          </div>
+        </div>
+      </div>
+      <div className={styles.timelineContainer}>
+        <div className="container">
+          <div className="row">
+            <div className="col-12">
+              <ParentSize debounceTime={10}>
+                {({ width, height }) => (
+                  <Timeline
+                    documents={timelineDocs}
+                    width={width}
+                    height={height}
+                  ></Timeline>
+                )}
+              </ParentSize>
+            </div>
           </div>
         </div>
       </div>
