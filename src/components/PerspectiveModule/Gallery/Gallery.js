@@ -27,6 +27,7 @@ const GalleryItem = React.memo(({ document }) => {
         src={document.data.resolutions.preview.url}
         alt={document.data.title}
         style={{ maxWidth: '100%' }}
+        className="customCursor"
       />
     </LangLink>
   )

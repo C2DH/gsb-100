@@ -17,7 +17,7 @@ function PlayingDocument({ document, onClick }) {
         <img src={document.data.translated_thumb_urls} alt={document.title} />
       </div>*/}
       <img
-        className={`${styles.PlayingDocument}`}
+        className={`${styles.PlayingDocument} customCursor`}
         src={document.data.translated_thumb_urls}
         onClick={toggleModal}
         alt={document.data.title}

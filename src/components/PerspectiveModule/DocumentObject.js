@@ -16,6 +16,7 @@ export default function DocumentObject({ document, caption, className }) {
               width: '100%',
               height: 'auto',
             }}
+            className="customCursor"
           />
           <Caption caption={caption}></Caption>
         </DocLink>

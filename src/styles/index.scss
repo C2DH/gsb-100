@@ -52,12 +52,8 @@ h3 {
   content: '– ';
 }
 
-.indent p {
-  text-indent: 1rem;
-}
-
-.indent p:first-of-type {
-  text-indent: 0;
+.customCursor {
+  cursor: url('./plus.svg') 48 48, auto;
 }
 
 input[type='range'] {
