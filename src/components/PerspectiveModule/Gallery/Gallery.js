@@ -13,10 +13,22 @@ const GalleryItem = React.memo(({ document }) => {
   const prefetchDocument = usePrefetchDocument()
 
   return (
-    <img
-      src={document.data.resolutions.preview.url}
-      alt={document.data.title}
-    />
+    <LangLink
+      onClick={() => {
+        prefetchDocument(document.document_id)
+      }}
+      to={{
+        pathname: `/documents/${document.document_id}`,
+        state: { background: location, modalDocument: document },
+      }}
+      className="d-flex"
+    >
+      <img
+        src={document.data.resolutions.preview.url}
+        alt={document.data.title}
+        style={{ maxWidth: '100%' }}
+      />
+    </LangLink>
   )
 })
 
