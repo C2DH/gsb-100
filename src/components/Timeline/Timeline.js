@@ -1,7 +1,11 @@
-import React, { useMemo } from 'react'
-import * as d3Array from 'd3-array'
-import * as d3Scale from 'd3-scale'
+import React, { useMemo, useEffect } from 'react'
+import { extent } from 'd3-array'
+import { scaleTime } from 'd3-scale'
+import * as d3TimeFormat from 'd3-time-format'
 import { AxisBottom } from '@vx/axis'
+import { useTranslation } from 'react-i18next'
+import { UncontrolledPopover, PopoverHeader } from 'reactstrap'
+import { LocaleList } from '../../utils'
 import styles from './Timeline.module.scss'
 
 const dodge = (data, radius, x) => {
@@ -56,43 +60,37 @@ const dodge = (data, radius, x) => {
   return circles
 }
 
-const radius = 4
-const padding = 2
-const height = 70
+const DATE_FORMAT = '%d %B %Y'
 
 function Timeline({ documents, width }) {
+  const { i18n } = useTranslation()
   const margin = {
     top: 0,
     right: 15,
     bottom: 20,
     left: 15,
   }
+  const radius = 4
+  const padding = 2
+  const height = 70
   const vizWidth = width - margin.right - margin.left
   const vizHeight = height - margin.top - margin.bottom
-  const domain = d3Array.extent(documents, (d) => new Date(d.data.start_date))
+  const domain = extent(documents, (d) => new Date(d.data.start_date))
   const xScale = useMemo(() => {
-    return d3Scale.scaleTime().domain(domain).range([0, vizWidth])
+    return scaleTime().domain(domain).range([0, vizWidth])
   }, [vizWidth, domain])
 
   const dots = useMemo(() => {
     return dodge(documents, radius * 2 + padding, xScale)
   }, [xScale, documents])
 
+  const formatter = useMemo(() => {
+    d3TimeFormat.timeFormatDefaultLocale(LocaleList[i18n.language])
+    return d3TimeFormat.timeFormat(DATE_FORMAT)
+  }, [i18n.language])
+
   return (
     <svg width={width} height={height}>
-      <g transform={`translate(${margin.left},${margin.top})`}>
-        {dots.map((dot) => {
-          return (
-            <circle
-              key={dot.doc_id}
-              cx={dot.x}
-              cy={vizHeight / 2 + dot.y}
-              r={radius}
-              fill={'white'}
-            ></circle>
-          )
-        })}
-      </g>
       <AxisBottom
         top={vizHeight}
         left={margin.left}
@@ -109,6 +107,41 @@ function Timeline({ documents, width }) {
         }
         hideAxisLine
       ></AxisBottom>
+      <g transform={`translate(${margin.left},${margin.top})`}>
+        {dots.map((dot) => {
+          return (
+            <React.Fragment key={dot.doc_id}>
+              <circle
+                id={`pop_${dot.doc_id}`}
+                cx={dot.x}
+                cy={vizHeight / 2 + dot.y}
+                r={radius}
+                fill={'white'}
+                className={styles.dot}
+              ></circle>
+              <UncontrolledPopover
+                placement="top"
+                target={`pop_${dot.doc_id}`}
+                innerClassName={styles.popover}
+                trigger={'hover'}
+              >
+                <PopoverHeader>
+                  <span className={`text-primary ${styles.date}`}>
+                    {formatter(new Date(dot.data.start_date))}
+                  </span>
+                  <br></br>
+                  {dot.data.title}
+                </PopoverHeader>
+                {dot.data.description && (
+                  <div className={`popover-body ${styles.popoverBody}`}>
+                    {dot.data.description}
+                  </div>
+                )}
+              </UncontrolledPopover>
+            </React.Fragment>
+          )
+        })}
+      </g>
       )}
     </svg>
   )

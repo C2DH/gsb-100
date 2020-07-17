@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import * as d3TimeFormat from 'd3-time-format'
-import LocaleList from './LocaleList'
+import { LocaleList } from '../../../utils'
 import styles from './DocumentInfoMetadata.module.scss'
 
 const METATADA_KEYS = ['date', 'creator', 'provenance', 'copyright']
@@ -42,7 +42,7 @@ export default function DocumentInfoMetadata({ data }) {
       }
       return { label: m, value: value }
     }).filter((d) => d.value)
-  }, [data, i18n])
+  }, [data, i18n.language])
 
   return (
     <table className={`${styles.tableBorders} table`}>

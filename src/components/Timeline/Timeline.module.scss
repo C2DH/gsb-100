@@ -1,0 +1,21 @@
+.popoverBody {
+  color: var(--secondary);
+}
+.popover h3 {
+  color: var(--primary);
+  background: white;
+}
+
+.date {
+  color: var(--secondary) !important;
+  font-family: var(--font-family-sans-serif);
+  font-size: 0.75rem;
+}
+
+.dot {
+  stroke: none;
+}
+
+.dot:hover {
+  stroke: var(--primary);
+}
