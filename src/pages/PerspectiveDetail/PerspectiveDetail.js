@@ -1,6 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useMemo, useState, Suspense } from 'react'
+import classNames from 'classnames'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
+import sortBy from 'lodash/sortBy'
+import findIndex from 'lodash/findIndex'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { ParentSize } from '@vx/responsive'
 import { useCacheStory } from '../../miller'
@@ -9,16 +12,46 @@ import Menu from '../../components/Menu'
 import LangLink from '../../components/LangLink'
 import Timeline from '../../components/Timeline'
 import styles from './PerspectiveDetail.module.scss'
+import { extent } from 'd3-array'
+import Video from '../../components/Video'
+
+function PeriodVideo({ id, title }) {
+  const [story] = useCacheStory(id)
+  const videoUrl = story.contents?.modules?.[0]?.object?.document?.url ?? null
+  return (
+    <div className={styles.PeriodVideoBox}>
+      <Video url={videoUrl} />
+      <div>{title}</div>
+    </div>
+  )
+}
 
 export default function PerspectiveDetail() {
   const { slug } = useParams()
   const { t } = useTranslation()
   const [theme] = useCacheStory(slug)
+  const [outlineTheme] = useCacheStory('outline-1')
+
   const chaptersRef = useRef()
 
   const { chapters: chaptersIds } = theme.data
 
+  const periods = useMemo(() => {
+    return sortBy(outlineTheme.stories, (s) =>
+      Number(s.data.abstract.split('-')[0])
+    ).slice(3)
+  }, [outlineTheme])
+
   const timelineDocs = theme.documents
+
+  const selectedPeriodIndex = useMemo(() => {
+    const [, endDate] = extent(timelineDocs, (d) => new Date(d.data.start_date))
+    const endYear = endDate ? endDate.getFullYear() : 0 // Z3r0 Don't make sense
+    return findIndex(periods, (p) => {
+      const [, endPeriodYear] = p.data.abstract.split('-').map(Number)
+      return endYear <= endPeriodYear
+    })
+  }, [timelineDocs, periods])
 
   function getChapterWidth() {
     const container = chaptersRef.current
@@ -42,10 +75,41 @@ export default function PerspectiveDetail() {
     )
   }
 
+  const [openPeriodIndex, setOpenPeriodIndex] = useState(null)
+
   return (
     <React.Fragment>
       <Menu />
       <div className="container">
+        <div className="row">
+          {periods.map((period, i) => (
+            <div
+              onMouseEnter={() => setOpenPeriodIndex(i)}
+              onMouseLeave={() => setOpenPeriodIndex(null)}
+              key={period.id}
+              className={classNames('col-md', styles.Period, {
+                'ml-3': i > 0,
+                [styles.SelectedPeriod]: selectedPeriodIndex === i,
+              })}
+            >
+              <div>{period.data.abstract}</div>
+              <div className={styles.PeriodLine} />
+              <div className={styles.PeriodVideoContainer}>
+                {openPeriodIndex === i && (
+                  <Suspense
+                    fallback={
+                      <div className={styles.PeriodVideoBox}>
+                        {period.data.title}
+                      </div>
+                    }
+                  >
+                    <PeriodVideo id={period.id} title={period.data.title} />
+                  </Suspense>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
         <div className="row">
           <div className="col-md-9">
             <h1 className={`${styles.title} my-3`}>
