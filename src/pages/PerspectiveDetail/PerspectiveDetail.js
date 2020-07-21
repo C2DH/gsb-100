@@ -6,7 +6,7 @@ import sortBy from 'lodash/sortBy'
 import findIndex from 'lodash/findIndex'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { ParentSize } from '@vx/responsive'
-import { useCacheStory } from '../../miller'
+import { useCacheStory, usePrefetchStory } from '../../miller'
 import PerspectiveChapter from '../../components/PerspectiveChapter'
 import Menu from '../../components/Menu'
 import LangLink from '../../components/LangLink'
@@ -30,6 +30,7 @@ export default function PerspectiveDetail() {
   const { slug } = useParams()
   const { t } = useTranslation()
   const [theme] = useCacheStory(slug)
+  const prefetchStory = usePrefetchStory()
   const [outlineTheme] = useCacheStory('outline-1')
 
   const chaptersRef = useRef()
@@ -84,7 +85,10 @@ export default function PerspectiveDetail() {
         <div className="row">
           {periods.map((period, i) => (
             <div
-              onMouseEnter={() => setOpenPeriodIndex(i)}
+              onMouseEnter={() => {
+                setOpenPeriodIndex(i)
+                prefetchStory(periods[i].id)
+              }}
               onMouseLeave={() => setOpenPeriodIndex(null)}
               key={period.id}
               className={classNames('col-md', styles.Period, {
