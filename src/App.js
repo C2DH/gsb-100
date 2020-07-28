@@ -172,7 +172,7 @@ if (process.env.NODE_ENV !== 'production') {
     //nocache: 1,
   })
   headers = () => ({
-    // 'Cache-Control': 'no-cache',
+    'Cache-Control': 'no-cache',
   })
 }
 
