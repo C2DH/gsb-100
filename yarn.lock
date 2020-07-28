@@ -3870,6 +3870,11 @@ d3-path@1, d3-path@^1.0.5:
   resolved "https://registry.yarnpkg.com/d3-path/-/d3-path-1.0.9.tgz#48c050bb1fe8c262493a8caf5524e3e9591701cf"
   integrity sha512-VLaYcn81dtHVTjEHd8B+pbe9yHWpXKZUC87PzoFmsFrJqgFwDe/qxfp5MlfsfM1V5E/iVt0MmEbWQ7FVIXh/bg==
 
+d3-random@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/d3-random/-/d3-random-2.1.0.tgz#312f348d789a80f8d05eb1e75fa40d30acb25029"
+  integrity sha512-NY3GKeKxlRAXzUNun8Pv36Mciggnf8v+4kCDEoKaAbw4qmpfJ5LvMazdiYNDEiuM4hQSVHnxNeuYdVRJlFw9dg==
+
 d3-scale@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/d3-scale/-/d3-scale-3.2.1.tgz#da1684adce7261b4bc7a76fe193d887f0e909e69"

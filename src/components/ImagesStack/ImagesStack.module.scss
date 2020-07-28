@@ -1,0 +1,28 @@
+.stack {
+  flex: 0 0 25%;
+  max-height: 500px;
+  max-width: 500px;
+  position: relative;
+  margin-right: 50px;
+  isolation: isolate;
+
+  h3 {
+    z-index: 1;
+  }
+}
+
+.stack:after {
+  content: '';
+  display: block;
+  padding-bottom: 100%;
+}
+
+.stackImage {
+  position: absolute;
+  opacity: 0.2;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  mix-blend-mode: multiply;
+  transform-origin: center;
+}
