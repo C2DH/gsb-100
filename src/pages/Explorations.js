@@ -72,7 +72,7 @@ export default function Explorations() {
 
   const categoriesWithImages = useMemo(() => {
     const byCategories = groupBy(documents, (d) => d.data.category)
-    const sortedCategories = Object.keys(byCategories)
+    const sortedCategories = Object.keys(byCategories).sort()
 
     return sortedCategories.map((category) => {
       let docs = byCategories[category]
