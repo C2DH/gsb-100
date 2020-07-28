@@ -3,13 +3,12 @@ import groupBy from 'lodash/groupBy'
 import { shuffle } from 'seed-shuffle'
 import Menu from '../../components/Menu'
 import { useCacheStory, useCacheDocuments } from '../../miller'
-import LangLink from '../../components/LangLink'
 import ImagesStack from '../../components/ImagesStack'
 import styles from './Explorations.module.scss'
 
 const NUMBER_OF_IMAGES_PER_CATEGORY = 5
 
-// Mantein the same "random" for the entire user session
+// Mantain the same "random" for the entire user session
 // NOTE: Place a literal Es:. 5 to have ALWAYS the same random factor
 const RANDOM_SEED = 1 + Math.floor(Math.random() * 1000)
 
