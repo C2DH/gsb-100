@@ -3,34 +3,64 @@ import Menu from '../components/Menu'
 import { useCacheStory, useCacheDocuments } from '../miller'
 import LangLink from '../components/LangLink'
 import groupBy from 'lodash/groupBy'
-import shuffle from 'lodash/shuffle'
+import { shuffle } from 'seed-shuffle'
 
 const NUMBER_OF_IMAGES_PER_CATEGORY = 5
+const IMAGE_SIZE = 250
+
+// Mantein the same "random" for the entire user session
+// NOTE: Place a literal Es:. 5 to have ALWAYS the same random factor
+const RANDOM_SEED = 1 + Math.floor(Math.random() * 1000)
 
 const MultiOverlappedDocsLink = React.memo(({ category, docs }) => (
-  <div className="bg-info" style={{ width: 200, height: 200 }}>
-    <div>{category}</div>
-    <div style={{ position: 'relative' }}>
+  <LangLink to={`/explorations/${category}`}>
+    <div
+      className="align-items-center d-flex justify-content-center"
+      style={{
+        position: 'relative',
+        width: IMAGE_SIZE * 1.5,
+        height: IMAGE_SIZE * 1.5,
+      }}
+    >
       {docs.map((doc, i) => (
         <img
           style={{
             position: 'absolute',
-            left: Math.floor(Math.random() * 10),
-            top: Math.floor(Math.random() * 10),
+            opacity: 0.9 - 0.1 * i - 0.1,
+            left: (Math.sin(i) * IMAGE_SIZE) / 4 + (IMAGE_SIZE * 1.5) / 4,
+            top: (Math.cos(i) * IMAGE_SIZE) / 4 + (IMAGE_SIZE * 1.5) / 4,
           }}
-          width={100}
+          width={IMAGE_SIZE / 2}
           alt={doc.data.title}
           key={doc.id}
           src={doc.data.resolutions.medium.url}
         />
       ))}
+      <h5 className="text-capitalize m-0 p-0 text-white" style={{ zIndex: 9 }}>
+        {category}
+      </h5>
     </div>
-  </div>
+  </LangLink>
 ))
+
+const BoxLink = ({ children, to }) => (
+  <LangLink to={to}>
+    <div
+      className="align-items-center d-flex justify-content-center border"
+      style={{
+        marginTop: (IMAGE_SIZE * 1.5) / 6,
+        marginLeft: (IMAGE_SIZE * 1.5) / 6,
+        width: IMAGE_SIZE,
+        height: IMAGE_SIZE,
+      }}
+    >
+      <h5 className="m-0 p-0 text-white text-capitalize">{children}</h5>
+    </div>
+  </LangLink>
+)
 
 export default function Explorations() {
   const [explorationsStory] = useCacheStory('explorations')
-  console.log('ExplorationsStory', explorationsStory)
 
   const [{ documents }] = useCacheDocuments({
     filters: {
@@ -46,8 +76,7 @@ export default function Explorations() {
 
     return sortedCategories.map((category) => {
       let docs = byCategories[category]
-      // Comment this line to avoid having random images every time....
-      docs = shuffle(docs)
+      docs = shuffle(docs, RANDOM_SEED)
       docs = docs.slice(0, NUMBER_OF_IMAGES_PER_CATEGORY)
       return {
         category,
@@ -55,14 +84,13 @@ export default function Explorations() {
       }
     })
   }, [documents])
-  console.log('D', documents, categoriesWithImages)
 
   return (
     <div>
       <Menu />
       <h1>Explorations</h1>
 
-      <div className='d-flex'>
+      <div className="d-flex">
         {categoriesWithImages.map((catWithImages) => (
           <MultiOverlappedDocsLink
             key={catWithImages.category}
@@ -70,24 +98,8 @@ export default function Explorations() {
             docs={catWithImages.docs}
           />
         ))}
-      </div>
-
-      <div>
-        {/* <p>
-          <LangLink to="/explorations/gender">GENDER</LangLink>
-        </p>
-        <p>
-          <LangLink to="/explorations/the-idea-of-borders">
-            THE IDEA OF BORDERS
-          </LangLink>
-        </p> */}
-
-        <p>
-          <LangLink to="/explorations/all">ALL</LangLink>
-        </p>
-        <p>
-          <LangLink to="/explorations/alternative">ALTERNATIVE</LangLink>
-        </p>
+        <BoxLink to='/explorations/all'>all the sources</BoxLink>
+        <BoxLink to='/explorations/alternative'>alternative sources</BoxLink>
       </div>
     </div>
   )
