@@ -47,5 +47,36 @@ h4 {
   left: 0;
   right: 0;
   z-index: 0;
-  opacity: 0.4;
+  opacity: 1;
+  transition: opacity 2s ease-in-out;
+}
+
+.mapContainer.hide {
+  opacity: 0;
+}
+
+.Player {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  z-index: 0;
+  overflow: hidden;
+  video {
+    object-fit: cover;
+  }
+}
+
+.playerControls {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  opacity: 0;
+  transition: opacity 2s ease-in-out;
+  display: flex;
+}
+
+.playerControls.show {
+  opacity: 1;
 }

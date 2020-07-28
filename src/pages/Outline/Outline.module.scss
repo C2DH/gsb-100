@@ -29,12 +29,8 @@
 
 .Controls {
   background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-  transform: translate(0, 100%);
-  transition: transform var(--transition);
-}
-
-.Controls.show {
   transform: translate(0, 0%);
+  transition: transform var(--transition);
 }
 
 .skipIntroContainer {

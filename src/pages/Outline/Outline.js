@@ -3,7 +3,7 @@ import find from 'lodash/find'
 import classNames from 'classnames'
 import ReactPlayer from 'react-player'
 import { Play, Pause, VolumeX, Volume2, SkipForward } from 'react-feather'
-import { useCacheStory, useCacheDocument } from '../../miller'
+import { useCacheStory } from '../../miller'
 import Menu from '../../components/Menu'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
@@ -43,14 +43,12 @@ function usePlayingDocument(story, playedSeconds) {
 }
 
 export default function Outline() {
-  const [document] = useCacheDocument(350) //HC forever
   const [outlineStory] = useCacheStory('outline')
   const [outlineTheme] = useCacheStory('outline-1', {
     withChapters: true,
   })
   const chapters = outlineTheme.data.chapters
 
-  const [showIntro, setShowIntro] = useState(true)
   const [chapterIndex, setChapterIndex] = useState(0)
   const [playing, setPlaying] = useState(true)
   const togglePlay = () => setPlaying((a) => !a)
@@ -63,10 +61,6 @@ export default function Outline() {
   const playerRef = useRef()
 
   const chapter = chapters[chapterIndex]
-
-  const introVideoUrl = useMemo(() => {
-    return document.data.translated_urls
-  }, [document])
 
   const playingVideoUrl = useMemo(() => {
     const documentId = chapter.contents.modules[0].object.id
@@ -100,11 +94,6 @@ export default function Outline() {
     }
   }
 
-  const hideIntro = () => {
-    setShowIntro(false)
-    playerRef.current.seekTo(0, 'fraction')
-  }
-
   return (
     <div className={styles.PlayerPage}>
       <Menu />
@@ -112,41 +101,24 @@ export default function Outline() {
         <ReactPlayer
           className={styles.Player}
           ref={playerRef}
-          onProgress={showIntro ? () => {} : setProgress}
-          onEnded={showIntro ? () => {} : skipNext}
+          onProgress={setProgress}
+          onEnded={skipNext}
           volume={volume}
           width="100%"
           height="100%"
           playing={playing}
-          url={showIntro ? introVideoUrl : playingVideoUrl}
+          url={playingVideoUrl}
           playsinline
         />
-        {playingDocument && !showIntro && (
+        {playingDocument && (
           <PlayingDocument
             onClick={handlePlayingDocClick}
             document={playingDocument}
           />
         )}
         <div
-          className={classNames(styles.skipIntroContainer, {
-            [styles.hide]: !showIntro,
-          })}
-        >
-          <button
-            type="button"
-            className="btn btn-light btn-icon-round opacity-75"
-            onClick={togglePlay}
-          >
-            {playing ? <Pause /> : <Play />}
-          </button>
-          <p onClick={hideIntro}>Skip intro</p>
-        </div>
-        <div
           className={classNames(
-            `${styles.Controls} pb-3 px-5 position-relative`,
-            {
-              [styles.show]: !showIntro,
-            }
+            `${styles.Controls} pb-3 px-5 position-relative`
           )}
         >
           <div className="py-4 d-flex">
