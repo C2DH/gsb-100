@@ -1,5 +1,6 @@
-import { useParams } from 'react-router-dom'
-import { useLayoutEffect } from 'react'
+import qs from 'query-string'
+import { useParams, useLocation, useHistory } from 'react-router-dom'
+import { useLayoutEffect, useMemo, useCallback } from 'react'
 
 function namespacePath(path, lang) {
   let pathWithLang = `/${lang}`
@@ -9,6 +10,21 @@ function namespacePath(path, lang) {
     pathWithLang += `/${path}`
   }
   return pathWithLang
+}
+
+export function useQueryString() {
+  const location = useLocation()
+  const hisotry = useHistory()
+
+  const queryString = useMemo(() => {
+    return qs.parse(location.search)
+  }, [location.search])
+
+  const setQueryString = useCallback((newQueryString) => {
+    hisotry.push(`${location.pathname}?${qs.stringify(newQueryString)}`)
+  }, [location.pathname, hisotry])
+
+  return [queryString, setQueryString]
 }
 
 export function useToWithLang(to) {
