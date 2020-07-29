@@ -8,6 +8,7 @@ import { usePrefetchDocument } from '../../miller'
 import { useCacheDocuments } from '../../miller'
 import Menu from '../../components/Menu'
 import LangLink from '../../components/LangLink'
+import IconSwitch from '../../components/IconSwitch'
 import styles from './ExplorationsCategory.module.scss'
 
 const DocsTypedGallery = ({ type, docs }) => {
@@ -44,7 +45,7 @@ const DocsTypedGallery = ({ type, docs }) => {
                   />
                 ) : (
                   <div className={`${styles.notFound} mr-2`}>
-                    <EyeOff></EyeOff>
+                    <IconSwitch type={doc.type}></IconSwitch>
                   </div>
                 )}
               </LangLink>
