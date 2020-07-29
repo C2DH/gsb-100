@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Waypoint } from 'react-waypoint'
 import Menu from '../components/Menu'
 import { useDocuments, useDocumentsSuggest } from '../miller'
@@ -7,15 +7,14 @@ import capitalize from 'lodash/capitalize'
 import { useQueryString } from '../hooks'
 import Autocomplete from '../components/Autocomplete'
 
-const DATA_TYPES = ['image']
-
 export default function ExplorationsAll() {
   const [queryString, setQueryString] = useQueryString()
 
   const [{ documents, loading, allFacets }, { fetchMore }] = useDocuments({
     limit: 100,
+    q: queryString.q || undefined,
     filters: {
-      data__type: queryString.type,
+      data__type: queryString.type || undefined,
     },
     crossFacets: {
       allFacets: {
@@ -23,12 +22,7 @@ export default function ExplorationsAll() {
       },
     },
   })
-  console.log('u.u', allFacets)
-
-  const [searchText, setSearchText] = useState('')
   const [suggestions, { search, clearSearch }] = useDocumentsSuggest()
-
-  console.log('~', suggestions, search)
 
   function handleLoadMore() {
     if (!loading) {
@@ -40,9 +34,18 @@ export default function ExplorationsAll() {
     <div>
       <Menu />
       <h1>Explorations All</h1>
-      <div>
+      <div>{loading && 'Loading.....'}</div>
+      <div className="d-flex">
         <Autocomplete
-          suggstions={suggestions}
+          initialSearch={queryString.q}
+          onSelected={(q) =>
+            setQueryString({
+              q,
+              type: queryString.type,
+            })
+          }
+          placeholder="Search"
+          suggestions={suggestions}
           loadSuggestions={search}
           clearSuggestions={clearSearch}
         />
@@ -50,7 +53,10 @@ export default function ExplorationsAll() {
         <select
           value={queryString.type ?? ''}
           onChange={(e) => {
-            setQueryString({ type: e.target.value })
+            setQueryString({
+              type: e.target.value,
+              q: queryString.q,
+            })
           }}
         >
           <option value="">All types</option>
