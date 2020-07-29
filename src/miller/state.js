@@ -176,6 +176,25 @@ export const DocumentsState = rj(
   }
 )
 
+const fakeSuggest = q => {
+  const FAKE_SUGGEST_LIST = [
+    'Fake',
+    'Far3nz',
+    'Belgen',
+    'Bele1',
+    'Plutonio',
+    'PluX1'
+  ]
+
+  const suggestFilteredList = FAKE_SUGGEST_LIST.filter(suggest => {
+    return suggest.toLowerCase().indexOf(q.toLowerCase()) !== -1
+  })
+
+  return new Promise(resolve => {
+    setTimeout(() => resolve(suggestFilteredList), 200)
+  })
+}
+
 export const DocumentsSuggestState = rj(
   rjDebounce(),
   rjCache({
@@ -186,9 +205,10 @@ export const DocumentsSuggestState = rj(
     name: 'MillerSuggestDocument',
     effectCaller: rj.configured(),
     effect: (opts, q = '') => {
-      return getJSON(`/document/suggest/`, { q }, null, opts).pipe(
-        map((r) => r.results)
-      )
+      return fakeSuggest(q)
+      // return getJSON(`/document/suggest/`, { q }, null, opts).pipe(
+      //   map((r) => r.results)
+      // )
     },
   }
 )

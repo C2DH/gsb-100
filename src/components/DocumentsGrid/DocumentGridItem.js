@@ -7,7 +7,7 @@ function DocumentGridItem({ doc }) {
   const location = useLocation()
   const prefetchDocument = usePrefetchDocument()
   const imageUrl =
-    doc.data.resolutions?.medium?.url ?? doc.attachment ?? doc.snapshot
+    doc.data.resolutions?.thumbnail?.url ?? doc.attachment ?? doc.snapshot
 
   return (
     <div className="p-3">

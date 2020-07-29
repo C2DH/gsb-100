@@ -316,8 +316,11 @@ export function useDocumentsSuggest(config = {}) {
     typeof config.cache === 'boolean' ? config.cache : gloablUseCache
 
   const search = useCallback(
-    (q) => {
-      run.withMeta({ debounced: true, cache }).run(q)
+    (q, cb) => {
+      run
+        .withMeta({ debounced: true, cache })
+        .onSucccess(cb)
+        .run(q)
     },
     [run, cache]
   )
