@@ -1,11 +1,9 @@
 import React, { useState, useMemo } from 'react'
-import { useLocation } from 'react-router-dom'
 import find from 'lodash/find'
-import { usePrefetchDocument } from '../../miller'
-import LangLink from '../LangLink'
 import Video from '../Video'
 import { convertStrToSeconds } from '../../utils'
-import { Caption, DocLink } from './ModuleUtils'
+import { Caption } from './ModuleUtils'
+import DocLink from '../DocLink'
 import styles from './PerspectiveModule.module.scss'
 
 const Segments = React.memo(({ segments }) => {
@@ -21,17 +19,9 @@ const Segments = React.memo(({ segments }) => {
 })
 
 const MiniPlayingDocument = React.memo(({ document }) => {
-  const location = useLocation()
-  const prefetchDocument = usePrefetchDocument()
   return (
-    <LangLink
-      onClick={() => {
-        prefetchDocument(document.document_id)
-      }}
-      to={{
-        pathname: `/documents/${document.document_id}`,
-        state: { background: location, modalDocument: document },
-      }}
+    <DocLink
+      document={document}
       className={styles.miniDocLink}
     >
       <div
@@ -40,7 +30,7 @@ const MiniPlayingDocument = React.memo(({ document }) => {
         }}
         className={`${styles.miniDoc} customCursor`}
       />
-    </LangLink>
+    </DocLink>
   )
 })
 

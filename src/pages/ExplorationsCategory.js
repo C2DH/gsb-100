@@ -5,6 +5,7 @@ import { useCacheDocuments } from '../miller'
 import { ArrowLeft } from 'react-feather'
 import groupBy from 'lodash/groupBy'
 import LangLink from '../components/LangLink'
+import DocLink from '../components/DocLink'
 
 const DocsTypedGallery = ({ type, docs }) => {
   return (
@@ -17,14 +18,16 @@ const DocsTypedGallery = ({ type, docs }) => {
             return null
           }
           return (
-            <div key={doc.id}>
-              <img
-                className='mr-2'
-                height={200}
-                alt={doc.data.title}
-                src={url}
-              />
-            </div>
+            <DocLink document={doc}>
+              <div key={doc.id}>
+                <img
+                  className="mr-2"
+                  height={200}
+                  alt={doc.data.title}
+                  src={url}
+                />
+              </div>
+            </DocLink>
           )
         })}
       </div>
