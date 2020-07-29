@@ -1,35 +1,21 @@
 import React from 'react'
 import Carousel from 'nuka-carousel'
-import { useLocation } from 'react-router-dom'
 import { ArrowLeft, ArrowRight } from 'react-feather'
-import { usePrefetchDocument } from '../../../miller'
 import { Caption } from '../ModuleUtils'
-import LangLink from '../../LangLink'
+import DocLink from '../../DocLink'
 import styles from '../PerspectiveModule.module.scss'
 import './Gallery.css'
 
 const GalleryItem = React.memo(({ document }) => {
-  const location = useLocation()
-  const prefetchDocument = usePrefetchDocument()
-
   return (
-    <LangLink
-      onClick={() => {
-        prefetchDocument(document.document_id)
-      }}
-      to={{
-        pathname: `/documents/${document.document_id}`,
-        state: { background: location, modalDocument: document },
-      }}
-      className="d-flex"
-    >
+    <DocLink className="d-flex" document={document}>
       <img
         src={document.data.resolutions.preview.url}
         alt={document.data.title}
         style={{ maxWidth: '100%' }}
         className="customCursor"
       />
-    </LangLink>
+    </DocLink>
   )
 })
 

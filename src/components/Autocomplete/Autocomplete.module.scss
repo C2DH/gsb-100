@@ -1,5 +1,27 @@
 .autocomplete {
+  width: 100%;
+  position: relative;
+
+
   input {
-    font-size: 50px;
+    width: 100%;
+    background-color: var(--secondary);
+    font-size: 25px;
+    color: white;
+  }
+
+  .suggestions {
+    position: absolute;
+    left: 0;
+    right: 0;
+    background-color: var(--secondary);
+    z-index: 99;
+    .suggestion {
+      &.highlighted {
+        background: var(--primary);
+      }
+      cursor: pointer;
+      padding: 5px;
+    }
   }
 }

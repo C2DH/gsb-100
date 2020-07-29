@@ -319,7 +319,7 @@ export function useDocumentsSuggest(config = {}) {
     (q, cb) => {
       run
         .withMeta({ debounced: true, cache })
-        .onSucccess(cb)
+        .onSuccess(cb)
         .run(q)
     },
     [run, cache]

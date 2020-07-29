@@ -1,0 +1,14 @@
+.docLink {
+  text-decoration: none;
+  font-size: 0.875rem;
+  line-height: 1.2;
+}
+
+.docLink:hover {
+  text-decoration: none;
+}
+
+.docLink:hover svg,
+.docLink svg {
+  stroke: var(--primary);
+}

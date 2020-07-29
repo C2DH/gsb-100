@@ -162,29 +162,30 @@ function AppRoutes() {
   )
 }
 
-// KILL MILLER CACHE IN DEV
-let hashParams
 let headers
 
-if (process.env.NODE_ENV !== 'production') {
-  hashParams = (params) => ({
-    ...params,
-    //nocache: 1,
-  })
+// Disable miller cache when in DEV or in React SNAP Context
+if (
+  process.env.NODE_ENV !== 'production' ||
+  navigator.userAgent === 'ReactSnap'
+) {
   headers = () => ({
     'Cache-Control': 'no-cache',
   })
 }
 
+// Use custom proxy api url when in React SNAP Context
+const apiUrl =
+  navigator.userAgent === 'ReactSnap' ? 'http://localhost:3033/api' : '/api'
+
 export default function App() {
   const { i18n } = useTranslation()
   return (
     <Miller
-      hashParams={hashParams}
       headers={headers}
       lang={i18n.language}
       langs={LANGS}
-      apiUrl={'/api'}
+      apiUrl={apiUrl}
       cache
       suspense
     >
