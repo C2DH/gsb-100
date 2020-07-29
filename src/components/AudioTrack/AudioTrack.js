@@ -41,6 +41,17 @@ export default function AudioTrack({ url, module }) {
     })
   }
 
+  let fixedUrl = url
+  if (navigator.userAgent === 'ReactSnap') {
+    if (fixedUrl.indexOf('http') !== 0) {
+      if (fixedUrl[fixedUrl.length - 1] !== '/') {
+        fixedUrl = '/' + fixedUrl
+      }
+      fixedUrl = `https://gsb100.dhlab.lu/${fixedUrl}`
+    }
+  }
+
+
   return (
     <div className="w-100 d-flex align-items-center justify-content-center flex-column">
       <div className="w-100 d-flex">
@@ -62,7 +73,7 @@ export default function AudioTrack({ url, module }) {
         <div className="w-100">
           <ReactWaves
             className="w-100 m-0 p-0"
-            audioFile={url}
+            audioFile={fixedUrl}
             onPosChange={handlePosChange}
             onReady={handleLoaded}
             options={{
