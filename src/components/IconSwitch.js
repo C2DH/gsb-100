@@ -1,18 +1,18 @@
 import React from 'react'
 import { Image, FileText, Youtube, Headphones, HelpCircle } from 'react-feather'
 
-function IconSwitch({ type }) {
+function IconSwitch({ type, color }) {
   switch (type) {
     case 'image':
-      return <Image />
+      return <Image color={color} />
     case 'pdf':
-      return <FileText />
+      return <FileText color={color} />
     case 'video':
-      return <Youtube />
+      return <Youtube color={color} />
     case 'audio':
-      return <Headphones />
+      return <Headphones color={color} />
     default:
-      return <HelpCircle />
+      return <HelpCircle color={color} />
   }
 }
 

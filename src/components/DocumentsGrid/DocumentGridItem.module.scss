@@ -1,0 +1,29 @@
+.itemBlockContainer {
+  transform: scale(1);
+  z-index: 0;
+  transition: transform var(--transition);
+}
+
+.itemBlockContainer:hover {
+  // transform: scale(3);
+  // transform-origin: center center;
+  // z-index: 1;
+}
+
+.itemBlock {
+  width: 68px;
+  height: 68px;
+
+  img {
+    object-fit: contain;
+    width: 68px;
+    height: 68px;
+
+    filter: brightness(0.75);
+    transition: filter var(--transition);
+  }
+
+  img:hover {
+    filter: brightness(1);
+  }
+}

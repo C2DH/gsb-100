@@ -1,22 +1,22 @@
 import React from 'react'
 import DocLink from '../DocLink'
+import IconSwitch from '../IconSwitch'
+import styles from './DocumentGridItem.module.scss'
 
 function DocumentGridItem({ doc }) {
-  const imageUrl =
-    doc.data.resolutions?.thumbnail?.url ?? doc.attachment ?? doc.snapshot
+  const imageUrl = doc.data.resolutions?.thumbnail.url
 
   return (
-    <div className="p-3">
-      <div style={{ height: 67, width: 67 }}>
+    <div className={`${styles.itemBlockContainer} p-2`}>
+      <div className={styles.itemBlock}>
         <DocLink document={doc}>
-          <img
-            style={{ objectFit: 'cover' }}
-            height={67}
-            width={67}
-            title={doc.title}
-            alt={doc.title}
-            src={imageUrl}
-          />
+          {imageUrl ? (
+            <img title={doc.title} alt={doc.title} src={imageUrl} />
+          ) : (
+            <div className="w-100 h-100 border bg-secondary d-flex align-items-center justify-content-center">
+              <IconSwitch color={'white'} type={doc.type}></IconSwitch>
+            </div>
+          )}
         </DocLink>
       </div>
     </div>
