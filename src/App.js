@@ -175,9 +175,8 @@ if (
 }
 
 // Use custom proxy api url when in React SNAP Context
-// const apiUrl =
-//   navigator.userAgent === 'ReactSnap' ? 'http://localhost:3033/api' : '/api'
-const apiUrl = 'http://localhost:3033/api'
+const apiUrl =
+  navigator.userAgent === 'ReactSnap' ? 'http://localhost:3033/api' : '/api'
 
 export default function App() {
   const { i18n } = useTranslation()
