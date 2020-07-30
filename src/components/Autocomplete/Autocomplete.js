@@ -21,6 +21,7 @@ function autocompleteReducer(state, action) {
       ...state,
       highlighted: null,
       showSuggestions: false,
+      searchText: action.suggestion,
     }
   } else if (action.type === 'HIGHLIGHT') {
     return {
@@ -138,7 +139,7 @@ export default function Autocomplete({
     ) {
       const suggestion = lastSuggestions[index]
       inputRef.current.blur()
-      dispatch({ type: 'SELECT' })
+      dispatch({ type: 'SELECT', suggestion })
       onSelected(lastSuggestions[index])
       if (suggestion !== searchText) {
         loadSuggestions(suggestion)
@@ -154,9 +155,17 @@ export default function Autocomplete({
       selectSuggestion(highlighted)
     } else {
       inputRef.current.blur()
-      dispatch({ type: 'SELECT' })
+      dispatch({ type: 'SELECT', suggestion: searchText })
       onSelected(searchText)
     }
+  }
+
+  function reset() {
+    onSelected('')
+    dispatch({
+      type: 'SEARCH_INPUT',
+      text: '',
+    })
   }
 
   function handleOnFocus() {
@@ -190,6 +199,7 @@ export default function Autocomplete({
         }}
       />
       <button type='submit'>SUBMIT</button>
+      <button onClick={reset} type='button'>RESET</button>
       {showSuggestions && (
         <div className={styles.suggestions}>
           {suggestions &&
