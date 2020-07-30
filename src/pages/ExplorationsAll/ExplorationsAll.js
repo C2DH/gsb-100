@@ -13,7 +13,7 @@ export default function ExplorationsAll() {
   const [queryString, setQueryString] = useQueryString()
 
   const [{ documents, loading, allFacets }, { fetchMore }] = useDocuments({
-    limit: 100,
+    limit: 150,
     q: queryString.q || undefined,
     filters: {
       data__type: queryString.type || undefined,
@@ -22,6 +22,7 @@ export default function ExplorationsAll() {
     crossFacets: {
       allFacets: {
         facets: ['data__type'],
+        exclude: { type: 'entity' },
       },
     },
   })
