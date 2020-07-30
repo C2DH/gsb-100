@@ -31,6 +31,15 @@
   color: var(--secondary);
 }
 
+.previewContainer {
+  overflow: visible;
+  position: relative;
+}
+
+.previewContainer:hover {
+  z-index: 1;
+}
+
 @media (min-width: 576px) {
   .rowPadding {
     padding-left: calc(50vw - (var(--max-width-sm) / 2));
