@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useReducer } from 'react'
 import classNames from 'classnames'
 import styles from './Autocomplete.module.scss'
+import { Search } from 'react-feather'
 
 const initialState = {
   searchText: '',
@@ -20,7 +21,6 @@ function autocompleteReducer(state, action) {
       ...state,
       highlighted: null,
       showSuggestions: false,
-      searchText: action.suggestion,
     }
   } else if (action.type === 'HIGHLIGHT') {
     return {
@@ -30,7 +30,7 @@ function autocompleteReducer(state, action) {
   } else if (action.type === 'SEARCH_INPUT') {
     return {
       ...state,
-      highlighted: 0,
+      highlighted: null,
       searchText: action.text,
     }
   } else if (action.type === 'ARROW_UP') {
@@ -138,7 +138,7 @@ export default function Autocomplete({
     ) {
       const suggestion = lastSuggestions[index]
       inputRef.current.blur()
-      dispatch({ type: 'SELECT', suggestion })
+      dispatch({ type: 'SELECT' })
       onSelected(lastSuggestions[index])
       if (suggestion !== searchText) {
         loadSuggestions(suggestion)
@@ -152,6 +152,10 @@ export default function Autocomplete({
       onSelected('') // Clear is requested!
     } else if (highlighted !== null) {
       selectSuggestion(highlighted)
+    } else {
+      inputRef.current.blur()
+      dispatch({ type: 'SELECT' })
+      onSelected(searchText)
     }
   }
 
@@ -185,6 +189,7 @@ export default function Autocomplete({
           }
         }}
       />
+      <button type='submit'>SUBMIT</button>
       {showSuggestions && (
         <div className={styles.suggestions}>
           {suggestions &&
