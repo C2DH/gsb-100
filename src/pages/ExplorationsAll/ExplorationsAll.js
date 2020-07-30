@@ -1,6 +1,5 @@
 import React from 'react'
 import { Waypoint } from 'react-waypoint'
-import capitalize from 'lodash/capitalize'
 import { ArrowLeft } from 'react-feather'
 import { useQueryString } from '../../hooks'
 import { useDocuments, useDocumentsSuggest } from '../../miller'
@@ -76,8 +75,12 @@ export default function ExplorationsAll() {
               >
                 <option value="">All types</option>
                 {allFacets.data__type.map((facet) => (
-                  <option value={facet.data__type} key={facet.data__type}>
-                    {capitalize(facet.data__type)}
+                  <option
+                    className="text-capitalize"
+                    value={facet.data__type}
+                    key={facet.data__type}
+                  >
+                    {facet.data__type}
                   </option>
                 ))}
               </select>
