@@ -1,3 +1,13 @@
+.gridContainer {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, 68px);
+  grid-template-rows: repeat(auto-fill, 68px);
+  grid-gap: 1rem;
+  justify-content: space-between;
+  width: 100%;
+  margin: 15px 0;
+}
+
 .itemBlockContainer {
   transform: scale(1);
   z-index: 0;
@@ -11,9 +21,7 @@
 }
 
 .itemBlock {
-  width: 68px;
-  height: 68px;
-
+  background-color: var(--secondary);
   img {
     object-fit: contain;
     width: 68px;
