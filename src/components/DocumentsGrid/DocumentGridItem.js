@@ -17,7 +17,7 @@ function DocumentGridItem({ doc }) {
         {imageUrl ? (
           <img
             className={styles.smallImage}
-            alt={doc.data.title}
+            alt={doc.data.title.substring(0, 10)}
             src={imageUrl}
           />
         ) : (

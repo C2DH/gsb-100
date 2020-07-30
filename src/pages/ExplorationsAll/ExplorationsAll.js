@@ -34,6 +34,12 @@ export default function ExplorationsAll() {
     }
   }
 
+  function renderWaypoint() {
+    if (!loading) {
+      return <Waypoint onEnter={handleLoadMore} />
+    }
+  }
+
   return (
     <div className={styles.ExplorationsAllPage}>
       <Menu />
@@ -48,54 +54,49 @@ export default function ExplorationsAll() {
             </h1>
           </div>
         </div>
-        <div className="row">
-          <div className="col-12">
-            <div className="d-flex">
-              <Autocomplete
-                initialSearch={queryString.q}
-                onSelected={(q) =>
-                  setQueryString({
-                    q,
-                    type: queryString.type,
-                  })
-                }
-                placeholder="Search"
-                suggestions={suggestions}
-                loadSuggestions={search}
-                clearSuggestions={clearSearch}
-              />
-
-              <select
-                value={queryString.type ?? ''}
-                onChange={(e) => {
-                  setQueryString({
-                    type: e.target.value,
-                    q: queryString.q,
-                  })
-                }}
-              >
-                <option value="">All types</option>
-                {allFacets.data__type.map((facet) => (
-                  <option
-                    className="text-capitalize"
-                    value={facet.data__type}
-                    key={facet.data__type}
-                  >
-                    {facet.data__type}
-                  </option>
-                ))}
-              </select>
-            </div>
+        <div className={`${styles.rowSearch} row align-items-center`}>
+          <div className="col-10">
+            <Autocomplete
+              initialSearch={queryString.q}
+              onSelected={(q) =>
+                setQueryString({
+                  q,
+                  type: queryString.type,
+                })
+              }
+              placeholder="Search"
+              suggestions={suggestions}
+              loadSuggestions={search}
+              clearSuggestions={clearSearch}
+            />
+          </div>
+          <div className="col-2">
+            <select
+              className={`${styles.selectType} form-control`}
+              value={queryString.type ?? ''}
+              onChange={(e) => {
+                setQueryString({
+                  type: e.target.value,
+                  q: queryString.q,
+                })
+              }}
+            >
+              <option value="">All types</option>
+              {allFacets.data__type.map((facet) => (
+                <option value={facet.data__type} key={facet.data__type}>
+                  {facet.data__type}
+                </option>
+              ))}
+            </select>
           </div>
         </div>
         <div className="row">
           <div className="col-12">
             <DocumentsGrid documents={documents} />
-            <Waypoint onEnter={handleLoadMore} />
+            <div className="mb-4">{renderWaypoint()}</div>
           </div>
         </div>
       </div>
-      <div>{loading && 'Loading.....'}</div>
     </div>
   )
 }
