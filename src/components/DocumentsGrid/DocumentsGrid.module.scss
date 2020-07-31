@@ -11,7 +11,6 @@
 .itemBlock {
   background-color: var(--secondary);
   position: relative;
-  overflow: visible;
 }
 
 .smallImage {
@@ -22,10 +21,6 @@
   transition: filter var(--transition);
 }
 
-.smallImage:hover {
-  filter: brightness(1);
-}
-
-.itemBlock:hover {
-  z-index: 1;
-}
+// .smallImage:hover {
+//   filter: brightness(1);
+// }
