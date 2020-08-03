@@ -7,16 +7,16 @@ const rimraf = require('rimraf')
 const cprAsync = util.promisify(cpr)
 const rimrafAsync = util.promisify(rimraf)
 
-const DESTIONATION = './build-crawled'
+const DESTINATION = './build-crawled'
 
 async function buildWithApi() {
-  await rimrafAsync(DESTIONATION)
-  await cprAsync('./build', DESTIONATION)
+  await rimrafAsync(DESTINATION)
+  await cprAsync('./build', DESTINATION)
   const server = proxyApi()
   await run({
     publicPath: '/',
     fixWebpackChunksIssue: 'CRA2',
-    source: DESTIONATION,
+    source: DESTINATION,
   })
   server.close()
 }
