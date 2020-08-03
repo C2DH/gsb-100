@@ -1,0 +1,41 @@
+FROM node:12-alpine as builder
+
+ARG GIT_BRANCH
+ARG GIT_REVISION
+
+# Installs the latest Chromium (64) package.
+RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
+RUN apk update && apk upgrade && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
+    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories
+RUN apk add --no-cache nss@edge
+RUN apk add --no-cache chromium@edge
+
+# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
+ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
+
+WORKDIR /gsb-100-snap
+
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn install
+
+COPY public ./public
+COPY src ./src
+COPY snapWithProxyApi.js .
+COPY proxyApi.js .
+COPY .env .
+
+ENV NODE_ENV production
+ENV NODE_OPTIONS --max_old_space_size=4096
+
+ENV REACT_APP_GIT_BRANCH=${GIT_BRANCH}
+ENV REACT_APP_GIT_REVISION=${GIT_REVISION}
+
+RUN yarn build
+RUN yarn snap
+
+FROM busybox
+WORKDIR /gsb-100
+COPY --from=builder /gsb-100/build-crawled ./crawled
