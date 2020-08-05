@@ -1,0 +1,85 @@
+$videoHeight: 210px;
+
+.periodsContainer {
+  // overflow: hidden;
+}
+.periodsContainer:hover .periodBlock {
+  opacity: 0.25;
+}
+
+.periodBlock {
+  overflow: visible;
+  position: relative;
+  min-width: 0px;
+  opacity: 1;
+  transition: min-width var(--transition), opacity var(--transition);
+}
+
+.periodBlock.active {
+  min-width: 300px;
+  opacity: 1 !important;
+}
+
+.periodLine {
+  height: 4px;
+  background: white;
+  border-left: 1px solid #2f322f;
+}
+
+.periodFL {
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, white 10%);
+}
+
+.periodFR {
+  background: linear-gradient(270deg, rgba(255, 255, 255, 0) 0%, white 10%);
+}
+
+.periodFLR {
+  background: linear-gradient(
+    90deg,
+    rgba(255, 255, 255, 0) 0%,
+    white 10%,
+    white 90%,
+    rgba(255, 255, 255, 0) 100%
+  );
+}
+
+.periodBlock.active .videoContainer {
+  height: $videoHeight;
+}
+
+.videoContainer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  height: 0px;
+  transition: height var(--transition);
+  transition-delay: 0.3s;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.periodBlock.active .video {
+  transform: translateY(0%);
+}
+
+.video {
+  width: 300px;
+  height: $videoHeight;
+  background: white;
+  transform: translateY(100%);
+  transition: transform var(--transition);
+  transition-delay: 0.3s;
+}
+
+.periodBlock.active .videoTitle {
+  color: black;
+}
+
+.videoTitle {
+  position: relative;
+  color: white;
+  z-index: 1;
+  transition: color var(--transition);
+  transition-delay: 0.3s;
+}
