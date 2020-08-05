@@ -15,9 +15,17 @@ export default function Home() {
   const [document] = useCacheDocument(350) //HC forever
   const [showVideo, setShowVideo] = useState(false)
   const [playing, setPlaying] = useState(false)
-  const [volume, setVolume] = useState(1)
-  const togglePlay = () => setPlaying((a) => !a)
-  const toggleMute = () => setVolume((v) => (v === 0 ? 1 : 0))
+  const [muted, setMuted] = useState(true)
+  const [showBg, setshowBg] = useState(false)
+  const togglePlay = () => {
+    setPlaying((a) => !a)
+    setshowBg((a) => !a)
+  }
+  const toggleMute = () => setMuted((v) => !v)
+  const onEnded = () => {
+    togglePlay()
+    setshowBg(true)
+  }
 
   return (
     <React.Fragment>
@@ -26,9 +34,11 @@ export default function Home() {
         width="100%"
         height="100%"
         playing={playing}
-        volume={volume}
+        volume={1}
         url={document.data.translated_urls}
         playsinline
+        muted={muted}
+        onEnded={onEnded}
       />
       <div
         className={classNames(styles.mapContainer, {
@@ -38,7 +48,12 @@ export default function Home() {
         <MapHome setShowVideo={setShowVideo} setPlaying={setPlaying}></MapHome>
       </div>
       <div
-        className={`${styles.wrapper} d-flex flex-column justify-content-between p-4`}
+        className={classNames(
+          `${styles.wrapper} d-flex flex-column justify-content-between p-4`,
+          {
+            [styles.bgWrapper]: showBg,
+          }
+        )}
       >
         <div className="d-flex">
           <div>
@@ -71,7 +86,7 @@ export default function Home() {
               className="ml-3 btn btn-light btn-icon-round opacity-75"
               onClick={toggleMute}
             >
-              {volume === 0 ? <VolumeX /> : <Volume2 />}
+              {muted ? <VolumeX /> : <Volume2 />}
             </button>
           </div>
           <LangLink id={styles.startLink} to="/outline">
