@@ -28,10 +28,12 @@ jobs:
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       env:
+        MAPBOX_ACCESS_TOKEN: ${{ secrets.MAPBOX_ACCESS_TOKEN }}
+        GIT_TAG: ${{ env.RELEASE_VERSION }}
         GIT_BRANCH: ${{ steps.extract_branch.outputs.branch }}
         GIT_REVISION: ${{ steps.extract_hash.outputs.hash }}
       with:
-        name: c2dhunilu/journal-of-digital-history
+        name: c2dhunilu/gsb-100
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         buildargs: GIT_BRANCH,GIT_REVISION
