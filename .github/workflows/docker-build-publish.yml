@@ -36,5 +36,5 @@ jobs:
         name: c2dhunilu/gsb-100
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
-        buildargs: GIT_BRANCH,GIT_REVISION
+        buildargs: MAPBOX_ACCESS_TOKEN,GIT_TAG,GIT_BRANCH,GIT_REVISION
         tags: "${{ env.RELEASE_VERSION }},latest"
