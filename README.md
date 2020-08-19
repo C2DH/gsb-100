@@ -20,7 +20,7 @@ the action uses it to tag the docker repo accordingly.
 
 1. increment version in package.json
 2. Do `yarn install`, commit and push your branch.
-3. Create a pull request to `master`. Name it with **new version**. Merge it **without squashing**
+3. Create a pull request to `master`. Name it with **new version**, squash and merge.
 4. Locally, check out and pull master; tag it with the new version, e.g. `git tag v1.0.0`
 5. Push tags to GitHub: `git push origin --tags`
 
