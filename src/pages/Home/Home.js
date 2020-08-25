@@ -2,9 +2,10 @@ import React, { useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
 import classNames from 'classnames'
-import { Play, Pause, VolumeX, Volume2 } from 'react-feather'
+import { Play, Pause, VolumeX, Volume2, ArrowRight } from 'react-feather'
 import { useCacheStory, useCacheDocument } from '../../miller'
 import SwitchLanguage from '../../components/SwitchLanguage'
+import SwitchLanguageMobile from '../../components/SwitchLanguageMobile'
 import MapHome from '../../components/MapHome'
 import styles from './Home.module.scss'
 import LangLink from '../../components/LangLink'
@@ -49,13 +50,13 @@ export default function Home() {
       </div>
       <div
         className={classNames(
-          `${styles.wrapper} d-flex flex-column justify-content-between p-4`,
+          `${styles.wrapper} d-flex flex-column justify-content-between p-0 p-lg-4`,
           {
             [styles.bgWrapper]: showBg,
           }
         )}
       >
-        <div className="d-flex">
+        <div className="d-flex p-4 p-lg-0">
           <div>
             <h1>
               {homeStory.data.title.replace(/\s.*/, '')}
@@ -64,11 +65,20 @@ export default function Home() {
             </h1>
             <h4 className={`text-primary`}>{homeStory.data.subtitle}</h4>
           </div>
-          <div className="ml-auto">
+          <div className="ml-auto d-none d-lg-block">
             <SwitchLanguage></SwitchLanguage>
           </div>
         </div>
-        <div className="d-flex justify-content-center position-relative">
+        <div className="d-flex justify-content-between justify-content-lg-center position-relative p-4 p-lg-0 mt-auto mt-lg-0">
+          <LangLink
+            className="btn btn-primary d-flex align-items-center d-lg-none text-uppercase"
+            role="button"
+            aria-pressed="true"
+            to="/outline"
+          >
+            {t('start')}
+            <ArrowRight size="1.1rem" className="ml-1"></ArrowRight>
+          </LangLink>
           <div
             className={classNames(styles.playerControls, {
               [styles.show]: showVideo,
@@ -89,13 +99,20 @@ export default function Home() {
               {muted ? <VolumeX /> : <Volume2 />}
             </button>
           </div>
-          <LangLink id={styles.startLink} to="/outline">
+          <LangLink
+            id={styles.startLink}
+            to="/outline"
+            className="d-none d-lg-flex"
+          >
             <div id={styles.start}>
               <p className="m-0 text-center text-uppercase">
                 {t('click to start')}
               </p>
             </div>
           </LangLink>
+        </div>
+        <div className="d-block d-lg-none">
+          <SwitchLanguageMobile></SwitchLanguageMobile>
         </div>
       </div>
     </React.Fragment>

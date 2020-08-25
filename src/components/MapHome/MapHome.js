@@ -15,6 +15,7 @@ export default function MapHome({ setShowVideo, setPlaying }) {
       style: 'mapbox://styles/giorgiouboldi/ckcp2ku8202851ip2tdid4lxv', // stylesheet location
       center: center,
       zoom: zoom,
+      attributionControl: false,
     })
 
     map.on('load', () => {

@@ -147,3 +147,8 @@ how to remove the virtical space around the range input in IE*/
     /*Edge starts the margin from the thumb, not the track as other browsers do*/
   }
 }
+
+// TODO: just on mobile
+.mapboxgl-ctrl-bottom-left {
+  display: none !important;
+}
