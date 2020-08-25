@@ -60,16 +60,16 @@ $videoHeight: 210px;
 }
 
 .periodBlock.active .video {
-  transform: translateY(0%);
+  // transform: translateY(0%);
 }
 
 .video {
   width: 300px;
   height: $videoHeight;
   background: white;
-  transform: translateY(100%);
-  transition: transform var(--transition);
-  transition-delay: 0.3s;
+  // transform: translateY(100%);
+  // transition: transform var(--transition);
+  // transition-delay: 0.3s;
 }
 
 .periodBlock.active .videoTitle {
