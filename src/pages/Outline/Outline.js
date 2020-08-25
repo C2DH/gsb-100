@@ -5,6 +5,7 @@ import ReactPlayer from 'react-player'
 import { Play, Pause, VolumeX, Volume2, SkipForward } from 'react-feather'
 import { useCacheStory } from '../../miller'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
 import styles from './Outline.module.scss'
@@ -96,7 +97,12 @@ export default function Outline() {
 
   return (
     <div className={styles.PlayerPage}>
-      <Menu />
+      <div className="d-none d-lg-block">
+        <Menu />
+      </div>
+      <div className="d-block d-lg-none">
+        <MenuMobile title={outlineStory.data.title} />
+      </div>
       <div className={styles.PlayerWrapper}>
         <ReactPlayer
           className={styles.Player}
