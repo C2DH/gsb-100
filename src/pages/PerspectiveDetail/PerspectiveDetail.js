@@ -4,19 +4,31 @@ import { useTranslation } from 'react-i18next'
 import sortBy from 'lodash/sortBy'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { ParentSize } from '@vx/responsive'
+import Media from 'react-media'
 import { useCacheStory } from '../../miller'
 import PerspectiveChapter from '../../components/PerspectiveChapter'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
 import LangLink from '../../components/LangLink'
 import Timeline from '../../components/Timeline'
+import TimelineMobile from '../../components/TimelineMobile'
 import TimelineVideo from '../../components/TimelineVideo'
 import styles from './PerspectiveDetail.module.scss'
+
+const BREAKPOINTS = {
+  xs: { maxWidth: 566 },
+  sm: { maxWidth: 767 },
+  md: { maxWidth: 991 },
+  lg: { maxWidth: 1199 },
+  xl: { maxWidth: 1399 },
+}
 
 export default function PerspectiveDetail() {
   const { slug } = useParams()
   const { t } = useTranslation()
   const [theme] = useCacheStory(slug)
   const [outlineTheme] = useCacheStory('outline-1')
+  const [perspectivesStory] = useCacheStory('perspectives')
 
   const chaptersRef = useRef()
 
@@ -54,10 +66,21 @@ export default function PerspectiveDetail() {
 
   return (
     <React.Fragment>
-      <Menu />
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.md ? (
+            <div className="d-block sticky-top">
+              <MenuMobile title={perspectivesStory.data.title} />
+            </div>
+          ) : (
+            <Menu />
+          )
+        }
+      </Media>
+
       <div className="container">
         <div className="row">
-          <div className="col-md-9">
+          <div className="col-12 col-lg-9">
             <h1 className={`${styles.title} my-3`}>
               <LangLink to="/perspectives" className="mr-3">
                 <ArrowLeft color="white"></ArrowLeft>
@@ -67,7 +90,7 @@ export default function PerspectiveDetail() {
           </div>
         </div>
         <div className="row">
-          <div className="offset-md-4 col-md-7">
+          <div className="offset-1 col-11 offset-md-2 col-md-10 offset-lg-4 col-lg-7">
             <p className={styles.description}>{theme.data.abstract}</p>
           </div>
         </div>
@@ -79,41 +102,54 @@ export default function PerspectiveDetail() {
           </div>
         </div>
       </div>
-      <div className={styles.timelineContainer}>
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              <TimelineVideo
-                periods={periods}
-                timelineDocs={timelineDocs}
-              ></TimelineVideo>
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.sm ? (
+            <TimelineMobile documents={timelineDocs} />
+          ) : (
+            <div className={styles.timelineContainer}>
+              <div className="container">
+                <div className="row">
+                  <div className="col-12">
+                    <TimelineVideo
+                      periods={periods}
+                      timelineDocs={timelineDocs}
+                    ></TimelineVideo>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    {timelineDocs.length > 0 && (
+                      <ParentSize debounceTime={10}>
+                        {({ width, height }) => (
+                          <Timeline
+                            documents={timelineDocs}
+                            width={width}
+                            height={height}
+                          ></Timeline>
+                        )}
+                      </ParentSize>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-          <div className="row">
-            <div className="col-12">
-              {timelineDocs.length > 0 && (
-                <ParentSize debounceTime={10}>
-                  {({ width, height }) => (
-                    <Timeline
-                      documents={timelineDocs}
-                      width={width}
-                      height={height}
-                    ></Timeline>
-                  )}
-                </ParentSize>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-      <div className="h-100 d-flex flex-column overflow-hidden">
+          )
+        }
+      </Media>
+
+      <div
+        className={`${styles.chaptersCont} d-flex flex-column overflow-hidden`}
+      >
         <div className="container flex-shrink-0">
           <div className="row">
             <div className="col-12 d-flex justify-content-between align-items-center">
-              <p className={`m-0 text-primary text-capitalize line-before`}>
+              <p
+                className={`mb-2 m-md-0 text-primary text-capitalize line-before`}
+              >
                 {t('chapters')}
               </p>
-              <div>
+              <div className="d-none d-lg-block">
                 <button
                   className="btn bg-transparent text-white"
                   onClick={handleScrollBackChapter}
@@ -131,11 +167,11 @@ export default function PerspectiveDetail() {
           </div>
         </div>
         <div
-          className={`${styles.chapters} d-flex flex-grow-1`}
+          className={`${styles.chapters} d-flex flex-column flex-md-row flex-grow-0 flex-grow-md-1`}
           ref={chaptersRef}
         >
           {chaptersIds.map((chapterId) => (
-            <div key={chapterId} className={`${styles.chapter} bg-gray h-100`}>
+            <div key={chapterId} className={`${styles.chapter}`}>
               <PerspectiveChapter chapterId={chapterId} />
             </div>
           ))}
