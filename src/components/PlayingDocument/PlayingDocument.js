@@ -12,10 +12,7 @@ function PlayingDocument({ document, onClick }) {
     [onClick]
   )
   return (
-    <>
-      {/*<div className={`${styles.PlayingDocument} m-5`} onClick={toggleModal}>
-        <img src={document.data.translated_thumb_urls} alt={document.title} />
-      </div>*/}
+    <React.Fragment>
       <img
         className={`${styles.PlayingDocument} customCursor`}
         src={document.data.translated_thumb_urls}
@@ -25,7 +22,7 @@ function PlayingDocument({ document, onClick }) {
       {showModal && (
         <OutlineDocumentModal doc={document} onClose={toggleModal} />
       )}
-    </>
+    </React.Fragment>
   )
 }
 

@@ -8,49 +8,67 @@
 .PlayerWrapper {
   display: flex;
   flex-direction: column;
-  justify-content: flex-end;
+  justify-content: flex-start;
   flex: 1;
   overflow: hidden;
   position: relative;
 }
 
 .Player {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 0;
+  position: relative;
+  height: 45% !important;
+  width: auto !important;
   overflow: hidden;
   video {
     object-fit: cover;
   }
+  flex-grow: 1;
+  flex-shrink: 0;
 }
 
 .Controls {
-  background: linear-gradient(0deg, rgba(0, 0, 0, 1) 0%, rgba(0, 0, 0, 0) 100%);
-  transform: translate(0, 0%);
-  transition: transform var(--transition);
+  background: none;
+  flex-grow: 0;
+  overflow-y: auto;
 }
 
-.skipIntroContainer {
-  position: absolute;
-  bottom: 15px;
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  transform: translate(0, 0%);
-  transition: transform var(--transition);
-  p {
-    text-decoration: underline;
-    margin-top: 15px;
-    font-size: 1.275rem;
-    cursor: pointer;
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .PlayerWrapper {
+    justify-content: flex-end;
+  }
+
+  .Player {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    height: 100% !important;
+    overflow: hidden;
+  }
+
+  .Controls {
+    background: linear-gradient(
+      0deg,
+      rgba(0, 0, 0, 1) 0%,
+      rgba(0, 0, 0, 0) 100%
+    );
   }
 }
 
-.skipIntroContainer.hide {
-  transform: translate(0, 100%);
-  pointer-events: none;
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }

@@ -124,10 +124,10 @@ export default function Outline() {
         )}
         <div
           className={classNames(
-            `${styles.Controls} pb-3 px-5 position-relative`
+            `${styles.Controls} pb-2 pb-lg-3 px-2 px-lg-5 position-relative`
           )}
         >
-          <div className="py-4 d-flex">
+          <div className="py-2 py-lg-4 d-flex justify-content-center justify-content-lg-start sticky-top">
             <button
               type="button"
               className="ml-2 btn btn-light btn-icon-round opacity-75"
@@ -150,7 +150,7 @@ export default function Outline() {
               {volume === 0 ? <VolumeX /> : <Volume2 />}
             </button>
           </div>
-          <div className="d-flex">
+          <div className="d-flex flex-column flex-lg-row flex-grow-0 flex-shrink-1">
             {chapters.map((chapter, i) => (
               <SeekLine
                 key={i}
