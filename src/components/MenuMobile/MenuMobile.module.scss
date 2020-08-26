@@ -2,7 +2,7 @@
   min-height: 55px;
   border-bottom: 1px solid var(--border-color);
   position: relative;
-  z-index: 99;
+  z-index: 1021;
 }
 
 #menuSlide {
@@ -11,7 +11,7 @@
   bottom: 0px;
   left: 0px;
   right: 0px;
-  z-index: 100;
+  z-index: 1022;
   transform: translateX(-100%);
   transition: transform var(--transition);
 }
