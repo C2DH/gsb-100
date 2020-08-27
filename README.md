@@ -35,7 +35,11 @@ TO test that snap works correctly, run this command after making the first build
 ```sh
 yarn snap
 ```
-The Dockerfile-snap generated a docker image contained the result of the snap, so to generate the new docker image:
+The Dockerfile-snap generate a docker image which runs the crawl and store the resulting html files:
 ```sh
 make build-docker-snap-image MAPBOX_ACCESS_TOKEN=<your access token here>
+```
+A simpler approach, if you have already run the `yarn build && yarn snap` command:
+```sh
+make build-docker-snap-copy-image
 ```
