@@ -14,3 +14,11 @@ export function convertStrToSeconds(str) {
   const [mins, secs] = str.split(':')
   return parseInt(mins) * 60 + parseInt(secs)
 }
+
+export const BREAKPOINTS = {
+  xs: { maxWidth: 566 },
+  sm: { maxWidth: 767 },
+  md: { maxWidth: 991 },
+  lg: { maxWidth: 1199 },
+  xl: { maxWidth: 1399 },
+}

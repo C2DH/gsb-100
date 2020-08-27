@@ -6,13 +6,12 @@
 }
 
 .stacks {
-  overflow-x: auto;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 .desc {
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 @media (min-width: 576px) {
@@ -22,7 +21,14 @@
 }
 
 @media (min-width: 768px) {
+  .desc {
+    font-size: 1.5rem;
+  }
+
   .stacks {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
     padding-left: calc(50vw - (var(--max-width-md) / 2));
   }
 }

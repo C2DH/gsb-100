@@ -1,9 +1,12 @@
 import React, { useMemo } from 'react'
 import groupBy from 'lodash/groupBy'
 import { shuffle } from 'seed-shuffle'
+import Media from 'react-media'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import ImagesStack from '../../components/ImagesStack'
+import { BREAKPOINTS } from '../../utils'
 import styles from './Explorations.module.scss'
 
 const NUMBER_OF_IMAGES_PER_CATEGORY = 5
@@ -40,18 +43,28 @@ export default function Explorations() {
 
   return (
     <div className={styles.explorationPage}>
-      <Menu />
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.md ? (
+            <div className="d-block sticky-top">
+              <MenuMobile title={explorationsStory.data.title} />
+            </div>
+          ) : (
+            <Menu />
+          )
+        }
+      </Media>
       <div className="container">
         <div className="row">
-          <div className="col-7">
-            <p className={`${styles.desc} mt-5`}>
+          <div className="col-12 col-md-9 col-lg-7">
+            <p className={`${styles.desc} mt-2 mt-md-5`}>
               {explorationsStory.data.abstract}
             </p>
           </div>
         </div>
       </div>
       <div
-        className={`${styles.stacks} flex-grow-1 d-flex position-relative align-items-center`}
+        className={`${styles.stacks} flex-grow-1 d-flex flex-md-row flex-column position-relative align-items-center`}
       >
         {categoriesWithImages.map((catWithImages) => (
           <ImagesStack

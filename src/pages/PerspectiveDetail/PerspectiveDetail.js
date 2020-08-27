@@ -13,15 +13,8 @@ import LangLink from '../../components/LangLink'
 import Timeline from '../../components/Timeline'
 import TimelineMobile from '../../components/TimelineMobile'
 import TimelineVideo from '../../components/TimelineVideo'
+import { BREAKPOINTS } from '../../utils'
 import styles from './PerspectiveDetail.module.scss'
-
-const BREAKPOINTS = {
-  xs: { maxWidth: 566 },
-  sm: { maxWidth: 767 },
-  md: { maxWidth: 991 },
-  lg: { maxWidth: 1199 },
-  xl: { maxWidth: 1399 },
-}
 
 export default function PerspectiveDetail() {
   const { slug } = useParams()
