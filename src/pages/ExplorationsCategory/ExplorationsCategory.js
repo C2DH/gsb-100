@@ -2,17 +2,13 @@ import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import groupBy from 'lodash/groupBy'
-import { EyeOff } from 'react-feather'
-import { useLocation } from 'react-router-dom'
-import { usePrefetchDocument } from '../../miller'
 import { useCacheDocuments } from '../../miller'
 import Menu from '../../components/Menu'
 import LangLink from '../../components/LangLink'
+import ExplorationsCategoryImage from './ExplorationsCategoryImage'
 import styles from './ExplorationsCategory.module.scss'
 
 const DocsTypedGallery = ({ type, docs }) => {
-  const location = useLocation()
-  const prefetchDocument = usePrefetchDocument()
   return (
     <div className={`${styles.rowContainer} py-3`}>
       <p
@@ -23,34 +19,12 @@ const DocsTypedGallery = ({ type, docs }) => {
       <div
         className={`${styles.rowPadding} d-flex align-items-end py-2 overflow-auto`}
       >
-        {docs.map((doc) => {
-          const url = doc.data.resolutions?.thumbnail.url
-          return (
-            <div key={doc.id}>
-              <LangLink
-                onClick={() => {
-                  prefetchDocument(doc.id)
-                }}
-                to={{
-                  pathname: `/documents/${doc.id}`,
-                  state: { background: location, modalDocument: doc },
-                }}
-              >
-                {url ? (
-                  <img
-                    className={`${styles.preview} mr-2`}
-                    alt={doc.data.title}
-                    src={url}
-                  />
-                ) : (
-                  <div className={`${styles.notFound} mr-2`}>
-                    <EyeOff></EyeOff>
-                  </div>
-                )}
-              </LangLink>
-            </div>
-          )
-        })}
+        {docs.map((doc) => (
+          <ExplorationsCategoryImage
+            doc={doc}
+            key={doc.id}
+          ></ExplorationsCategoryImage>
+        ))}
       </div>
     </div>
   )

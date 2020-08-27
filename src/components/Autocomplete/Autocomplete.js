@@ -1,6 +1,7 @@
-import React, { useEffect, useRef, useReducer } from 'react'
+import React, { useEffect, useRef, useReducer, useState } from 'react'
 import classNames from 'classnames'
 import styles from './Autocomplete.module.scss'
+import { Search, X } from 'react-feather'
 
 const initialState = {
   searchText: '',
@@ -30,7 +31,7 @@ function autocompleteReducer(state, action) {
   } else if (action.type === 'SEARCH_INPUT') {
     return {
       ...state,
-      highlighted: 0,
+      highlighted: null,
       searchText: action.text,
     }
   } else if (action.type === 'ARROW_UP') {
@@ -99,10 +100,11 @@ export default function Autocomplete({
   const [{ searchText, highlighted, showSuggestions }, dispatch] = useReducer(
     autocompleteReducer,
     initialSearch,
-    initAutocompleteReducer,
+    initAutocompleteReducer
   )
   const lastSuggestionsRef = useRef(null)
   const inputRef = useRef(null)
+  const [searchIcon, setSeachIcon] = useState(true)
 
   useEffect(() => {
     function handleKeyDown(e) {
@@ -132,10 +134,7 @@ export default function Autocomplete({
 
   function selectSuggestion(index) {
     const lastSuggestions = lastSuggestionsRef.current
-    if (
-      lastSuggestions !== null &&
-      lastSuggestions[index] !== undefined
-    ) {
+    if (lastSuggestions !== null && lastSuggestions[index] !== undefined) {
       const suggestion = lastSuggestions[index]
       inputRef.current.blur()
       dispatch({ type: 'SELECT', suggestion })
@@ -152,7 +151,22 @@ export default function Autocomplete({
       onSelected('') // Clear is requested!
     } else if (highlighted !== null) {
       selectSuggestion(highlighted)
+    } else {
+      inputRef.current.blur()
+      dispatch({ type: 'SELECT', suggestion: searchText })
+      onSelected(searchText)
     }
+    setSeachIcon(false)
+  }
+
+  function reset(e) {
+    e.preventDefault()
+    onSelected('')
+    dispatch({
+      type: 'SEARCH_INPUT',
+      text: '',
+    })
+    setSeachIcon(true)
   }
 
   function handleOnFocus() {
@@ -164,27 +178,42 @@ export default function Autocomplete({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={styles.autocomplete}>
-      <input
-        ref={inputRef}
-        onBlur={handleOnBlur}
-        onFocus={handleOnFocus}
-        placeholder={placeholder}
-        type="text"
-        value={searchText}
-        onChange={(e) => {
-          const text = e.target.value
-          dispatch({
-            type: 'SEARCH_INPUT',
-            text,
-          })
-          if (text.trim() !== '') {
-            loadSuggestions(text)
-          } else {
-            clearSuggestions()
-          }
-        }}
-      />
+    <form onSubmit={handleSubmit} className={`${styles.autocomplete}`}>
+      <div className="form-group mb-0 d-flex">
+        <div className="input-group-prepend">
+          {searchIcon ? (
+            <button className="btn btn-secondary" type="submit">
+              <Search></Search>
+            </button>
+          ) : (
+            <button className="btn btn-secondary" onClick={reset}>
+              <X></X>
+            </button>
+          )}
+        </div>
+        <input
+          className="form-control"
+          ref={inputRef}
+          onBlur={handleOnBlur}
+          onFocus={handleOnFocus}
+          placeholder={placeholder}
+          type="text"
+          value={searchText}
+          onChange={(e) => {
+            const text = e.target.value
+            dispatch({
+              type: 'SEARCH_INPUT',
+              text,
+            })
+            if (text.trim() !== '') {
+              loadSuggestions(text)
+            } else {
+              clearSuggestions()
+            }
+            setSeachIcon(true)
+          }}
+        />
+      </div>
       {showSuggestions && (
         <div className={styles.suggestions}>
           {suggestions &&
@@ -196,7 +225,7 @@ export default function Autocomplete({
                     index: i,
                   })
                 }
-                onMouseDown={e => e.preventDefault()}
+                onMouseDown={(e) => e.preventDefault()}
                 onClick={() => selectSuggestion(i)}
                 key={suggestion}
                 className={classNames(styles.suggestion, {

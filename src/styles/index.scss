@@ -12,8 +12,8 @@
 :root {
   --transition: 0.3s ease-in-out;
   --border-color: rgba(255, 255, 255, 0.5);
-  --modal-z-index: 90;
-  --modal-close-z-index: 91;
+  --modal-z-index: 1021;
+  --modal-close-z-index: 1022;
   --secondary-rgb: #{hexToRGB(map-get($theme-colors, 'secondary'))};
   --gray-rgb: #{hexToRGB(map-get($theme-colors, 'gray'))};
 
@@ -42,7 +42,7 @@ h3 {
 }
 
 .btn-icon-round {
-  padding: 0.75rem !important;
+  padding: 0.5rem !important;
   display: flex !important;
   align-items: center !important;
   justify-content: center !important;
@@ -146,4 +146,31 @@ how to remove the virtical space around the range input in IE*/
     margin: 0;
     /*Edge starts the margin from the thumb, not the track as other browsers do*/
   }
+}
+
+// TODO: just on mobile
+.mapboxgl-ctrl-bottom-left {
+  display: none !important;
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .btn-icon-round {
+    padding: 0.75rem !important;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }

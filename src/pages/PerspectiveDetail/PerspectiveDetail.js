@@ -1,37 +1,34 @@
-import React, { useRef, useMemo, useState, Suspense } from 'react'
-import classNames from 'classnames'
+import React, { useRef, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { useTranslation } from 'react-i18next'
 import sortBy from 'lodash/sortBy'
-import findIndex from 'lodash/findIndex'
 import { ArrowLeft, ArrowRight } from 'react-feather'
 import { ParentSize } from '@vx/responsive'
-import { useCacheStory, usePrefetchStory } from '../../miller'
+import Media from 'react-media'
+import { useCacheStory } from '../../miller'
 import PerspectiveChapter from '../../components/PerspectiveChapter'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
 import LangLink from '../../components/LangLink'
 import Timeline from '../../components/Timeline'
+import TimelineMobile from '../../components/TimelineMobile'
+import TimelineVideo from '../../components/TimelineVideo'
 import styles from './PerspectiveDetail.module.scss'
-import { extent } from 'd3-array'
-import Video from '../../components/Video'
 
-function PeriodVideo({ id, title }) {
-  const [story] = useCacheStory(id)
-  const videoUrl = story.contents?.modules?.[0]?.object?.document?.url ?? null
-  return (
-    <div className={styles.PeriodVideoBox}>
-      <Video url={videoUrl} />
-      <div>{title}</div>
-    </div>
-  )
+const BREAKPOINTS = {
+  xs: { maxWidth: 566 },
+  sm: { maxWidth: 767 },
+  md: { maxWidth: 991 },
+  lg: { maxWidth: 1199 },
+  xl: { maxWidth: 1399 },
 }
 
 export default function PerspectiveDetail() {
   const { slug } = useParams()
   const { t } = useTranslation()
   const [theme] = useCacheStory(slug)
-  const prefetchStory = usePrefetchStory()
   const [outlineTheme] = useCacheStory('outline-1')
+  const [perspectivesStory] = useCacheStory('perspectives')
 
   const chaptersRef = useRef()
 
@@ -44,15 +41,6 @@ export default function PerspectiveDetail() {
   }, [outlineTheme])
 
   const timelineDocs = theme.documents
-
-  const selectedPeriodIndex = useMemo(() => {
-    const [, endDate] = extent(timelineDocs, (d) => new Date(d.data.start_date))
-    const endYear = endDate ? endDate.getFullYear() : 0 // Z3r0 Don't make sense
-    return findIndex(periods, (p) => {
-      const [, endPeriodYear] = p.data.abstract.split('-').map(Number)
-      return endYear <= endPeriodYear
-    })
-  }, [timelineDocs, periods])
 
   function getChapterWidth() {
     const container = chaptersRef.current
@@ -76,46 +64,23 @@ export default function PerspectiveDetail() {
     )
   }
 
-  const [openPeriodIndex, setOpenPeriodIndex] = useState(null)
-
   return (
     <React.Fragment>
-      <Menu />
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.md ? (
+            <div className="d-block sticky-top">
+              <MenuMobile title={perspectivesStory.data.title} />
+            </div>
+          ) : (
+            <Menu />
+          )
+        }
+      </Media>
+
       <div className="container">
         <div className="row">
-          {periods.map((period, i) => (
-            <div
-              onMouseEnter={() => {
-                setOpenPeriodIndex(i)
-                prefetchStory(periods[i].id)
-              }}
-              onMouseLeave={() => setOpenPeriodIndex(null)}
-              key={period.id}
-              className={classNames('col-md', styles.Period, {
-                'ml-3': i > 0,
-                [styles.SelectedPeriod]: selectedPeriodIndex === i,
-              })}
-            >
-              <div>{period.data.abstract}</div>
-              <div className={styles.PeriodLine} />
-              <div className={styles.PeriodVideoContainer}>
-                {openPeriodIndex === i && (
-                  <Suspense
-                    fallback={
-                      <div className={styles.PeriodVideoBox}>
-                        {period.data.title}
-                      </div>
-                    }
-                  >
-                    <PeriodVideo id={period.id} title={period.data.title} />
-                  </Suspense>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-        <div className="row">
-          <div className="col-md-9">
+          <div className="col-12 col-lg-9">
             <h1 className={`${styles.title} my-3`}>
               <LangLink to="/perspectives" className="mr-3">
                 <ArrowLeft color="white"></ArrowLeft>
@@ -125,7 +90,7 @@ export default function PerspectiveDetail() {
           </div>
         </div>
         <div className="row">
-          <div className="offset-md-4 col-md-7">
+          <div className="offset-1 col-11 offset-md-2 col-md-10 offset-lg-4 col-lg-7">
             <p className={styles.description}>{theme.data.abstract}</p>
           </div>
         </div>
@@ -137,33 +102,54 @@ export default function PerspectiveDetail() {
           </div>
         </div>
       </div>
-      <div className={styles.timelineContainer}>
-        <div className="container">
-          <div className="row">
-            <div className="col-12">
-              {timelineDocs.length > 0 && (
-                <ParentSize debounceTime={10}>
-                  {({ width, height }) => (
-                    <Timeline
-                      documents={timelineDocs}
-                      width={width}
-                      height={height}
-                    ></Timeline>
-                  )}
-                </ParentSize>
-              )}
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.sm ? (
+            <TimelineMobile documents={timelineDocs} />
+          ) : (
+            <div className={styles.timelineContainer}>
+              <div className="container">
+                <div className="row">
+                  <div className="col-12">
+                    <TimelineVideo
+                      periods={periods}
+                      timelineDocs={timelineDocs}
+                    ></TimelineVideo>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-12">
+                    {timelineDocs.length > 0 && (
+                      <ParentSize debounceTime={10}>
+                        {({ width, height }) => (
+                          <Timeline
+                            documents={timelineDocs}
+                            width={width}
+                            height={height}
+                          ></Timeline>
+                        )}
+                      </ParentSize>
+                    )}
+                  </div>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-      <div className="h-100 d-flex flex-column overflow-hidden">
+          )
+        }
+      </Media>
+
+      <div
+        className={`${styles.chaptersCont} d-flex flex-column overflow-hidden`}
+      >
         <div className="container flex-shrink-0">
           <div className="row">
             <div className="col-12 d-flex justify-content-between align-items-center">
-              <p className={`m-0 text-primary text-capitalize line-before`}>
+              <p
+                className={`mb-2 m-md-0 text-primary text-capitalize line-before`}
+              >
                 {t('chapters')}
               </p>
-              <div>
+              <div className="d-none d-lg-block">
                 <button
                   className="btn bg-transparent text-white"
                   onClick={handleScrollBackChapter}
@@ -181,11 +167,11 @@ export default function PerspectiveDetail() {
           </div>
         </div>
         <div
-          className={`${styles.chapters} d-flex flex-grow-1`}
+          className={`${styles.chapters} d-flex flex-column flex-md-row flex-grow-0 flex-grow-md-1`}
           ref={chaptersRef}
         >
           {chaptersIds.map((chapterId) => (
-            <div key={chapterId} className={`${styles.chapter} bg-gray h-100`}>
+            <div key={chapterId} className={`${styles.chapter}`}>
               <PerspectiveChapter chapterId={chapterId} />
             </div>
           ))}

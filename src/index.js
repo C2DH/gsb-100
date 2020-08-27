@@ -42,3 +42,9 @@ window.snapSaveState = () => ({
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister()
+
+// printout current version and link to current github
+console.info(
+  'v', process.env.REACT_APP_GIT_TAG, process.env.REACT_APP_GIT_BRANCH,
+  `\nhttps://github.com/C2DH/gsb-100/commit/${process.env.REACT_APP_GIT_REVISION}`
+)

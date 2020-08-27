@@ -1,38 +1,107 @@
 .ThemeListContainer {
-  display: flex;
-  flex-wrap: wrap;
-  padding: 0 20px;
-  margin-top: 30px;
+  flex-grow: 1;
+  overflow-y: scroll;
 }
 
-// TODO: MEDIA EM' ALL
 .ThemeListItem {
-  flex-basis: 50%;
-  padding: 0 20px;
+  margin-top: 15px;
+  margin-bottom: 15px;
+
+  .infoCont {
+    background-size: cover;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+
+  .infoCont:after {
+    content: '';
+    background-color: var(--secondary);
+    opacity: 0.5;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    position: absolute;
+    z-index: 1;
+  }
+
+  h2 {
+    position: relative;
+    z-index: 2;
+    text-align: center;
+  }
 
   a,
   a:hover {
     color: white;
     text-decoration: none;
   }
-  h3 {
-    margin-bottom: 20px;
-  }
-  img {
-    width: 100%;
-    object-fit: cover;
-    height: auto;
-    max-height: 450px;
-    position: relative;
-    filter: saturate(30%);
-    transition: filter var(--transition);
-  }
+
   &.shifted {
-    margin-top: 60px;
-    transform: translateY(70px);
+    transform: translateY(0px);
   }
 
   a:hover img {
     filter: saturate(100%);
   }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .ThemeListItem {
+    margin-top: 60px;
+    margin-bottom: 15px;
+
+    .infoCont {
+      background-image: none !important;
+      min-height: unset;
+      flex-direction: column;
+      align-items: flex-start;
+      position: relative;
+      padding: 0;
+    }
+
+    .infoCont:after {
+      opacity: 0;
+    }
+
+    h2 {
+      text-align: left;
+    }
+
+    img {
+      width: 100%;
+      object-fit: cover;
+      width: 100%;
+      height: 450px;
+      position: relative;
+      filter: saturate(30%);
+      transition: filter var(--transition);
+    }
+    &.shifted {
+      transform: translateY(100px);
+    }
+
+    a:hover img {
+      filter: saturate(100%);
+    }
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }

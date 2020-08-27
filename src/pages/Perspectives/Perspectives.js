@@ -2,6 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 import { useCacheStory, useCacheStories, usePrefetchStory } from '../../miller'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
 import styles from './Perspectives.module.scss'
 import LangLink from '../../components/LangLink'
 
@@ -22,11 +23,19 @@ function ThemeListItem({ theme, ...props }) {
         }}
         to={`/perspectives/${theme.slug}`}
       >
-        <h3>{theme.data.title}</h3>
-        <img
-          alt={theme.data.title}
-          src={theme.covers?.[0]?.data?.resolutions?.preview?.url}
-        />
+        <div
+          className={styles.infoCont}
+          style={{
+            backgroundImage: `url(${theme.covers?.[0]?.data?.resolutions?.preview?.url})`,
+          }}
+        >
+          <h2>{theme.data.title}</h2>
+          <img
+            className="d-none d-lg-block"
+            alt={theme.data.title}
+            src={theme.covers?.[0]?.data?.resolutions?.preview?.url}
+          />
+        </div>
       </LangLink>
     </div>
   )
@@ -37,20 +46,33 @@ export default function Perspectives() {
   const [{ stories: themes }] = useCacheStories(themesParams)
 
   return (
-    <div>
-      <Menu />
+    <div className="h-100 d-flex flex-column">
+      <div className="d-none d-lg-block">
+        <Menu />
+      </div>
+      <div className="d-block d-lg-none">
+        <MenuMobile title={perspectivesStory.data.title} />
+      </div>
       <div className={styles.ThemeListContainer}>
-        {themes.map((theme, i) => {
-          return (
-            <ThemeListItem
-              key={theme.id}
-              theme={theme}
-              className={classNames(styles.ThemeListItem, {
-                [styles.shifted]: i % 2 === 1,
-              })}
-            />
-          )
-        })}
+        <div className="container">
+          <div className="row">
+            {themes.map((theme, i) => {
+              return (
+                <ThemeListItem
+                  key={theme.id}
+                  theme={theme}
+                  className={classNames(
+                    'col-12 col-lg-6',
+                    styles.ThemeListItem,
+                    {
+                      [styles.shifted]: i % 2 === 1,
+                    }
+                  )}
+                />
+              )
+            })}
+          </div>
+        </div>
       </div>
     </div>
   )

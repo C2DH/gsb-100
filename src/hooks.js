@@ -1,6 +1,12 @@
 import qs from 'query-string'
 import { useParams, useLocation, useHistory } from 'react-router-dom'
-import { useLayoutEffect, useMemo, useCallback } from 'react'
+import {
+  useLayoutEffect,
+  useMemo,
+  useCallback,
+  useEffect,
+  useState,
+} from 'react'
 
 function namespacePath(path, lang) {
   let pathWithLang = `/${lang}`
@@ -20,11 +26,33 @@ export function useQueryString() {
     return qs.parse(location.search)
   }, [location.search])
 
-  const setQueryString = useCallback((newQueryString) => {
-    hisotry.push(`${location.pathname}?${qs.stringify(newQueryString)}`)
-  }, [location.pathname, hisotry])
+  const setQueryString = useCallback(
+    (newQueryString) => {
+      hisotry.push(`${location.pathname}?${qs.stringify(newQueryString)}`)
+    },
+    [location.pathname, hisotry]
+  )
 
   return [queryString, setQueryString]
+}
+
+export function usePreloadImage(imageUrl) {
+  const [isLoaded, setIsLoaded] = useState(false)
+  useEffect(() => {
+    setIsLoaded(false)
+    if (imageUrl) {
+      const img = new Image()
+      img.src = imageUrl
+      function handleImageLoad() {
+        setIsLoaded(true)
+      }
+      img.addEventListener('load', handleImageLoad)
+      return () => {
+        img.removeEventListener('load', handleImageLoad)
+      }
+    }
+  }, [imageUrl])
+  return isLoaded
 }
 
 export function useToWithLang(to) {
@@ -35,7 +63,7 @@ export function useToWithLang(to) {
   } else {
     return {
       ...to,
-      pathname: namespacePath(to.pathname, lang)
+      pathname: namespacePath(to.pathname, lang),
     }
   }
 }
@@ -58,4 +86,3 @@ export function useBodyNoOverflow() {
     }
   }, [])
 }
-

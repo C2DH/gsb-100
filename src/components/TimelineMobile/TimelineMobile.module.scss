@@ -1,0 +1,28 @@
+.docContainer {
+  flex: 0 0 80%;
+  border-right: 2px solid var(--secondary);
+  border-radius: 15px;
+  background-color: white;
+  color: var(--secondary);
+  padding: 0.875rem;
+  margin: 10px 0;
+}
+
+.docContainer:first-of-type {
+  border-left: 2px solid var(--secondary);
+}
+
+.date {
+  color: var(--secondary) !important;
+  font-family: var(--font-family-sans-serif);
+  font-size: 0.75rem;
+}
+
+.title {
+  font-size: 1.125rem;
+  color: var(--primary);
+}
+
+.description {
+  font-size: 0.875rem;
+}

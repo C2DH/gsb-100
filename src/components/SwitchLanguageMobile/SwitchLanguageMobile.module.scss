@@ -1,0 +1,32 @@
+.langBlockContainer {
+  border-top: 1px solid var(--border-color);
+}
+
+.langBlock {
+  border-right: 1px solid var(--border-color);
+  border-bottom: 2px solid transparent;
+  padding: 10px;
+}
+
+.langBlock:last-of-type {
+  border-right: none;
+}
+
+.langBlock.active {
+  border-bottom: 2px solid var(--primary);
+}
+
+.langBlock a {
+  color: white;
+  text-transform: uppercase;
+}
+
+.langBlock a,
+.langBlock a:hover,
+.langBlock a:active {
+  text-decoration: none;
+}
+
+.langBlock.active a {
+  color: var(--primary);
+}
