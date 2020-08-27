@@ -45,7 +45,7 @@ export default function DocumentInfoMetadata({ data }) {
   }, [data, i18n.language])
 
   return (
-    <table className={`${styles.tableBorders} table`}>
+    <table className={`${styles.tableBorders} table mb-0 mb-lg-auto`}>
       <tbody>
         {metadata.map((d) => {
           return (
