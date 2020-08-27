@@ -1,19 +1,22 @@
 # gsb-100
 Ostbelgien
 
-## BUILD
+## development
+```sh
+yarn install
+yarn start
+```
+or better using Makefile
+```sh
+yarn install
+make run-dev
+```
+Build is performed every time the `master` branch is update (see below for use in production). To test build:
 ```sh
 yarn build
 ```
 
-## REACT SNAP (MAKE IT STATIC)
-
-Run this command after making the first build.
-```sh
-yarn snap
-```
-
-## Release procedure
+## Deployment and release procedure
 Github Actions will build and push new images to docker hub whenever the `master` branch is updated.
 In this case it will be tagged as *latest* on docker. Whenever a new tag is created,
 the action uses it to tag the docker repo accordingly.
@@ -25,3 +28,14 @@ the action uses it to tag the docker repo accordingly.
 5. Push tags to GitHub: `git push origin --tags`
 
 Note: the action may take up to 10 minutes.
+
+
+## React SNAP (MAKE IT STATIC)
+TO test that snap works correctly, run this command after making the first build.
+```sh
+yarn snap
+```
+The Dockerfile-snap generated a docker image contained the result of the snap, so to generate the new docker image:
+```sh
+make build-docker-snap-image MAPBOX_ACCESS_TOKEN=<your access token here>
+```
