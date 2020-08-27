@@ -42,7 +42,9 @@
   }
 
   .chaptersCont {
-    height: 100%;
+    height: calc(100% - 55px);
+    position: sticky;
+    top: 55px;
   }
 
   .chapters {
@@ -67,6 +69,11 @@
 }
 
 @media (min-width: 992px) {
+  .chaptersCont {
+    height: 100%;
+    position: relative;
+  }
+
   .chapter {
     flex: 0 0 40%;
   }
