@@ -2,9 +2,12 @@ import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import groupBy from 'lodash/groupBy'
-import { useCacheDocuments } from '../../miller'
+import { useCacheStory, useCacheDocuments } from '../../miller'
+import Media from 'react-media'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
 import LangLink from '../../components/LangLink'
+import { BREAKPOINTS } from '../../utils'
 import ExplorationsCategoryImage from './ExplorationsCategoryImage'
 import styles from './ExplorationsCategory.module.scss'
 
@@ -32,6 +35,7 @@ const DocsTypedGallery = ({ type, docs }) => {
 
 export default function ExplorationsCategory() {
   const { category } = useParams()
+  const [explorationsStory] = useCacheStory('explorations')
 
   const [{ documents }] = useCacheDocuments({
     filters: {
@@ -52,13 +56,31 @@ export default function ExplorationsCategory() {
 
   return (
     <div className={styles.categoryPage}>
-      <Menu />
-      <div className="container">
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.md ? (
+            <div className="d-block sticky-top">
+              <MenuMobile title={explorationsStory.data.title} />
+            </div>
+          ) : (
+            <Menu />
+          )
+        }
+      </Media>
+      <div className={`${styles.catCont} container bg-secondary`}>
         <div className="row">
-          <div className="col-7">
+          <div className="col-12 col-lg-7">
             <h1 className="d-flex align-items-center my-4">
               <LangLink className="text-white" to="/explorations">
-                <ArrowLeft size={40} />
+                <Media queries={BREAKPOINTS}>
+                  {(matches) =>
+                    matches.md ? (
+                      <ArrowLeft size={25} />
+                    ) : (
+                      <ArrowLeft size={40} />
+                    )
+                  }
+                </Media>
               </LangLink>
               <span className="text-capitalize ml-2">{category}</span>
             </h1>

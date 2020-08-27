@@ -1,3 +1,12 @@
+.catCont {
+  position: sticky;
+  top: 55px;
+  z-index: 1;
+}
+.rowPadding {
+  padding-left: 15px;
+}
+
 .rowContainer {
   border-bottom: 1px solid var(--border-color);
 }
@@ -53,6 +62,11 @@
 }
 
 @media (min-width: 992px) {
+  .catCont {
+    position: relative;
+    top: unset;
+  }
+
   .rowPadding {
     padding-left: calc(50vw - (var(--max-width-lg) / 2));
   }
