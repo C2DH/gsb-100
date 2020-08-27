@@ -1,22 +1,22 @@
-FROM node:12-alpine as builder
+FROM buildkite/puppeteer as builder
 
 ARG MAPBOX_ACCESS_TOKEN
 ARG GIT_TAG
 ARG GIT_BRANCH
 ARG GIT_REVISION
 
-# Installs the latest Chromium (64) package.
-RUN sed -i 's/dl-cdn.alpinelinux.org/mirrors.ustc.edu.cn/g' /etc/apk/repositories
-RUN apk update && apk upgrade && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/community >> /etc/apk/repositories && \
-    echo @edge http://nl.alpinelinux.org/alpine/edge/main >> /etc/apk/repositories
-RUN apk add --no-cache nss@edge
-RUN apk add --no-cache chromium@edge
-
-# Tell Puppeteer to skip installing Chrome. We'll be using the installed package.
-ENV PUPPETEER_SKIP_CHROMIUM_DOWNLOAD true
-
 WORKDIR /gsb-100
+
+# Run everything after as non-privileged user.
+# Add user so we don't need --no-sandbox.
+RUN groupadd -r pptruser && useradd --no-log-init -r -g pptruser pptruser \
+    && mkdir -p /home/pptruser/Downloads /app \
+    && chown -R pptruser:pptruser /home/pptruser \
+    && chown -R pptruser:pptruser /app \
+    && chown -R pptruser:pptruser /gsb-100    
+
+# Run everything after as non-privileged user
+USER pptruser
 
 COPY package.json .
 COPY yarn.lock .
