@@ -8,6 +8,7 @@ import Menu from '../../components/Menu'
 import MenuMobile from '../../components/MenuMobile'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
+import MenuResponsive from '../../components/MenuResponsive'
 import styles from './Outline.module.scss'
 import { convertStrToSeconds } from '../../utils'
 
@@ -97,12 +98,13 @@ export default function Outline() {
 
   return (
     <div className={styles.PlayerPage}>
-      <div className="d-none d-lg-block">
+      {/*<div className="d-none d-lg-block">
         <Menu />
       </div>
       <div className="d-block d-lg-none">
         <MenuMobile title={outlineStory.data.title} />
-      </div>
+      </div>*/}
+      <MenuResponsive title={outlineStory.data.title}></MenuResponsive>
       <div className={styles.PlayerWrapper}>
         <ReactPlayer
           className={styles.Player}
