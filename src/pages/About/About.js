@@ -1,8 +1,11 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
-import { useCacheStory } from '../../miller'
+import Media from 'react-media'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
+import { BREAKPOINTS } from '../../utils'
+import { useCacheStory } from '../../miller'
 import c2dh from './c2dh.jpg'
 import unilu from './unilu.jpg'
 import styles from './About.module.scss'
@@ -13,7 +16,17 @@ export default function About() {
 
   return (
     <React.Fragment>
-      <Menu />
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.md ? (
+            <div className="d-block sticky-top">
+              <MenuMobile title={aboutStory.data.title} />
+            </div>
+          ) : (
+            <Menu />
+          )
+        }
+      </Media>
       <div className={styles.titleContainer}>
         <div className="container">
           <div className="row">
@@ -27,7 +40,7 @@ export default function About() {
       </div>
       <div className="container my-md-4">
         <div className="row">
-          <div className="col-12 col-md-7 col-xl-6 order-1 order-lg-0">
+          <div className="col-12 col-lg-7 order-1 order-lg-0">
             <div className={styles.pageContent}>
               <ReactMarkdown
                 linkTarget="_blank"
@@ -35,7 +48,7 @@ export default function About() {
               />
             </div>
           </div>
-          <div className="col-12 col-md-5 col-xl-6 order-0 order-lg-1">
+          <div className="col-12 col-lg-5 order-0 order-lg-1">
             <div className={styles.pageContent}>
               <h6 className="text-capitalize">{t('partners')}</h6>
               <div className="d-flex flex-wrap align-items-center">
