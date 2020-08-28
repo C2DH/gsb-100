@@ -1,6 +1,6 @@
 import React, { useState, useContext, useRef } from 'react'
 import ReactPlayer from 'react-player'
-import { Play, Pause, Maximize, Volume, Volume2 } from 'react-feather'
+import { Play, Pause, Maximize, VolumeX, Volume2 } from 'react-feather'
 import screenfull from 'screenfull'
 import styles from './Video.module.scss'
 
@@ -13,6 +13,9 @@ const Controls = ({ show }) => {
     togglePlay,
     seekTo,
     goFullScreen,
+    muted,
+    setMuted,
+    toggleMuted,
     volume,
     setVolume,
     extraProgress,
@@ -37,16 +40,16 @@ const Controls = ({ show }) => {
       <div className={styles.PlayPause} onClick={togglePlay}>
         {playing ? <Pause /> : <Play />}
       </div>
-      <div className={styles.Volume}>
-        {volume === 0 ? <Volume /> : <Volume2 />}
-        <input
+      <div className={styles.Volume} onClick={() => toggleMuted()}>
+        {muted === true ? <VolumeX /> : <Volume2 />}
+        {/*<input
           value={volume}
           onChange={(e) => setVolume(+e.target.value)}
           min={0}
           max={1}
           type="range"
           step="any"
-        />
+        />*/}
       </div>
       <div
         onClick={handleClick}
@@ -111,6 +114,8 @@ export default function Video({
     playerRef.current.seekTo(played, 'fraction')
   }
   const [volume, setVolume] = useState(1)
+  const [muted, setMuted] = useState(false)
+  const toggleMuted = () => setMuted((a) => !a)
 
   const goFullScreen = () => {
     const videoElement = playerRef.current.wrapper.querySelector('video')
@@ -131,6 +136,9 @@ export default function Video({
         goFullScreen,
         volume,
         setVolume,
+        muted,
+        setMuted,
+        toggleMuted,
         extraProgress,
         extraVideoOverlay,
       }}
@@ -139,6 +147,7 @@ export default function Video({
         onReady={handleOnReady}
         ref={playerRef}
         volume={volume}
+        muted={muted}
         progressInterval={200}
         className={styles.Player}
         onPause={() => setPlaying(false)}
