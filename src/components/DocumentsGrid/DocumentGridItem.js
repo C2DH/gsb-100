@@ -7,7 +7,7 @@ import IconSwitch from '../IconSwitch'
 import PopoverPreview from '../PopoverPreview'
 import styles from './DocumentsGrid.module.scss'
 
-function DocumentGridItem({ doc }) {
+function DocumentGridItem({ doc, mobile }) {
   const [show, setShow] = useState(false)
   const [referenceElement, setReferenceElement] = useState(null)
   const [popperElement, setPopperElement] = useState(null)
@@ -28,8 +28,14 @@ function DocumentGridItem({ doc }) {
     <React.Fragment>
       <div
         className={styles.itemBlock}
-        onMouseEnter={() => setShow(true)}
-        onMouseLeave={() => setShow(false)}
+        onMouseEnter={() => {
+          if (mobile) return
+          setShow(true)
+        }}
+        onMouseLeave={() => {
+          if (mobile) return
+          setShow(false)
+        }}
         ref={setReferenceElement}
       >
         <DocLink document={doc}>

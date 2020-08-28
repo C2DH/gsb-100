@@ -13,7 +13,7 @@ export default function DocumentDetail() {
   const { t } = useTranslation()
 
   return (
-    <div className="h-100 position-relative">
+    <div className={`${styles.documentDetailCont} h-100 position-relative`}>
       <LangLink
         to="/explorations/all"
         className={`${styles.close} d-flex align-items-center`}
