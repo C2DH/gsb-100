@@ -12,12 +12,12 @@
 .PdfDocumentContainer {
   flex-grow: 1;
   min-height: 0;
+  display: flex;
 }
 
 .pdfDocument {
   display: flex;
   flex-direction: column;
-  height: 100%;
 }
 
 .pdfPage {
