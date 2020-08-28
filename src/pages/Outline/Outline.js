@@ -98,12 +98,6 @@ export default function Outline() {
 
   return (
     <div className={styles.PlayerPage}>
-      {/*<div className="d-none d-lg-block">
-        <Menu />
-      </div>
-      <div className="d-block d-lg-none">
-        <MenuMobile title={outlineStory.data.title} />
-      </div>*/}
       <MenuResponsive title={outlineStory.data.title}></MenuResponsive>
       <div className={styles.PlayerWrapper}>
         <ReactPlayer
@@ -129,7 +123,10 @@ export default function Outline() {
             `${styles.Controls} pb-2 pb-lg-3 px-2 px-lg-5 position-relative`
           )}
         >
-          <div className="py-2 py-lg-4 d-flex justify-content-center justify-content-lg-start sticky-top">
+          <div
+            className="py-2 py-lg-4 d-flex justify-content-center justify-content-lg-start"
+            style={{ position: 'sticky', top: 0 }}
+          >
             <button
               type="button"
               className="ml-2 btn btn-light btn-icon-round opacity-75"
