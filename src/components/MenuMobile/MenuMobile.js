@@ -74,13 +74,16 @@ function MenuMobile({ title, level }) {
             return (
               <div
                 key={d.slug}
-                className={classNames('flex-grow-1', `${styles.navLinkCont}`)}
+                className={classNames(
+                  'flex-grow-1 d-flex',
+                  `${styles.navLinkCont}`
+                )}
               >
                 <LangNavLink
                   to={d.slug}
                   onMouseOver={() => prefetchStory(d.slug)}
                   activeClassName={styles.active}
-                  className={`${styles.navLink} nav-item nav-link text-center d-flex align-items-center h-100 justify-content-center`}
+                  className={`${styles.navLink} nav-item nav-link text-center d-flex align-items-center justify-content-center`}
                 >
                   {d.slug !== 'about' &&
                     (i + 1).toString().padStart(2, '0') + '. '}

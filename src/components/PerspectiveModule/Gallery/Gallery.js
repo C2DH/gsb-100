@@ -8,7 +8,7 @@ import './Gallery.css'
 
 const GalleryItem = React.memo(({ document }) => {
   return (
-    <DocLink className="d-flex" document={document}>
+    <DocLink className="d-flex flex-column" document={document}>
       <img
         src={document.data.resolutions.preview.url}
         alt={document.data.title}

@@ -7,8 +7,7 @@ import { ParentSize } from '@vx/responsive'
 import Media from 'react-media'
 import { useCacheStory } from '../../miller'
 import PerspectiveChapter from '../../components/PerspectiveChapter'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
+import MenuResponsive from '../../components/MenuResponsive'
 import LangLink from '../../components/LangLink'
 import Timeline from '../../components/Timeline'
 import TimelineMobile from '../../components/TimelineMobile'
@@ -59,17 +58,10 @@ export default function PerspectiveDetail() {
 
   return (
     <React.Fragment>
-      <Media queries={BREAKPOINTS}>
-        {(matches) =>
-          matches.md ? (
-            <div className="d-block sticky-top">
-              <MenuMobile title={perspectivesStory.data.title} />
-            </div>
-          ) : (
-            <Menu />
-          )
-        }
-      </Media>
+      <MenuResponsive
+        level={'02'}
+        title={perspectivesStory.data.title}
+      ></MenuResponsive>
 
       <div className="container">
         <div className="row">
