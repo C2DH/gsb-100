@@ -15,7 +15,7 @@ export default function SwitchLanguage() {
   const { langs } = useMiller()
 
   return (
-    <UncontrolledDropdown>
+    <UncontrolledDropdown className="d-flex">
       <DropdownToggle color="secondary" className={styles.dropdownToggle} caret>
         {i18n.language.split('_')[0]}
       </DropdownToggle>

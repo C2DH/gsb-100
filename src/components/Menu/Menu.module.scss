@@ -3,7 +3,7 @@
 }
 
 #navbarBrand {
-  font-family: "Begum Sans", serif;
+  font-family: 'Begum Sans', serif;
   color: white;
   padding: 0.5rem 0;
 }
@@ -31,6 +31,11 @@
   width: 100%;
   line-height: 2rem;
   text-transform: capitalize;
+  color: white;
+}
+
+.navLink:hover {
+  color: var(--primary);
 }
 
 .navLink.active {

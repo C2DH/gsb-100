@@ -21,7 +21,7 @@ function Menu() {
   return (
     <nav
       id={styles.navbar}
-      className="navbar navbar-expand-lg navbar-dark bg-secondary"
+      className="nav px-2 justify-content-start d-flex align-items-center navbar-dark bg-secondary"
     >
       <LangLink id={styles.navbarBrand} className="navbar-brand" to="/">
         {[
@@ -33,8 +33,8 @@ function Menu() {
           </h3>
         ))}
       </LangLink>
-      <div className="collapse navbar-collapse align-self-stretch">
-        <div className="navbar-nav flex-grow-1 h-100">
+      <div className="d-flex flex-grow-1 align-self-stretch">
+        <div className="d-flex flex-grow-1 h-100 align-items-center">
           {stories.map((d, i) => {
             return (
               <div
