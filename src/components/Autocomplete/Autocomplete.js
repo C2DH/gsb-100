@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useReducer, useState } from 'react'
 import classNames from 'classnames'
+import Media from 'react-media'
+import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
+import { BREAKPOINTS } from '../../utils'
 import styles from './Autocomplete.module.scss'
 import { Search, X } from 'react-feather'
 
@@ -180,19 +184,29 @@ export default function Autocomplete({
   return (
     <form onSubmit={handleSubmit} className={`${styles.autocomplete}`}>
       <div className="form-group mb-0 d-flex">
-        <div className="input-group-prepend">
-          {searchIcon ? (
-            <button className="btn btn-secondary" type="submit">
-              <Search></Search>
-            </button>
-          ) : (
-            <button className="btn btn-secondary" onClick={reset}>
-              <X></X>
-            </button>
+        <Media queries={BREAKPOINTS}>
+          {(matches) => (
+            <div
+              className={
+                !matches.md
+                  ? 'input-group-prepend order-0'
+                  : 'input-group-append order-1'
+              }
+            >
+              {searchIcon ? (
+                <button className="btn btn-secondary" type="submit">
+                  <Search size={!matches.md ? 24 : 16}></Search>
+                </button>
+              ) : (
+                <button className="btn btn-secondary" onClick={reset}>
+                  <X size={!matches.md ? 24 : 16}></X>
+                </button>
+              )}
+            </div>
           )}
-        </div>
+        </Media>
         <input
-          className="form-control"
+          className="form-control order-0 order-lg-1"
           ref={inputRef}
           onBlur={handleOnBlur}
           onFocus={handleOnFocus}

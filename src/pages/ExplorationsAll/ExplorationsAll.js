@@ -1,16 +1,20 @@
 import React from 'react'
 import { Waypoint } from 'react-waypoint'
 import { ArrowLeft } from 'react-feather'
-import { useQueryString } from '../../hooks'
-import { useDocuments, useDocumentsSuggest } from '../../miller'
+import Media from 'react-media'
 import Menu from '../../components/Menu'
+import MenuMobile from '../../components/MenuMobile'
+import { useQueryString } from '../../hooks'
+import { useCacheStory, useDocuments, useDocumentsSuggest } from '../../miller'
 import DocumentsGrid from '../../components/DocumentsGrid'
 import Autocomplete from '../../components/Autocomplete'
 import LangLink from '../../components/LangLink'
+import { BREAKPOINTS } from '../../utils'
 import styles from './ExplorationsAll.module.scss'
 
 export default function ExplorationsAll() {
   const [queryString, setQueryString] = useQueryString()
+  const [explorationsStory] = useCacheStory('explorations')
 
   const [{ documents, loading, allFacets }, { fetchMore }] = useDocuments({
     limit: 150,
@@ -42,20 +46,38 @@ export default function ExplorationsAll() {
 
   return (
     <div className={styles.ExplorationsAllPage}>
-      <Menu />
+      <Media queries={BREAKPOINTS}>
+        {(matches) =>
+          matches.md ? (
+            <div className="d-block sticky-top">
+              <MenuMobile title={explorationsStory.data.title} />
+            </div>
+          ) : (
+            <Menu />
+          )
+        }
+      </Media>
       <div className="container">
         <div className="row">
-          <div className="col-7">
+          <div className="col-12 col-lg-7">
             <h1 className="d-flex align-items-center my-4">
               <LangLink className="text-white" to="/explorations">
-                <ArrowLeft size={40} />
+                <Media queries={BREAKPOINTS}>
+                  {(matches) =>
+                    matches.md ? (
+                      <ArrowLeft size={25} />
+                    ) : (
+                      <ArrowLeft size={40} />
+                    )
+                  }
+                </Media>
               </LangLink>
               <span className="text-capitalize ml-2">All sources</span>
             </h1>
           </div>
         </div>
         <div className={`${styles.rowSearch} row align-items-center`}>
-          <div className="col-10">
+          <div className={`${styles.colSearch} col-12 col-lg-10`}>
             <Autocomplete
               initialSearch={queryString.q}
               onSelected={(q) =>
@@ -70,7 +92,7 @@ export default function ExplorationsAll() {
               clearSuggestions={clearSearch}
             />
           </div>
-          <div className="col-2">
+          <div className="col-12 col-lg-2 pr-4 pr-lg-auto">
             <select
               className={`${styles.selectType} form-control`}
               value={queryString.type ?? ''}

@@ -40,7 +40,9 @@ function DocumentGridItem({ doc }) {
               src={imageUrl}
             />
           ) : (
-            <div className="w-100 h-100 border bg-secondary d-flex align-items-center justify-content-center">
+            <div
+              className={`${styles.smallPreview} border bg-secondary d-flex align-items-center justify-content-center`}
+            >
               <IconSwitch color={'white'} type={doc.type}></IconSwitch>
             </div>
           )}

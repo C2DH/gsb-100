@@ -9,7 +9,7 @@
   color: white;
   border: none;
   box-shadow: none;
-  font-size: 1.5rem;
+  font-size: 1rem;
 }
 
 .selectType {
@@ -22,9 +22,44 @@
   background-position-y: 50%;
 }
 .rowSearch {
+  border-top: 1px solid var(--border-color);
   border-bottom: 1px solid var(--border-color);
   position: sticky;
-  top: 0;
+  top: 55px;
   z-index: 1;
   background: var(--secondary);
+}
+
+.colSearch {
+  border-bottom: 1px solid var(--border-color);
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .selectType {
+    font-size: 1.5rem;
+  }
+
+  .rowSearch {
+    border-top: none;
+    top: 0;
+  }
+  .colSearch {
+    border-bottom: none;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }

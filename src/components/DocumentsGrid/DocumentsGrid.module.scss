@@ -1,8 +1,13 @@
+:root {
+  --grid-size-lg: 68px;
+  --grid-size: 100px;
+}
+
 .gridContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, 68px);
-  grid-template-rows: repeat(auto-fill, 68px);
-  grid-gap: 1rem;
+  grid-template-columns: repeat(auto-fill, var(--grid-size));
+  grid-template-rows: repeat(auto-fill, var(--grid-size));
+  grid-gap: 0.75rem;
   justify-content: space-between;
   width: 100%;
   margin: 15px 0;
@@ -14,13 +19,49 @@
 }
 
 .smallImage {
-  object-fit: contain;
-  width: 68px;
-  height: 68px;
+  object-fit: cover;
+  width: var(--grid-size);
+  height: var(--grid-size);
   filter: brightness(0.75);
   transition: filter var(--transition);
 }
 
-// .smallImage:hover {
-//   filter: brightness(1);
-// }
+.smallPreview {
+  width: var(--grid-size);
+  height: var(--grid-size);
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .gridContainer {
+    grid-template-columns: repeat(auto-fill, var(--grid-size-lg));
+    grid-template-rows: repeat(auto-fill, var(--grid-size-lg));
+    grid-gap: 1rem;
+  }
+
+  .smallImage {
+    object-fit: contain;
+    width: var(--grid-size-lg);
+    height: var(--grid-size-lg);
+  }
+
+  .smallPreview {
+    width: var(--grid-size-lg);
+    height: var(--grid-size-lg);
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
+}
