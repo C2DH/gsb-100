@@ -31,6 +31,17 @@
   z-index: 1;
 }
 
+.mobileTitle {
+  position: sticky;
+  top: 55px;
+  background: linear-gradient(
+    rgba(var(--gray-rgb), 1) 0%,
+    rgba(var(--gray-rgb), 0.7) 70%,
+    rgba(var(--gray-rgb), 0) 100%
+  );
+  z-index: 1;
+}
+
 .chevron {
   transition: transform var(--transition);
 }

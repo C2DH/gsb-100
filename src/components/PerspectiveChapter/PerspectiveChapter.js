@@ -4,15 +4,8 @@ import Media from 'react-media'
 import { ChevronDown, ChevronUp } from 'react-feather'
 import PerspectiveModule from '../PerspectiveModule'
 import { useCacheStory } from '../../miller'
+import { BREAKPOINTS } from '../../utils'
 import styles from './PerspectiveChapter.module.scss'
-
-const BREAKPOINTS = {
-  xs: { maxWidth: 566 },
-  sm: { maxWidth: 767 },
-  md: { maxWidth: 991 },
-  lg: { maxWidth: 1199 },
-  xl: { maxWidth: 1399 },
-}
 
 function PerspectiveChapterContent({ chapterId }) {
   const [chapter] = useCacheStory(chapterId)
@@ -24,8 +17,11 @@ function PerspectiveChapterContent({ chapterId }) {
     <Media queries={BREAKPOINTS}>
       {(matches) =>
         matches.sm ? (
-          <div>
-            <div className="d-flex align-items-center" onClick={toggle}>
+          <React.Fragment>
+            <div
+              className={`${styles.mobileTitle} d-flex align-items-center`}
+              onClick={toggle}
+            >
               <h3 className="m-0">{chapter.data.title}</h3>
               <div className="ml-auto">
                 <ChevronDown
@@ -37,7 +33,7 @@ function PerspectiveChapterContent({ chapterId }) {
               </div>
             </div>
             <Collapse isOpen={isOpen}>
-              <Card className="border-0">
+              <Card className="border-0 bg-gray">
                 <CardBody className="p-0">
                   {modules.map((module, index) => (
                     <div className="my-4" key={index}>
@@ -47,7 +43,7 @@ function PerspectiveChapterContent({ chapterId }) {
                 </CardBody>
               </Card>
             </Collapse>
-          </div>
+          </React.Fragment>
         ) : (
           <React.Fragment>
             <h3 className={`${styles.title} m-0 py-4`}>{chapter.data.title}</h3>

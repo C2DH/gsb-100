@@ -57,7 +57,7 @@ export default function PerspectiveDetail() {
   }
 
   return (
-    <React.Fragment>
+    <div className={styles.perspectiveDetailCont}>
       <MenuResponsive
         level={'02'}
         title={perspectivesStory.data.title}
@@ -123,9 +123,7 @@ export default function PerspectiveDetail() {
         }
       </Media>
 
-      <div
-        className={`${styles.chaptersCont} d-flex flex-column overflow-hidden`}
-      >
+      <div className={`${styles.chaptersCont} d-flex flex-column`}>
         <div className="container flex-shrink-0">
           <div className="row">
             <div className="col-12 d-flex justify-content-between align-items-center">
@@ -162,6 +160,6 @@ export default function PerspectiveDetail() {
           ))}
         </div>
       </div>
-    </React.Fragment>
+    </div>
   )
 }
