@@ -1,8 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import { useCacheStory, useCacheStories, usePrefetchStory } from '../../miller'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
+import MenuResponsive from '../../components/MenuResponsive'
 import styles from './Perspectives.module.scss'
 import LangLink from '../../components/LangLink'
 
@@ -26,7 +25,8 @@ function ThemeListItem({ theme, ...props }) {
         <div
           className={styles.infoCont}
           style={{
-            backgroundImage: `url(${theme.covers?.[0]?.data?.resolutions?.preview?.url})`,
+            backgroundImage:
+              'url(' + theme.covers?.[0]?.data?.resolutions?.preview?.url + ')',
           }}
         >
           <h2>{theme.data.title}</h2>
@@ -47,12 +47,10 @@ export default function Perspectives() {
 
   return (
     <div className="h-100 d-flex flex-column">
-      <div className="d-none d-lg-block">
-        <Menu />
-      </div>
-      <div className="d-block d-lg-none">
-        <MenuMobile title={perspectivesStory.data.title} />
-      </div>
+      <MenuResponsive
+        level={'02'}
+        title={perspectivesStory.data.title}
+      ></MenuResponsive>
       <div className={styles.ThemeListContainer}>
         <div className="container">
           <div className="row">

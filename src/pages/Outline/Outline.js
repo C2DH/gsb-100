@@ -4,8 +4,6 @@ import classNames from 'classnames'
 import ReactPlayer from 'react-player'
 import { Play, Pause, VolumeX, Volume2, SkipForward } from 'react-feather'
 import { useCacheStory } from '../../miller'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
 import MenuResponsive from '../../components/MenuResponsive'
@@ -98,7 +96,10 @@ export default function Outline() {
 
   return (
     <div className={styles.PlayerPage}>
-      <MenuResponsive title={outlineStory.data.title}></MenuResponsive>
+      <MenuResponsive
+        level={'01'}
+        title={outlineStory.data.title}
+      ></MenuResponsive>
       <div className={styles.PlayerWrapper}>
         <ReactPlayer
           className={styles.Player}

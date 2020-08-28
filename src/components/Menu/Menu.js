@@ -21,7 +21,7 @@ function Menu() {
   return (
     <nav
       id={styles.navbar}
-      className="nav px-2 justify-content-start d-flex align-items-center navbar-dark bg-secondary"
+      className="nav px-2 justify-content-start align-items-center navbar-dark bg-secondary d-none d-lg-flex"
     >
       <LangLink id={styles.navbarBrand} className="navbar-brand" to="/">
         {[

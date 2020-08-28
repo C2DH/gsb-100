@@ -2,8 +2,7 @@ import React from 'react'
 import { Waypoint } from 'react-waypoint'
 import { ArrowLeft } from 'react-feather'
 import Media from 'react-media'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
+import MenuResponsive from '../../components/MenuResponsive'
 import { useQueryString } from '../../hooks'
 import { useCacheStory, useDocuments, useDocumentsSuggest } from '../../miller'
 import DocumentsGrid from '../../components/DocumentsGrid'
@@ -46,17 +45,10 @@ export default function ExplorationsAll() {
 
   return (
     <div className={styles.ExplorationsAllPage}>
-      <Media queries={BREAKPOINTS}>
-        {(matches) =>
-          matches.md ? (
-            <div className="d-block sticky-top">
-              <MenuMobile title={explorationsStory.data.title} />
-            </div>
-          ) : (
-            <Menu />
-          )
-        }
-      </Media>
+      <MenuResponsive
+        level={'03'}
+        title={explorationsStory.data.title}
+      ></MenuResponsive>
       <div className="container">
         <div className="row">
           <div className="col-12 col-lg-7">

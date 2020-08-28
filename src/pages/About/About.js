@@ -1,10 +1,7 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
-import Media from 'react-media'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
-import { BREAKPOINTS } from '../../utils'
+import MenuResponsive from '../../components/MenuResponsive'
 import { useCacheStory } from '../../miller'
 import c2dh from './c2dh.jpg'
 import unilu from './unilu.jpg'
@@ -16,17 +13,7 @@ export default function About() {
 
   return (
     <React.Fragment>
-      <Media queries={BREAKPOINTS}>
-        {(matches) =>
-          matches.md ? (
-            <div className="d-block sticky-top">
-              <MenuMobile title={aboutStory.data.title} />
-            </div>
-          ) : (
-            <Menu />
-          )
-        }
-      </Media>
+      <MenuResponsive title={aboutStory.data.title}></MenuResponsive>
       <div className={styles.titleContainer}>
         <div className="container">
           <div className="row">

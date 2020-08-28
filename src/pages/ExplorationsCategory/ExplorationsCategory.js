@@ -4,10 +4,9 @@ import { ArrowLeft } from 'react-feather'
 import groupBy from 'lodash/groupBy'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import Media from 'react-media'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
-import LangLink from '../../components/LangLink'
 import { BREAKPOINTS } from '../../utils'
+import MenuResponsive from '../../components/MenuResponsive'
+import LangLink from '../../components/LangLink'
 import ExplorationsCategoryImage from './ExplorationsCategoryImage'
 import styles from './ExplorationsCategory.module.scss'
 
@@ -56,17 +55,10 @@ export default function ExplorationsCategory() {
 
   return (
     <div className={styles.categoryPage}>
-      <Media queries={BREAKPOINTS}>
-        {(matches) =>
-          matches.md ? (
-            <div className="d-block sticky-top">
-              <MenuMobile title={explorationsStory.data.title} />
-            </div>
-          ) : (
-            <Menu />
-          )
-        }
-      </Media>
+      <MenuResponsive
+        level={'03'}
+        title={explorationsStory.data.title}
+      ></MenuResponsive>
       <div className={`${styles.catCont} container bg-secondary`}>
         <div className="row">
           <div className="col-12 col-lg-7">

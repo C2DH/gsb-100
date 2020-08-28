@@ -4,13 +4,13 @@ import Menu from '../../components/Menu'
 import MenuMobile from '../../components/MenuMobile'
 import { BREAKPOINTS } from '../../utils'
 
-export default function MenuResponsive({ title }) {
+export default function MenuResponsive({ title, level }) {
   return (
     <Media queries={BREAKPOINTS}>
       {(matches) =>
         matches.md ? (
           <div className="d-block sticky-top">
-            <MenuMobile title={title} />
+            <MenuMobile title={title} level={level} />
           </div>
         ) : (
           <Menu />

@@ -1,12 +1,9 @@
 import React, { useMemo } from 'react'
 import groupBy from 'lodash/groupBy'
 import { shuffle } from 'seed-shuffle'
-import Media from 'react-media'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
+import MenuResponsive from '../../components/MenuResponsive'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import ImagesStack from '../../components/ImagesStack'
-import { BREAKPOINTS } from '../../utils'
 import styles from './Explorations.module.scss'
 
 const NUMBER_OF_IMAGES_PER_CATEGORY = 5
@@ -43,17 +40,10 @@ export default function Explorations() {
 
   return (
     <div className={styles.explorationPage}>
-      <Media queries={BREAKPOINTS}>
-        {(matches) =>
-          matches.md ? (
-            <div className="d-block sticky-top">
-              <MenuMobile title={explorationsStory.data.title} />
-            </div>
-          ) : (
-            <Menu />
-          )
-        }
-      </Media>
+      <MenuResponsive
+        level={'03'}
+        title={explorationsStory.data.title}
+      ></MenuResponsive>
       <div className="container">
         <div className="row">
           <div className="col-12 col-md-9 col-lg-7">

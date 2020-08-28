@@ -14,7 +14,7 @@ const params = {
   filters: { slug__in: pagesId },
 }
 
-function MenuMobile({ title }) {
+function MenuMobile({ title, level }) {
   const [open, setOpen] = useState(false)
   const [{ stories }] = useCacheStories(params)
   const [homeStory] = useCacheStory('home')
@@ -26,7 +26,10 @@ function MenuMobile({ title }) {
         id={styles.menuTop}
         className="bg-secondary d-flex py-2 px-3 align-items-center justify-content-between"
       >
-        <h5 className="m-0 text-primary">{`01. ${title}`}</h5>
+        <h5 className="m-0 text-primary">
+          {level && `${level}. `}
+          {title}
+        </h5>
         <div
           className="btn btn-secondary"
           onClick={() => {
