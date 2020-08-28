@@ -50,10 +50,10 @@ export default function Outline() {
   const chapters = outlineTheme.data.chapters
 
   const [chapterIndex, setChapterIndex] = useState(0)
-  const [playing, setPlaying] = useState(true)
+  const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
-  const [volume, setVolume] = useState(1)
-  const toggleMute = () => setVolume((v) => (v === 0 ? 1 : 0))
+  const [muted, setMuted] = useState(false)
+  const toggleMute = () => setMuted((v) => !v)
   const [progress, setProgress] = useState({
     played: 0,
     playedSeconds: 0,
@@ -106,7 +106,7 @@ export default function Outline() {
           ref={playerRef}
           onProgress={setProgress}
           onEnded={skipNext}
-          volume={volume}
+          muted={muted}
           width="100%"
           height="100%"
           playing={playing}
@@ -147,7 +147,7 @@ export default function Outline() {
               className="ml-3 btn btn-light btn-icon-round opacity-75"
               onClick={toggleMute}
             >
-              {volume === 0 ? <VolumeX /> : <Volume2 />}
+              {muted === true ? <VolumeX /> : <Volume2 />}
             </button>
           </div>
           <div className="d-flex flex-column flex-lg-row flex-grow-0 flex-shrink-1">
