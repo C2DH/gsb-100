@@ -26,10 +26,32 @@
   flex-shrink: 0;
 }
 
+.playControl {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  top: calc(45% / 2);
+  left: 50%;
+  transform: translate(-50%, -50%);
+  display: flex;
+  border-radius: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
 .Controls {
   background: none;
   flex-grow: 0;
   overflow-y: auto;
+}
+
+.Controls:hover #playerControl {
+  opacity: 1;
+}
+
+#playerControl {
+  opacity: 0;
+  transition: opacity var(--transition);
 }
 
 // Small devices (landscape phones, 576px and up)
@@ -55,6 +77,12 @@
     z-index: 0;
     height: 100% !important;
     overflow: hidden;
+  }
+
+  .playControl {
+    width: 100px;
+    height: 100px;
+    top: 50%;
   }
 
   .Controls {

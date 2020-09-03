@@ -3,6 +3,8 @@ import find from 'lodash/find'
 import classNames from 'classnames'
 import ReactPlayer from 'react-player'
 import { Play, Pause, VolumeX, Volume2, SkipForward } from 'react-feather'
+import { Transition, Spring } from 'react-spring/renderprops'
+import { useSpring, animated } from 'react-spring'
 import { useCacheStory } from '../../miller'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
@@ -111,22 +113,61 @@ export default function Outline() {
           height="100%"
           playing={playing}
           url={playingVideoUrl}
+          onClick={() => {
+            togglePlay()
+          }}
           playsinline
         />
-        {playingDocument && (
-          <PlayingDocument
-            onClick={handlePlayingDocClick}
-            document={playingDocument}
-          />
-        )}
+        <Transition
+          items={playingDocument}
+          from={{ opacity: 0, transform: 'translateX(100%)' }}
+          enter={{ opacity: 1, transform: 'translateX(0%)' }}
+          leave={{ opacity: 0, transform: 'translateX(100%)' }}
+        >
+          {(playingDocument) =>
+            playingDocument &&
+            ((props) => (
+              <PlayingDocument
+                onClick={handlePlayingDocClick}
+                document={playingDocument}
+                style={props}
+              />
+            ))
+          }
+        </Transition>
+        <Transition
+          items={playing}
+          from={{ opacity: 0 }}
+          enter={{ opacity: 0.75 }}
+          leave={{ opacity: 0 }}
+          trail={300}
+        >
+          {(playing) =>
+            !playing &&
+            ((props) => (
+              <animated.div
+                className={classNames(
+                  `${styles.playControl} btn btn-secondary`
+                )}
+                onClick={() => {
+                  togglePlay()
+                }}
+                style={props}
+              >
+                <Play size={30} />
+              </animated.div>
+            ))
+          }
+        </Transition>
+
         <div
           className={classNames(
             `${styles.Controls} pb-2 pb-lg-3 px-2 px-lg-5 position-relative`
           )}
         >
           <div
-            className="py-2 py-lg-4 d-flex justify-content-center justify-content-lg-start"
-            style={{ position: 'sticky', top: 0 }}
+            id={styles.playerControl}
+            className="py-2 py-lg-4 d-none d-lg-flex justify-content-center justify-content-lg-start"
           >
             <button
               type="button"
@@ -150,18 +191,28 @@ export default function Outline() {
               {muted === true ? <VolumeX /> : <Volume2 />}
             </button>
           </div>
-          <div className="d-flex flex-column flex-lg-row flex-grow-0 flex-shrink-1">
-            {chapters.map((chapter, i) => (
-              <SeekLine
-                key={i}
-                onSeek={handleSeek}
-                index={i}
-                title={chapter.data.title}
-                abstract={chapter.data.abstract}
-                progress={i === chapterIndex ? progress.played : null}
-              />
-            ))}
-          </div>
+          <Spring
+            from={{ transform: 'translateY(100%)' }}
+            to={{ transform: 'translateY(0%)' }}
+          >
+            {(props) => (
+              <div
+                style={props}
+                className="d-flex flex-column flex-lg-row flex-grow-0 flex-shrink-1 pt-2 pt-lg-0"
+              >
+                {chapters.map((chapter, i) => (
+                  <SeekLine
+                    key={i}
+                    onSeek={handleSeek}
+                    index={i}
+                    title={chapter.data.title}
+                    abstract={chapter.data.abstract}
+                    progress={i === chapterIndex ? progress.played : null}
+                  />
+                ))}
+              </div>
+            )}
+          </Spring>
         </div>
       </div>
     </div>

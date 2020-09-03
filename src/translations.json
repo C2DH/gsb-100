@@ -1,22 +1,22 @@
 {
   "fr_FR": {
     "translation": {
-      "hello": "Bonjour"
+      "start": "start"
     }
   },
   "en_US": {
     "translation": {
-      "hello": "Hello"
+      "start": "start"
     }
   },
   "de_DE": {
     "translation": {
-      "hello": "Hallo"
+      "start": "start"
     }
   },
   "nl_BE": {
     "translation": {
-      "hello": "Hallo"
+      "start": "start"
     }
   }
 }

@@ -3,6 +3,8 @@
   display: flex;
   align-items: flex-end;
   margin: 0 10px;
+  opacity: 0.7;
+  transition: opacity var(--transition), color var(--transition);
 }
 .SeekContentSmall {
   flex-basis: (100% / 9);
@@ -11,8 +13,14 @@
   flex-basis: (100% / 9) * 2;
 }
 
-.SeekContent.active .SeekBackground {
+.SeekContent.active .SeekBackground,
+.SeekContent:hover .SeekBackground {
   transform: scaleY(1.8);
+}
+
+.SeekContent.active,
+.SeekContent:hover {
+  opacity: 1;
 }
 
 .SeekLineContainer {
@@ -20,6 +28,7 @@
 }
 
 .SeekBackground {
+  position: relative;
   cursor: pointer;
   width: 100%;
   height: 5px;
@@ -33,7 +42,19 @@
   background-color: var(--primary);
 }
 
-.SeekContent.active .SeekLineText:first-of-type {
+.SeekPreview {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 0%;
+  opacity: 0.35;
+  background-color: var(--primary);
+  pointer-events: none;
+  // transition: width 0.2s linear;
+}
+
+.SeekContent.active .SeekLineText:first-of-type,
+.SeekContent:hover .SeekLineText:first-of-type {
   color: var(--primary);
 }
 
@@ -42,4 +63,8 @@
   margin: 6px 0;
   line-height: 1.2;
   transition: color var(--transition);
+}
+
+.SeekLineText:first-of-type {
+  cursor: pointer;
 }

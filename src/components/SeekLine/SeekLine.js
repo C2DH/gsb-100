@@ -1,8 +1,9 @@
-import React, { useRef } from 'react'
+import React, { useRef, useState } from 'react'
 import classNames from 'classnames'
 import styles from './SeekLine.module.scss'
 
 function SeekLine({ index, progress, onSeek, title, abstract }) {
+  const [widthPreview, setWidthPreview] = useState(0)
   const width = progress === null ? 0 : progress * 100 + '%'
   const seekLineRef = useRef()
 
@@ -16,6 +17,18 @@ function SeekLine({ index, progress, onSeek, title, abstract }) {
     onSeek(index, nextProgress)
   }
 
+  function handleMouseMove(e) {
+    const clientX = e.clientX
+    const { left, width } = seekLineRef.current.getBoundingClientRect()
+    setWidthPreview(
+      Math.min(Math.max(clientX - parseInt(left), 0) / width, 1) * 100
+    )
+  }
+
+  function handleMouseLeave() {
+    setWidthPreview(0)
+  }
+
   return (
     <div
       className={classNames(
@@ -25,12 +38,20 @@ function SeekLine({ index, progress, onSeek, title, abstract }) {
       )}
     >
       <div className={styles.SeekLineContainer}>
-        <p className={styles.SeekLineText}>{title}</p>
+        <p onClick={() => onSeek(index, 0)} className={styles.SeekLineText}>
+          {title}
+        </p>
         <div
           ref={seekLineRef}
           onClick={handleClick}
+          onMouseMove={handleMouseMove}
+          onMouseLeave={handleMouseLeave}
           className={styles.SeekBackground}
         >
+          <div
+            className={styles.SeekPreview}
+            style={{ width: `${widthPreview}%` }}
+          />
           <div className={styles.SeekProgress} style={{ width }} />
         </div>
         <p className={styles.SeekLineText}>{abstract}</p>

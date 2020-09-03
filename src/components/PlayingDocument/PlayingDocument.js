@@ -1,8 +1,9 @@
 import React, { useState, useCallback } from 'react'
+import { Transition } from 'react-spring/renderprops'
 import OutlineDocumentModal from '../OutlineDocumentModal'
 import styles from './PlayingDocument.module.scss'
 
-function PlayingDocument({ document, onClick }) {
+function PlayingDocument({ document, onClick, style }) {
   const [showModal, setShowModal] = useState(false)
   const toggleModal = useCallback(
     (e) => {
@@ -18,10 +19,25 @@ function PlayingDocument({ document, onClick }) {
         src={document.data.translated_thumb_urls}
         onClick={toggleModal}
         alt={document.data.title}
+        style={style}
       />
-      {showModal && (
-        <OutlineDocumentModal doc={document} onClose={toggleModal} />
-      )}
+      <Transition
+        items={showModal}
+        from={{ opacity: 0 }}
+        enter={{ opacity: 1 }}
+        leave={{ opacity: 0 }}
+      >
+        {(showModal) =>
+          showModal &&
+          ((props) => (
+            <OutlineDocumentModal
+              doc={document}
+              onClose={toggleModal}
+              style={props}
+            />
+          ))
+        }
+      </Transition>
     </React.Fragment>
   )
 }

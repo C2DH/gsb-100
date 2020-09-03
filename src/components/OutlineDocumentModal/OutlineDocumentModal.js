@@ -3,10 +3,10 @@ import { useBodyNoOverflow } from '../../hooks'
 import { X } from 'react-feather'
 import styles from './OutlineDocumentModal.module.scss'
 
-export default function OutlineDocumentModal({ doc, onClose }) {
+export default function OutlineDocumentModal({ doc, onClose, style }) {
   useBodyNoOverflow()
   return (
-    <div className={styles.ModalContainer}>
+    <div className={styles.ModalContainer} style={style}>
       <div className={styles.close} onClick={onClose}>
         <X size={30} />
       </div>
