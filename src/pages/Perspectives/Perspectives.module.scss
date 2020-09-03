@@ -40,10 +40,6 @@
     text-decoration: none;
   }
 
-  &.shifted {
-    transform: translateY(0px);
-  }
-
   a:hover img {
     filter: saturate(100%);
   }
@@ -59,43 +55,8 @@
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-  .ThemeListItem {
-    margin-top: 60px;
-    margin-bottom: 15px;
-
-    .infoCont {
-      background-image: none !important;
-      min-height: unset;
-      flex-direction: column;
-      align-items: flex-start;
-      position: relative;
-      padding: 0;
-    }
-
-    .infoCont:after {
-      opacity: 0;
-    }
-
-    h2 {
-      text-align: left;
-    }
-
-    img {
-      width: 100%;
-      object-fit: cover;
-      width: 100%;
-      height: 450px;
-      position: relative;
-      filter: saturate(30%);
-      transition: filter var(--transition);
-    }
-    &.shifted {
-      transform: translateY(100px);
-    }
-
-    a:hover img {
-      filter: saturate(100%);
-    }
+  .ThemeListContainer {
+    overflow-y: hidden;
   }
 }
 
