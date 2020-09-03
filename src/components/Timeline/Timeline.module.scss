@@ -14,8 +14,11 @@
 
 .dot {
   stroke: none;
+  fill: white;
+  transition: fill var(--transition);
 }
 
 .dot:hover {
   stroke: var(--primary);
+  fill: var(--primary) !important;
 }

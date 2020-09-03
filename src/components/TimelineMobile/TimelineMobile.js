@@ -6,7 +6,7 @@ import styles from './TimelineMobile.module.scss'
 
 const DATE_FORMAT = '%d %B %Y'
 
-function TimelineMobile({ documents }) {
+function TimelineMobile({ documents, ...rest }) {
   const { i18n } = useTranslation()
 
   const formatter = useMemo(() => {
@@ -15,7 +15,7 @@ function TimelineMobile({ documents }) {
   }, [i18n.language])
 
   return (
-    <div className="d-flex overflow-auto">
+    <div className="d-flex overflow-auto" {...rest}>
       {documents.map((doc) => {
         return (
           <div key={doc.id} className={styles.docContainer}>

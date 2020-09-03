@@ -1,10 +1,7 @@
 import React, { useMemo, useState, Suspense } from 'react'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
-import * as d3TimeFormat from 'd3-time-format'
-import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
-import findIndex from 'lodash/findIndex'
 import { useCacheStory, usePrefetchStory } from '../../miller'
 import Video from '../../components/Video'
 import styles from './TimelineVideo.module.scss'
@@ -15,7 +12,6 @@ function PeriodVideo({ id, title }) {
   return (
     <div className={styles.PeriodVideoBox}>
       <Video url={videoUrl} />
-      {/*<div>{title}</div>*/}
     </div>
   )
 }
@@ -23,8 +19,6 @@ function PeriodVideo({ id, title }) {
 function TimelineVideo({ periods, timelineDocs }) {
   const [activePeriod, setActivePeriod] = useState(null)
   const prefetchStory = usePrefetchStory()
-
-  console.log(periods)
 
   const xScale = useMemo(
     () =>
@@ -91,32 +85,3 @@ function TimelineVideo({ periods, timelineDocs }) {
 }
 
 export default TimelineVideo
-
-/*<div
-  onMouseEnter={() => {
-    setOpenPeriodIndex(i)
-    prefetchStory(periods[i].id)
-  }}
-  onMouseLeave={() => setOpenPeriodIndex(null)}
-  key={period.id}
-  className={classNames('col-md', styles.Period, {
-    'ml-3': i > 0,
-    [styles.SelectedPeriod]: selectedPeriodIndex === i,
-  })}
->
-  <div>{period.data.abstract}</div>
-  <div className={styles.PeriodLine} />
-  <div className={styles.PeriodVideoContainer}>
-    {openPeriodIndex === i && (
-      <Suspense
-        fallback={
-          <div className={styles.PeriodVideoBox}>
-            {period.data.title}
-          </div>
-        }
-      >
-        <PeriodVideo id={period.id} title={period.data.title} />
-      </Suspense>
-    )}
-  </div>
-</div>*/

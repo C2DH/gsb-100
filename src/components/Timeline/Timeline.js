@@ -70,7 +70,7 @@ function Timeline({ documents, width }) {
     bottom: 20,
     left: 15,
   }
-  const radius = 4
+  const radius = 5
   const padding = 2
   const height = 70
   const vizWidth = width - margin.right - margin.left
@@ -116,7 +116,6 @@ function Timeline({ documents, width }) {
                 cx={dot.x}
                 cy={vizHeight / 2 + dot.y}
                 r={radius}
-                fill={'white'}
                 className={styles.dot}
               ></circle>
               <UncontrolledPopover
