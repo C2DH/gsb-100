@@ -1,0 +1,18 @@
+.titleCont {
+  border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 55px;
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
+  .titleCont {
+    top: 0;
+  }
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
+}
