@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import groupBy from 'lodash/groupBy'
+import { Trail } from 'react-spring/renderprops'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import Media from 'react-media'
 import { BREAKPOINTS } from '../../utils'
@@ -10,9 +11,9 @@ import LangLink from '../../components/LangLink'
 import ExplorationsCategoryImage from './ExplorationsCategoryImage'
 import styles from './ExplorationsCategory.module.scss'
 
-const DocsTypedGallery = ({ type, docs }) => {
+const DocsTypedGallery = ({ type, docs, style }) => {
   return (
-    <div className={`${styles.rowContainer} py-3`}>
+    <div className={`${styles.rowContainer} py-3`} style={style}>
       <p
         className={`${styles.rowPadding} ${styles.label} text-primary text-capitalize`}
       >
@@ -81,13 +82,21 @@ export default function ExplorationsCategory() {
       </div>
 
       <div className={`${styles.categoriesContainer}`}>
-        {typesWithDocs.map((typeWithDocs) => (
-          <DocsTypedGallery
-            key={typeWithDocs.type}
-            type={typeWithDocs.type}
-            docs={typeWithDocs.docs}
-          />
-        ))}
+        <Trail
+          items={typesWithDocs}
+          keys={(item) => item.type}
+          from={{ opacity: 0 }}
+          to={{ opacity: 1 }}
+        >
+          {(item) => (props) => (
+            <DocsTypedGallery
+              key={item.type}
+              type={item.type}
+              docs={item.docs}
+              style={props}
+            />
+          )}
+        </Trail>
       </div>
     </div>
   )

@@ -9,7 +9,9 @@
   }
 
   input:focus {
+    color: white;
     box-shadow: none;
+    background-color: var(--gray-dark);
   }
 }
 
