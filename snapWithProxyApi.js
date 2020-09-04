@@ -9,6 +9,8 @@ const rimrafAsync = util.promisify(rimraf)
 
 const DESTINATION = './build-crawled'
 
+const pptSandbox = !process.argv.some((arg) => arg === '--no-sandbox')
+
 async function buildWithApi() {
   await rimrafAsync(DESTINATION)
   await cprAsync('./build', DESTINATION)
@@ -17,11 +19,14 @@ async function buildWithApi() {
     publicPath: '/',
     fixWebpackChunksIssue: 'CRA2',
     source: DESTINATION,
+    puppeteerArgs: pptSandbox
+      ? undefined
+      : ['--no-sandbox', '--disable-setuid-sandbox'],
   })
   server.close()
 }
 
-buildWithApi().catch(error => {
+buildWithApi().catch((error) => {
   console.error(error)
   process.exit(1)
 })
