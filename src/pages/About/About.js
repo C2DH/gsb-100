@@ -5,7 +5,20 @@ import MenuResponsive from '../../components/MenuResponsive'
 import { useCacheStory } from '../../miller'
 import c2dh from './c2dh.jpg'
 import unilu from './unilu.jpg'
+import jahre from './100Jahre.png'
+import sonuma from './sonuma.png'
+import zog from './zog.jpg'
+import ostbelgien from './ostbelgien.png'
 import styles from './About.module.scss'
+
+const logos = [
+  { src: c2dh, alt: 'c2dh', href: 'https://www.c2dh.uni.lu/' },
+  { src: unilu, alt: 'unilu', href: 'https://uni.lu' },
+  { src: jahre, alt: '100jahre', href: '' },
+  { src: ostbelgien, alt: 'ostbelgien', href: 'https://www.ostbelgien.eu/en' },
+  { src: zog, alt: 'zog', href: 'https://www.geschichte.be/' },
+  { src: sonuma, alt: 'sonuma', href: 'https://www.sonuma.be' },
+]
 
 export default function About() {
   const [aboutStory] = useCacheStory('about')
@@ -39,24 +52,22 @@ export default function About() {
             <div className={styles.pageContent}>
               <h6 className="text-capitalize">{t('partners')}</h6>
               <div className="d-flex flex-wrap align-items-center">
-                <div className="col-4">
-                  <a
-                    href="https://uni.lu"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img className="img-fluid" src={unilu} alt="logo UniLu" />
-                  </a>
-                </div>
-                <div className="col-4">
-                  <a
-                    href="https://www.c2dh.uni.lu/"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    <img className="img-fluid" src={c2dh} alt="logo C2DH" />
-                  </a>
-                </div>
+                {logos.map((logo) => (
+                  <div className="col-4 my-2">
+                    <a
+                      href={logo.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={styles.logoLink}
+                    >
+                      <img
+                        className="img-fluid"
+                        src={logo.src}
+                        alt={logo.alt}
+                      />
+                    </a>
+                  </div>
+                ))}
               </div>
             </div>
           </div>
