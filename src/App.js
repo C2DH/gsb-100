@@ -15,6 +15,7 @@ import {
 import find from 'lodash/find'
 import Home from './pages/Home'
 import About from './pages/About'
+import TermsOfUse from './pages/TermsOfUse'
 import Outline from './pages/Outline'
 import resources from './translations'
 import PageLoader from './components/PageLoader'
@@ -104,6 +105,9 @@ function LangRoutes() {
         </Route>
         <Route exact path={`${path}/about`}>
           <About />
+        </Route>
+        <Route exact path={`${path}/terms-of-use`}>
+          <TermsOfUse />
         </Route>
         <Route exact path={`${path}/outline`}>
           <Outline />

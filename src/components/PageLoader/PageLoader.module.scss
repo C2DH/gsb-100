@@ -4,6 +4,10 @@
   }
 }
 .DelayedSpinner {
-  animation: makeVisible 0s linear 0.5s forwards;
+  animation: makeVisible 0s linear 0.2s forwards;
   visibility: hidden;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
