@@ -1,4 +1,4 @@
-import React, { useState, useContext, useRef } from 'react'
+import React, { useState, useContext, useRef, useImperativeHandle } from 'react'
 import ReactPlayer from 'react-player'
 import { Play, Pause, Maximize, VolumeX, Volume2 } from 'react-feather'
 import screenfull from 'screenfull'
@@ -93,7 +93,7 @@ const Wrapper = React.forwardRef(
   }
 )
 
-export default function Video({
+function Video({
   onReady,
   extraProgress = null,
   extraVideoOverlay = null,
@@ -101,7 +101,7 @@ export default function Video({
   height = null,
   onProgress,
   ...props
-}) {
+}, ref) {
   const playerRef = useRef()
   const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
@@ -125,6 +125,11 @@ export default function Video({
   const handleOnReady = () => {
     onReady && onReady(playerRef.current)
   }
+
+  useImperativeHandle(ref, () => ({
+    togglePlay,
+    setPlaying,
+  }))
 
   return (
     <ControlsContext.Provider
@@ -166,3 +171,5 @@ export default function Video({
     </ControlsContext.Provider>
   )
 }
+
+export default React.forwardRef(Video)
