@@ -2,6 +2,7 @@ import React from 'react'
 import { Waypoint } from 'react-waypoint'
 import { ArrowLeft } from 'react-feather'
 import Media from 'react-media'
+import { useTranslation } from 'react-i18next'
 import MenuResponsive from '../../components/MenuResponsive'
 import { useQueryString } from '../../hooks'
 import { useCacheStory, useDocuments, useDocumentsSuggest } from '../../miller'
@@ -12,6 +13,7 @@ import { BREAKPOINTS } from '../../utils'
 import styles from './ExplorationsAll.module.scss'
 
 export default function ExplorationsAll() {
+  const { t } = useTranslation()
   const [queryString, setQueryString] = useQueryString()
   const [explorationsStory] = useCacheStory('explorations')
 
@@ -64,7 +66,7 @@ export default function ExplorationsAll() {
                   }
                 </Media>
               </LangLink>
-              <span className="text-capitalize ml-2">All sources</span>
+              <span className="text-capitalize ml-2">{t('all')}</span>
             </h1>
           </div>
         </div>
@@ -78,7 +80,7 @@ export default function ExplorationsAll() {
                   type: queryString.type,
                 })
               }
-              placeholder="Search"
+              placeholder={t('search')}
               suggestions={suggestions}
               loadSuggestions={search}
               clearSuggestions={clearSearch}
@@ -95,10 +97,10 @@ export default function ExplorationsAll() {
                 })
               }}
             >
-              <option value="">All types</option>
+              <option value="">{t('all types')}</option>
               {allFacets.data__type.map((facet) => (
                 <option value={facet.data__type} key={facet.data__type}>
-                  {facet.data__type}
+                  {t(facet.data__type)}
                 </option>
               ))}
             </select>

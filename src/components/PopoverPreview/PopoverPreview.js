@@ -46,7 +46,7 @@ const PopoverPreview = React.forwardRef((props, ref) => {
       <animated.div className={styles.popover} style={props.style}>
         <div style={props.style}>
           <p className={`${styles.label} m-0 text-capitalize text-primary`}>
-            {props.doc.data.type}
+            {props.type}
           </p>
         </div>
         <div className="flex-grow-1 flex-shrink-1 d-flex overflow-hidden flex-column my-2">

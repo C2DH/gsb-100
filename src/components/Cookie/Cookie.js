@@ -1,20 +1,20 @@
 import React from 'react'
 import CookieBanner from 'react-cookie-banner'
+import { useTranslation } from 'react-i18next'
 import LangLink from '../LangLink'
 import styles from './Cookie.module.scss'
 
 function Cookie({ children }) {
-  const text =
-    'Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden.'
+  const { t } = useTranslation()
   return (
     <React.Fragment>
       {children}
       <CookieBanner
-        message={text}
-        buttonMessage={'Got it'}
+        message={t('cookie')}
+        buttonMessage={t('got it')}
         dismissOnScroll={true}
         className={styles.banner}
-        link={<LangLink to={`/terms-of-use`}>More info</LangLink>}
+        link={<LangLink to={`/terms-of-use`}>{t('more info')}</LangLink>}
       />
     </React.Fragment>
   )
