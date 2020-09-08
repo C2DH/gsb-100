@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 import { randomUniform, randomInt } from 'd3-random'
 import classNames from 'classnames'
 import LangLink from '../LangLink'
@@ -49,11 +49,11 @@ function RandImage({ doc, randomize }) {
   )
 }
 
-function ImagesStack({ category, docs, empty, style }) {
+function ImagesStack({ category, docs, empty, style, link }) {
   const [randomize, setRandomize] = useState(false)
   return (
     <LangLink
-      to={`/explorations/${category}`}
+      to={`/explorations/${link}`}
       className={styles.stack}
       style={style}
     >
