@@ -21,10 +21,10 @@ function RandImage({ doc }) {
   )
 }
 
-function ImagesStack({ category, docs, empty, style }) {
+function ImagesStack({ category, docs, empty, style, link }) {
   return (
     <LangLink
-      to={`/explorations/${category}`}
+      to={`/explorations/${link}`}
       className={styles.stack}
       style={style}
     >

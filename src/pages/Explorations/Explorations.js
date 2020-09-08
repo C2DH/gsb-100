@@ -2,6 +2,7 @@ import React, { useMemo } from 'react'
 import groupBy from 'lodash/groupBy'
 import { shuffle } from 'seed-shuffle'
 import { Trail } from 'react-spring/renderprops'
+import { useTranslation } from 'react-i18next'
 import MenuResponsive from '../../components/MenuResponsive'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import ImagesStack from '../../components/ImagesStack'
@@ -14,6 +15,7 @@ const NUMBER_OF_IMAGES_PER_CATEGORY = 5
 const RANDOM_SEED = 1 + Math.floor(Math.random() * 1000)
 
 export default function Explorations() {
+  const { t } = useTranslation()
   const [explorationsStory] = useCacheStory('explorations')
 
   const [{ documents }] = useCacheDocuments({
@@ -68,22 +70,14 @@ export default function Explorations() {
         >
           {(item) => (props) => (
             <ImagesStack
-              category={item.category}
+              category={t(item.category)}
               docs={item.docs}
               style={props}
               empty={item.docs ? false : true}
+              link={item.category}
             />
           )}
         </Trail>
-        {/*{categoriesWithImages.map((catWithImages) => (
-          <ImagesStack
-            key={catWithImages.category}
-            category={catWithImages.category}
-            docs={catWithImages.docs}
-          />
-        ))}*/}
-        {/*<ImagesStack category={'all'} empty></ImagesStack>
-        <ImagesStack category={'alternative'} empty></ImagesStack>*/}
         <div style={{ flex: '0 0 1px', width: 1, height: 1 }}></div>
       </div>
     </div>
