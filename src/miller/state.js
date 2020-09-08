@@ -176,21 +176,21 @@ export const DocumentsState = rj(
   }
 )
 
-const fakeSuggest = q => {
+const fakeSuggest = (q) => {
   const FAKE_SUGGEST_LIST = [
     'Fake',
     'Far3nz',
     'Belgen',
     'Bele1',
     'Plutonio',
-    'PluX1'
+    'PluX1',
   ]
 
-  const suggestFilteredList = FAKE_SUGGEST_LIST.filter(suggest => {
+  const suggestFilteredList = FAKE_SUGGEST_LIST.filter((suggest) => {
     return suggest.toLowerCase().indexOf(q.toLowerCase()) !== -1
   })
 
-  return new Promise(resolve => {
+  return new Promise((resolve) => {
     setTimeout(() => resolve(suggestFilteredList), 200)
   })
 }
@@ -237,7 +237,7 @@ function mapStoryWithRelatedModulesDocs(story) {
     }),
     {}
   )
-  const mapId = obj => {
+  const mapId = (obj) => {
     if (obj.id) {
       const document = documentsById[obj.id] ?? null
       return {
@@ -258,7 +258,7 @@ function mapStoryWithRelatedModulesDocs(story) {
     if (Array.isArray(mappedModule.objects)) {
       mappedModule = {
         ...mappedModule,
-        objects: mappedModule.objects.map(mapId)
+        objects: mappedModule.objects.map(mapId),
       }
     }
     if (Array.isArray(mappedModule.gallery?.objects)) {
@@ -267,7 +267,7 @@ function mapStoryWithRelatedModulesDocs(story) {
         gallery: {
           ...mappedModule.gallery,
           objects: mappedModule.gallery.objects.map(mapId),
-        }
+        },
       }
     }
     return mappedModule
