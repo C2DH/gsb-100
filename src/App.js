@@ -1,4 +1,4 @@
-import React, { Suspense, useRef, useEffect } from 'react'
+import React, { Suspense, useRef, useEffect, useContext } from 'react'
 import i18n from 'i18next'
 import { initReactI18next, useTranslation } from 'react-i18next'
 import { Miller } from './miller'
@@ -30,6 +30,10 @@ import DocumentDetailModal from './pages/DocumentDetailModal'
 import NotFound from './components/NotFound'
 import PerspectiveDetail from './pages/PerspectiveDetail'
 import Cookie from './components/Cookie'
+import {
+  UnqueMedia,
+  UnqiueMediaContext,
+} from './components/PerspectiveModule/UniqueMedia'
 
 const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
 const DEFAULT_LANG = 'de_DE'
@@ -76,6 +80,17 @@ function SyncLang() {
   return null
 }
 
+function StopMedias({ background }) {
+  const [, setPlaying] = useContext(UnqiueMediaContext)
+  useEffect(() => {
+    if (background) {
+      setPlaying('stop')
+    }
+    return () => setPlaying(null)
+  }, [background, setPlaying])
+  return null
+}
+
 function LangRoutes() {
   const { path } = useRouteMatch()
   const location = useLocation()
@@ -98,57 +113,60 @@ function LangRoutes() {
 
   return (
     <React.Fragment>
-      <Cookie>
-        <Switch location={background || location}>
-          <Route exact path={`${path}`}>
-            <Suspense fallback={<PageLoader />}>
-              <Home />
-            </Suspense>
+      <UnqueMedia>
+        <Cookie>
+          <Switch location={background || location}>
+            <Route exact path={`${path}`}>
+              <Suspense fallback={<PageLoader />}>
+                <Home />
+              </Suspense>
+            </Route>
+            <Route exact path={`${path}/about`}>
+              <About />
+            </Route>
+            <Route exact path={`${path}/terms-of-use`}>
+              <TermsOfUse />
+            </Route>
+            <Route exact path={`${path}/outline`}>
+              <Outline />
+            </Route>
+            <Route exact path={`${path}/perspectives`}>
+              <Perspectives />
+            </Route>
+            <Route exact path={`${path}/perspectives/:slug`}>
+              <PerspectiveDetail />
+            </Route>
+            <Route exact path={`${path}/explorations`}>
+              <Explorations />
+            </Route>
+            <Route exact path={`${path}/explorations/all`}>
+              <ExplorationsAll />
+            </Route>
+            <Route exact path={`${path}/explorations/alternative`}>
+              <ExplorationsAlternative />
+            </Route>
+            <Route exact path={`${path}/explorations/:category`}>
+              <ExplorationsCategory />
+            </Route>
+            <Route exact path={`${path}/documents/:id`}>
+              <DocumentDetail />
+            </Route>
+            <Route path="*">
+              <NotFound />
+            </Route>
+          </Switch>
+          <Route path={path}>
+            <SyncLang />
           </Route>
-          <Route exact path={`${path}/about`}>
-            <About />
-          </Route>
-          <Route exact path={`${path}/terms-of-use`}>
-            <TermsOfUse />
-          </Route>
-          <Route exact path={`${path}/outline`}>
-            <Outline />
-          </Route>
-          <Route exact path={`${path}/perspectives`}>
-            <Perspectives />
-          </Route>
-          <Route exact path={`${path}/perspectives/:slug`}>
-            <PerspectiveDetail />
-          </Route>
-          <Route exact path={`${path}/explorations`}>
-            <Explorations />
-          </Route>
-          <Route exact path={`${path}/explorations/all`}>
-            <ExplorationsAll />
-          </Route>
-          <Route exact path={`${path}/explorations/alternative`}>
-            <ExplorationsAlternative />
-          </Route>
-          <Route exact path={`${path}/explorations/:category`}>
-            <ExplorationsCategory />
-          </Route>
-          <Route exact path={`${path}/documents/:id`}>
-            <DocumentDetail />
-          </Route>
-          <Route path="*">
-            <NotFound />
-          </Route>
-        </Switch>
-        <Route path={path}>
-          <SyncLang />
-        </Route>
-        {/* MODAL DOC */}
-        {background && (
-          <Route exact path={`${LANG_PATH}/documents/:id`}>
-            <DocumentDetailModal previewDocument={previewDocument} />
-          </Route>
-        )}
-      </Cookie>
+          <StopMedias background={background} />
+          {/* MODAL DOC */}
+          {background && (
+            <Route exact path={`${LANG_PATH}/documents/:id`}>
+              <DocumentDetailModal previewDocument={previewDocument} />
+            </Route>
+          )}
+        </Cookie>
+      </UnqueMedia>
     </React.Fragment>
   )
 }

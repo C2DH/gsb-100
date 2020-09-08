@@ -100,6 +100,8 @@ function Video({
   width = null,
   height = null,
   onProgress,
+  onPlay,
+  onPause,
   ...props
 }, ref) {
   const playerRef = useRef()
@@ -155,8 +157,14 @@ function Video({
         muted={muted}
         progressInterval={200}
         className={styles.Player}
-        onPause={() => setPlaying(false)}
-        onPlay={() => setPlaying(true)}
+        onPause={() => {
+          setPlaying(false)
+          onPause && onPause()
+        }}
+        onPlay={() => {
+          setPlaying(true)
+          onPlay && onPlay()
+        }}
         wrapper={Wrapper}
         playing={playing}
         onProgress={(progress) => {

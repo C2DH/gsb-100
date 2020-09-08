@@ -1,6 +1,6 @@
 import React, { useState, useMemo } from 'react'
 import find from 'lodash/find'
-import Video from '../Video'
+import { Video } from './UniqueMedia'
 import { convertStrToSeconds } from '../../utils'
 import { Caption } from './ModuleUtils'
 import DocLink from '../DocLink'

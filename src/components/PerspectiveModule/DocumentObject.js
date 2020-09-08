@@ -1,6 +1,6 @@
 import React from 'react'
 import AudioTrack from '../AudioTrack'
-import Video from '../Video'
+import { Video } from './UniqueMedia'
 import { Caption } from './ModuleUtils'
 import DocLink from '../DocLink'
 
