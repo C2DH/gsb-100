@@ -24,6 +24,7 @@
     "nuka-carousel": "^4.7.0",
     "query-string": "^6.13.1",
     "react": "^16.13.1",
+    "react-cookie-banner": "^4.1.0",
     "react-dom": "^16.13.1",
     "react-feather": "^2.0.8",
     "react-hammerjs": "^1.0.1",

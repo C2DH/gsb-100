@@ -1,0 +1,28 @@
+.banner {
+  bottom: 15px !important;
+  left: 15px !important;
+  width: 30% !important;
+  position: fixed !important;
+  height: auto !important;
+  text-align: left !important;
+  background-color: var(--secondary) !important;
+  display: flex;
+  flex-direction: column;
+  padding: 15px !important;
+  border: 1px solid white;
+  span {
+    color: white !important;
+    display: block;
+    line-height: 1.2 !important;
+    margin-bottom: 10px;
+  }
+
+  button {
+    position: relative !important;
+    margin: 0 auto 0 auto !important;
+    top: unset !important;
+    right: unset !important;
+    background: white !important;
+    width: 50%;
+  }
+}

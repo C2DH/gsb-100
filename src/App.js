@@ -29,6 +29,7 @@ import DocumentDetail from './pages/DocumentDetail'
 import DocumentDetailModal from './pages/DocumentDetailModal'
 import NotFound from './components/NotFound'
 import PerspectiveDetail from './pages/PerspectiveDetail'
+import Cookie from './components/Cookie'
 
 const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
 const DEFAULT_LANG = 'de_DE'
@@ -96,57 +97,59 @@ function LangRoutes() {
   }, [location])
 
   return (
-    <>
-      <Switch location={background || location}>
-        <Route exact path={`${path}`}>
-          <Suspense fallback={<PageLoader />}>
-            <Home />
-          </Suspense>
+    <React.Fragment>
+      <Cookie>
+        <Switch location={background || location}>
+          <Route exact path={`${path}`}>
+            <Suspense fallback={<PageLoader />}>
+              <Home />
+            </Suspense>
+          </Route>
+          <Route exact path={`${path}/about`}>
+            <About />
+          </Route>
+          <Route exact path={`${path}/terms-of-use`}>
+            <TermsOfUse />
+          </Route>
+          <Route exact path={`${path}/outline`}>
+            <Outline />
+          </Route>
+          <Route exact path={`${path}/perspectives`}>
+            <Perspectives />
+          </Route>
+          <Route exact path={`${path}/perspectives/:slug`}>
+            <PerspectiveDetail />
+          </Route>
+          <Route exact path={`${path}/explorations`}>
+            <Explorations />
+          </Route>
+          <Route exact path={`${path}/explorations/all`}>
+            <ExplorationsAll />
+          </Route>
+          <Route exact path={`${path}/explorations/alternative`}>
+            <ExplorationsAlternative />
+          </Route>
+          <Route exact path={`${path}/explorations/:category`}>
+            <ExplorationsCategory />
+          </Route>
+          <Route exact path={`${path}/documents/:id`}>
+            <DocumentDetail />
+          </Route>
+          <Route path="*">
+            <NotFound />
+          </Route>
+        </Switch>
+        <Route path={path}>
+          <SyncLang />
         </Route>
-        <Route exact path={`${path}/about`}>
-          <About />
-        </Route>
-        <Route exact path={`${path}/terms-of-use`}>
-          <TermsOfUse />
-        </Route>
-        <Route exact path={`${path}/outline`}>
-          <Outline />
-        </Route>
-        <Route exact path={`${path}/perspectives`}>
-          <Perspectives />
-        </Route>
-        <Route exact path={`${path}/perspectives/:slug`}>
-          <PerspectiveDetail />
-        </Route>
-        <Route exact path={`${path}/explorations`}>
-          <Explorations />
-        </Route>
-        <Route exact path={`${path}/explorations/all`}>
-          <ExplorationsAll />
-        </Route>
-        <Route exact path={`${path}/explorations/alternative`}>
-          <ExplorationsAlternative />
-        </Route>
-        <Route exact path={`${path}/explorations/:category`}>
-          <ExplorationsCategory />
-        </Route>
-        <Route exact path={`${path}/documents/:id`}>
-          <DocumentDetail />
-        </Route>
-        <Route path="*">
-          <NotFound />
-        </Route>
-      </Switch>
-      <Route path={path}>
-        <SyncLang />
-      </Route>
-      {/* MODAL DOC */}
-      {background && (
-        <Route exact path={`${LANG_PATH}/documents/:id`}>
-          <DocumentDetailModal previewDocument={previewDocument} />
-        </Route>
-      )}
-    </>
+        {/* MODAL DOC */}
+        {background && (
+          <Route exact path={`${LANG_PATH}/documents/:id`}>
+            <DocumentDetailModal previewDocument={previewDocument} />
+          </Route>
+        )}
+      </Cookie>
+    </React.Fragment>
   )
 }
 
