@@ -1,7 +1,7 @@
 .banner {
-  bottom: 15px !important;
+  bottom: 50px !important;
   left: 15px !important;
-  width: 30% !important;
+  width: calc(100% - 30px) !important;
   position: fixed !important;
   height: auto !important;
   text-align: left !important;
@@ -25,4 +25,27 @@
     background: white !important;
     width: 50%;
   }
+}
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+  .banner {
+    width: 30% !important;
+    bottom: 15px !important;
+  }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }

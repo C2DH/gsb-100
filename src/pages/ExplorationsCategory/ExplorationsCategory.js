@@ -3,8 +3,9 @@ import { useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
 import groupBy from 'lodash/groupBy'
 import { Trail } from 'react-spring/renderprops'
-import { useCacheStory, useCacheDocuments } from '../../miller'
+import { useTranslation } from 'react-i18next'
 import Media from 'react-media'
+import { useCacheStory, useCacheDocuments } from '../../miller'
 import { BREAKPOINTS } from '../../utils'
 import MenuResponsive from '../../components/MenuResponsive'
 import LangLink from '../../components/LangLink'
@@ -34,6 +35,7 @@ const DocsTypedGallery = ({ type, docs, style }) => {
 }
 
 export default function ExplorationsCategory() {
+  const { t } = useTranslation()
   const { category } = useParams()
   const [explorationsStory] = useCacheStory('explorations')
 
@@ -75,7 +77,7 @@ export default function ExplorationsCategory() {
                   }
                 </Media>
               </LangLink>
-              <span className="text-capitalize ml-2">{category}</span>
+              <span className="text-capitalize ml-2">{t(category)}</span>
             </h1>
           </div>
         </div>
@@ -91,7 +93,7 @@ export default function ExplorationsCategory() {
           {(item) => (props) => (
             <DocsTypedGallery
               key={item.type}
-              type={item.type}
+              type={t(item.type)}
               docs={item.docs}
               style={props}
             />

@@ -31,7 +31,9 @@ export default function DocumentInfoBox({ doc }) {
           <div
             className={`${styles.rowBorder} col-12 col-lg-2 offset-lg-1 pt-3 pl-auto pl-lg-0`}
           >
-            <div className="text-primary">{t('Description')}</div>
+            <div className="text-primary text-capitalize">
+              {t('description')}
+            </div>
           </div>
           <div
             className={`${styles.rowDesc} col-12 col-lg-5 pt-3 pb-3 pb-lg-0`}

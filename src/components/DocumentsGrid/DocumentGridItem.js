@@ -1,13 +1,14 @@
 import React, { useState } from 'react'
 import { useTransition } from 'react-spring'
 import { usePopper } from 'react-popper'
-import Portal from '../Portal'
+import { useTranslation } from 'react-i18next'
 import DocLink from '../DocLink'
 import IconSwitch from '../IconSwitch'
 import PopoverPreview from '../PopoverPreview'
 import styles from './DocumentsGrid.module.scss'
 
 function DocumentGridItem({ doc, mobile }) {
+  const { t } = useTranslation()
   const [show, setShow] = useState(false)
   const [referenceElement, setReferenceElement] = useState(null)
   const [popperElement, setPopperElement] = useState(null)
@@ -54,19 +55,6 @@ function DocumentGridItem({ doc, mobile }) {
           )}
         </DocLink>
       </div>
-      {/*{transition.map(
-        ({ item, key, props }) =>
-          item && (
-            <Portal key={key} selector={'body'}>
-              <PopoverPreview
-                ref={setPopperElement}
-                doc={doc}
-                style={props}
-                popper={popper}
-              ></PopoverPreview>
-            </Portal>
-          )
-      )}*/}
       {transition.map(
         ({ item, key, props }) =>
           item && (
@@ -76,6 +64,7 @@ function DocumentGridItem({ doc, mobile }) {
               doc={doc}
               style={props}
               popper={popper}
+              type={t(doc.data.type)}
             ></PopoverPreview>
           )
       )}
