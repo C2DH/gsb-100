@@ -38,7 +38,8 @@ export default function PerspectiveDetail() {
   function getChapterWidth() {
     const container = chaptersRef.current
     const width = container.clientWidth
-    const chapterWidth = width * 0.4 + 2 // CSS width: 40% + 1px border x side
+    const paddingLeft = parseInt(getComputedStyle(container).paddingLeft)
+    const chapterWidth = (width - paddingLeft) * 0.4 + 2 // CSS width: 40% + 1px border x side
     return chapterWidth
   }
   function handleScrollBackChapter() {
