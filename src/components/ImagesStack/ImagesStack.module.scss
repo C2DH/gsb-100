@@ -22,6 +22,7 @@
   object-fit: contain;
   mix-blend-mode: multiply;
   transform-origin: center;
+  transition: transform var(--transition);
 }
 
 // Small devices (landscape phones, 576px and up)
