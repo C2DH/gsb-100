@@ -1,4 +1,4 @@
-import React, { useMemo, useState, Suspense } from 'react'
+import React, { useMemo, useState, Suspense, createRef, useRef } from 'react'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
 import classNames from 'classnames'
@@ -6,15 +6,15 @@ import { useCacheStory, usePrefetchStory } from '../../miller'
 import Video from '../../components/Video'
 import styles from './TimelineVideo.module.scss'
 
-function PeriodVideo({ id, title }) {
+const PeriodVideo = React.forwardRef(({ id, title }, ref) => {
   const [story] = useCacheStory(id)
   const videoUrl = story.contents?.modules?.[0]?.object?.document?.url ?? null
   return (
     <div className={styles.PeriodVideoBox}>
-      <Video url={videoUrl} />
+      <Video url={videoUrl} ref={ref} />
     </div>
   )
-}
+})
 
 function TimelineVideo({ periods, timelineDocs }) {
   const [activePeriod, setActivePeriod] = useState(null)
@@ -28,6 +28,15 @@ function TimelineVideo({ periods, timelineDocs }) {
         .clamp(true),
     [timelineDocs]
   )
+
+  // Lazy create multi ref
+  const multiVideoRef = useRef({})
+  function createVideoIdRef(id) {
+    if (!multiVideoRef.current[id]) {
+      multiVideoRef.current[id] = createRef()
+    }
+    return multiVideoRef.current[id]
+  }
 
   return (
     <div
@@ -50,7 +59,13 @@ function TimelineVideo({ periods, timelineDocs }) {
               setActivePeriod(period.id)
               prefetchStory(period.id)
             }}
-            onMouseLeave={() => setActivePeriod(null)}
+            onMouseLeave={() => {
+              setActivePeriod(null)
+              const videoRef = multiVideoRef.current[period.id]
+              if (videoRef) {
+                videoRef.current.setPlaying(false)
+              }
+            }}
             key={i}
             className={classNames(styles.periodBlock, {
               [styles.active]: period.id === activePeriod,
@@ -73,7 +88,11 @@ function TimelineVideo({ periods, timelineDocs }) {
             <div className={styles.videoContainer}>
               <div className={styles.video}>
                 <Suspense>
-                  <PeriodVideo id={period.id} title={period.data.title} />
+                  <PeriodVideo
+                    ref={createVideoIdRef(period.id)}
+                    id={period.id}
+                    title={period.data.title}
+                  />
                 </Suspense>
               </div>
             </div>
