@@ -32,7 +32,7 @@ import PerspectiveDetail from './pages/PerspectiveDetail'
 import Cookie from './components/Cookie'
 import {
   UnqueMedia,
-  UnqiueMediaContext,
+  useUniqueMediaStop,
 } from './components/PerspectiveModule/UniqueMedia'
 
 const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
@@ -81,13 +81,14 @@ function SyncLang() {
 }
 
 function StopMedias({ background }) {
-  const [, setPlaying] = useContext(UnqiueMediaContext)
+  const { stopMedias, clearStopMedias } = useUniqueMediaStop()
   useEffect(() => {
     if (background) {
-      setPlaying('stop')
+      stopMedias()
+      return clearStopMedias
     }
-    return () => setPlaying(null)
-  }, [background, setPlaying])
+  }, [background, clearStopMedias, stopMedias])
+
   return null
 }
 

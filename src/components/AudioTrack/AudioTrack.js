@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useImperativeHandle } from 'react'
 import ReactWaves from '@dschoon/react-waves'
 import { Pause, Play, Volume, Volume2 } from 'react-feather'
 
@@ -11,9 +11,16 @@ function fromSecondsToProgressStr(time) {
     .padStart(2, '0')}`
 }
 
-export default function AudioTrack({ url, module }) {
+function AudioTrack({ url, module, onPlay, onPause }, ref) {
   const [playing, setPlaying] = useState(false)
-  const togglePlay = () => setPlaying((a) => !a)
+  const togglePlay = () => {
+    setPlaying(!playing)
+    if (playing) {
+      onPause && onPause()
+    } else {
+      onPlay && onPlay()
+    }
+  }
   const [progress, setProgress] = useState({
     duration: '00:00',
     played: '00:00',
@@ -25,6 +32,7 @@ export default function AudioTrack({ url, module }) {
     const played = wave.getCurrentTime()
     if (parseInt(duration) === parseInt(played)) {
       setPlaying(false)
+      onPause && onPause()
     }
     setProgress({
       duration: fromSecondsToProgressStr(duration),
@@ -51,6 +59,9 @@ export default function AudioTrack({ url, module }) {
     }
   }
 
+  useImperativeHandle(ref, () => ({
+    setPlaying,
+  }))
 
   return (
     <div className="w-100 d-flex align-items-center justify-content-center flex-column">
@@ -112,3 +123,5 @@ export default function AudioTrack({ url, module }) {
     </div>
   )
 }
+
+export default React.forwardRef(AudioTrack)
