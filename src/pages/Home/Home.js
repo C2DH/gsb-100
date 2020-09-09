@@ -121,37 +121,6 @@ export default function Home() {
             {t('start')}
             <ArrowRight size="1.1rem" className="ml-1"></ArrowRight>
           </LangLink>
-          {/*<div
-            className={classNames(styles.playerControls, {
-              [styles.show]: showVideo,
-            })}
-          >
-            <button
-              type="button"
-              className="ml-2 btn btn-light btn-icon-round opacity-75"
-              onClick={togglePlay}
-            >
-              {playing ? <Pause /> : <Play />}
-            </button>
-            <button
-              type="button"
-              className="ml-3 btn btn-light btn-icon-round opacity-75"
-              onClick={toggleMute}
-            >
-              {muted ? <VolumeX /> : <Volume2 />}
-            </button>
-          </div>
-          <LangLink
-            id={styles.startLink}
-            to="/outline"
-            className="d-none d-lg-flex"
-          >
-            <div id={styles.start}>
-              <p className="m-0 text-center text-uppercase">
-                {t('click to start')}
-              </p>
-            </div>
-          </LangLink>*/}
         </div>
         <div className="d-block d-lg-none">
           <SwitchLanguageMobile></SwitchLanguageMobile>
