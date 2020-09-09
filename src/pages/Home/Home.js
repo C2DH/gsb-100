@@ -1,8 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
 import classNames from 'classnames'
 import { Play, Pause, VolumeX, Volume2, ArrowRight } from 'react-feather'
+import { Transition } from 'react-spring/renderprops'
+import { animated } from 'react-spring'
 import { useCacheStory, useCacheDocument } from '../../miller'
 import SwitchLanguage from '../../components/SwitchLanguage'
 import SwitchLanguageMobile from '../../components/SwitchLanguageMobile'
@@ -14,23 +16,30 @@ export default function Home() {
   const { t } = useTranslation()
   const [homeStory] = useCacheStory('home')
   const [document] = useCacheDocument(350) //HC forever
+  const playerRef = useRef()
   const [showVideo, setShowVideo] = useState(false)
+  const [showPlay, setShowPlay] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(true)
-  const [showBg, setshowBg] = useState(false)
-  const togglePlay = () => {
-    setPlaying((a) => !a)
-    setshowBg((a) => !a)
+  const [showSkip, setshowSkip] = useState(false)
+  const toggleStart = () => {
+    playerRef.current.seekTo(0, 'fraction')
+    if (!playing) {
+      setPlaying(true)
+    }
+    setMuted(false)
+    setShowPlay(false)
+    setshowSkip(true)
   }
-  const toggleMute = () => setMuted((v) => !v)
+
   const onEnded = () => {
-    togglePlay()
-    setshowBg(true)
+    setShowPlay(true)
   }
 
   return (
     <React.Fragment>
       <ReactPlayer
+        ref={playerRef}
         className={styles.Player}
         width="100%"
         height="100%"
@@ -46,13 +55,17 @@ export default function Home() {
           [styles.hide]: showVideo,
         })}
       >
-        <MapHome setShowVideo={setShowVideo} setPlaying={setPlaying}></MapHome>
+        <MapHome
+          setShowVideo={setShowVideo}
+          setPlaying={setPlaying}
+          setShowPlay={setShowPlay}
+        ></MapHome>
       </div>
       <div
         className={classNames(
           `${styles.wrapper} d-flex flex-column justify-content-between p-0 p-lg-4`,
           {
-            [styles.bgWrapper]: showBg,
+            [styles.bgWrapper]: showPlay,
           }
         )}
       >
@@ -69,9 +82,38 @@ export default function Home() {
             <SwitchLanguage></SwitchLanguage>
           </div>
         </div>
+        <Transition
+          items={showPlay}
+          from={{ opacity: 0 }}
+          enter={{ opacity: 0.75 }}
+          leave={{ opacity: 0 }}
+        >
+          {(showPlay) =>
+            showPlay &&
+            ((props) => (
+              <animated.div
+                className={classNames(
+                  `${styles.playControl} btn btn-secondary`
+                )}
+                onClick={() => {
+                  toggleStart()
+                }}
+                style={props}
+              >
+                <Play size={30} />
+              </animated.div>
+            ))
+          }
+        </Transition>
         <div className="d-flex justify-content-between justify-content-lg-center position-relative p-4 p-lg-0 mt-auto mt-lg-0">
           <LangLink
-            className="btn btn-primary d-flex align-items-center d-lg-none text-uppercase"
+            className={classNames(
+              'btn btn-primary d-flex align-items-center text-uppercase',
+              styles.skip,
+              {
+                [styles.showSkip]: showSkip,
+              }
+            )}
             role="button"
             aria-pressed="true"
             to="/outline"
@@ -79,7 +121,7 @@ export default function Home() {
             {t('start')}
             <ArrowRight size="1.1rem" className="ml-1"></ArrowRight>
           </LangLink>
-          <div
+          {/*<div
             className={classNames(styles.playerControls, {
               [styles.show]: showVideo,
             })}
@@ -109,7 +151,7 @@ export default function Home() {
                 {t('click to start')}
               </p>
             </div>
-          </LangLink>
+          </LangLink>*/}
         </div>
         <div className="d-block d-lg-none">
           <SwitchLanguageMobile></SwitchLanguageMobile>

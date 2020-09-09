@@ -5,7 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 const zoom = 4
 const center = [6.2, 50.4346632]
 
-export default function MapHome({ setShowVideo, setPlaying }) {
+export default function MapHome({ setShowVideo, setPlaying, setShowPlay }) {
   const mapContainer = useRef(null)
 
   useEffect(() => {
@@ -20,20 +20,26 @@ export default function MapHome({ setShowVideo, setPlaying }) {
 
     map.on('load', () => {
       map.flyTo({
-        zoom: 14,
+        zoom: 12,
         speed: 0.3, // make the flying slow
         curve: 1, // change the speed at which it zooms out
       })
     })
 
-    map.on('zoom', () => {
-      const actualZoom = map.getZoom()
-      if (actualZoom > 12) {
-        setShowVideo(true)
-      }
-      if (actualZoom > 10) {
-        setPlaying(true)
-      }
+    // map.on('zoom', () => {
+    //   const actualZoom = map.getZoom()
+    //   if (actualZoom > 12) {
+    //     setShowVideo(true)
+    //   }
+    //   if (actualZoom > 10) {
+    //     setPlaying(true)
+    //   }
+    // })
+
+    map.on('zoomend', () => {
+      setShowVideo(true)
+      setPlaying(true)
+      setShowPlay(true)
     })
 
     return () => {
