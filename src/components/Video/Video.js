@@ -121,7 +121,9 @@ function Video({
 
   const goFullScreen = () => {
     const videoElement = playerRef.current.wrapper.querySelector('video')
-    screenfull.request(videoElement)
+    if (screenfull.isEnabled) {
+      screenfull.request(videoElement)
+    }
   }
 
   const handleOnReady = () => {
