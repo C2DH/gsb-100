@@ -24,14 +24,14 @@
   height: 100%;
 }
 
-.pdfPage > canvas {
-  max-width: 100%;
-  // height: auto !important;
-  height: 100% !important; //hack for chrome
-  max-height: 100%;
-  width: auto !important;
-  margin: auto;
-}
+// .pdfPage > canvas {
+//   max-width: 100%;
+//   // height: auto !important;
+//   height: 100% !important; //hack for chrome
+//   max-height: 100%;
+//   width: auto !important;
+//   margin: auto;
+// }
 
 .pdfPage span {
   pointer-events: none !important;
