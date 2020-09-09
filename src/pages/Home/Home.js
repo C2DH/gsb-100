@@ -2,9 +2,10 @@ import React, { useState, useRef } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
 import classNames from 'classnames'
-import { Play, Pause, VolumeX, Volume2, ArrowRight } from 'react-feather'
+import { Play, ArrowRight } from 'react-feather'
 import { Transition } from 'react-spring/renderprops'
 import { animated } from 'react-spring'
+import Helmet from 'react-helmet'
 import { useCacheStory, useCacheDocument } from '../../miller'
 import SwitchLanguage from '../../components/SwitchLanguage'
 import SwitchLanguageMobile from '../../components/SwitchLanguageMobile'
@@ -13,7 +14,7 @@ import styles from './Home.module.scss'
 import LangLink from '../../components/LangLink'
 
 export default function Home() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [homeStory] = useCacheStory('home')
   const [document] = useCacheDocument(350) //HC forever
   const playerRef = useRef()
@@ -38,6 +39,10 @@ export default function Home() {
 
   return (
     <React.Fragment>
+      <Helmet>
+        <html lang={i18n.language.split('_')[0]} />
+        <title itemProp="name">{homeStory.data.title}</title>
+      </Helmet>
       <ReactPlayer
         ref={playerRef}
         className={styles.Player}
