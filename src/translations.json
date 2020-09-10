@@ -35,9 +35,14 @@
       "all types": "tout type",
       "all sources": "toutes les sources",
       "link": "lien",
-      "page not found": "",
-      "API error": "",
-      "something went wrong": ""
+      "enter": "entrer",
+      "explore": "explorer",
+      "page not found": "page non trouvée",
+      "API error": "Erreur API",
+      "something went wrong": "erreur",
+      "got it": "J'ai compris",
+      "more info": "plus d'infos",
+      "cookie": "Nous utilisons des cookies afin d'améliorer le fonctionnement de notre site pour l'utilisateur. En continuant la navigation sur ce site, vous acceptez l'utilisation de ces cookies."
     }
   },
   "en_US": {
@@ -76,9 +81,14 @@
       "all types": "all types",
       "all sources": "all sources",
       "link": "link",
+      "enter": "enter",
+      "explore": "explore",
       "page not found": "page not found",
       "API error": "API error",
-      "something went wrong": "something went wrong"
+      "something went wrong": "something went wrong",
+      "got it": "got it",
+      "more info": "more info",
+      "cookie": "This site uses cookies. By using this website, you agree to the use of cookies."
     }
   },
   "de_DE": {
@@ -117,9 +127,14 @@
       "all types": "Alle Arten",
       "all sources": "Alle Quellen",
       "link": "Link",
-      "page not found": "",
-      "API error": "",
-      "something went wrong": ""
+      "enter": "eintreten",
+      "explore": "explorieren",
+      "page not found": "Seite nicht gefunden",
+      "API error": "API Fehler",
+      "something went wrong": "Fehler",
+      "got it": "Ich habe verstanden",
+      "more info": "Mehr Infos",
+      "cookie": "Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden."
     }
   },
   "nl_BE": {
@@ -158,9 +173,14 @@
       "all types": "alle soorten",
       "all sources": "alle bronnen",
       "link": "link",
-      "page not found": "",
-      "API error": "",
-      "something went wrong": ""
+      "enter": "ga naar",
+      "explore": "verken",
+      "page not found": "Pagina niet gevonden",
+      "API error": "API Fout",
+      "something went wrong": "er is iets misgegaan",
+      "got it": "Ik begrijp het",
+      "more info": "Meer info",
+      "cookie": "Deze site maakt gebruik van cookies. Door gebruik te maken van deze site gaat u akkoord met het gebruik van cookies."
     }
   }
 }
