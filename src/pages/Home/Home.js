@@ -123,7 +123,7 @@ export default function Home() {
             aria-pressed="true"
             to="/outline"
           >
-            {t('start')}
+            {t('explore')}
             <ArrowRight size="1.1rem" className="ml-1"></ArrowRight>
           </LangLink>
         </div>

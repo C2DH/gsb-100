@@ -26,20 +26,13 @@ export default function MapHome({ setShowVideo, setPlaying, setShowPlay }) {
       })
     })
 
-    // map.on('zoom', () => {
-    //   const actualZoom = map.getZoom()
-    //   if (actualZoom > 12) {
-    //     setShowVideo(true)
-    //   }
-    //   if (actualZoom > 10) {
-    //     setPlaying(true)
-    //   }
-    // })
-
-    map.on('zoomend', () => {
-      setShowVideo(true)
-      setPlaying(true)
-      setShowPlay(true)
+    map.on('zoom', () => {
+      const actualZoom = map.getZoom()
+      if (actualZoom > 11) {
+        setShowVideo(true)
+        setPlaying(true)
+        setShowPlay(true)
+      }
     })
 
     return () => {
