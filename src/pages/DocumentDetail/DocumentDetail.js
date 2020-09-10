@@ -20,7 +20,7 @@ export default function DocumentDetail() {
       >
         <ArrowLeft />
         <span className="ml-2 text-uppercase font-weight-bold">
-          {t('All sources')}
+          {t('all sources')}
         </span>
       </LangLink>
       <DocumentInfo doc={doc} />
