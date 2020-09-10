@@ -13,11 +13,13 @@
   flex-grow: 1;
   min-height: 0;
   display: flex;
+  max-width: 100%;
 }
 
 .pdfDocument {
   display: flex;
   flex-direction: column;
+  max-width: 100%;
 }
 
 .pdfPage {
