@@ -48,9 +48,12 @@ export default function Gallery({ objects, caption }) {
         )}
         renderBottomCenterControls={null}
       >
-        {objects.map((o) => (
-          <GalleryItem key={o.document.id} document={o.document} />
-        ))}
+        {objects.map(
+          (o) =>
+            o.document.data.resolutions && (
+              <GalleryItem key={o.document.id} document={o.document} />
+            )
+        )}
       </Carousel>
       {caption && (
         <div className={styles.docLink}>

@@ -58,12 +58,14 @@
 .gridItem.image {
   padding: 10px;
   overflow-y: hidden !important;
+  overflow-x: hidden;
 }
 
 .gridItem.image h3 {
   position: relative;
   font-size: 1.5rem;
   z-index: 2;
+  word-break: break-all;
 }
 
 .grid .gridItem:first-child {
