@@ -1,6 +1,12 @@
 import React, { useState, useCallback, useRef, useEffect } from 'react'
 import { Document, Page, pdfjs } from 'react-pdf'
-import { ArrowLeft, ArrowRight } from 'react-feather'
+import {
+  ArrowLeft,
+  ArrowRight,
+  ZoomIn,
+  ZoomOut,
+  Minimize2,
+} from 'react-feather'
 import DocumentInfoBox from '../DocumentInfoBox'
 import styles from './DocumentInfoPdf.module.scss'
 
@@ -12,14 +18,19 @@ export default function DocumentInfoPdf({ doc }) {
   const [numPages, setNumPages] = useState(null)
   const [pageNumber, setPageNumber] = useState(1)
   const [scale, setScale] = useState(1)
-  const zoomInScale = useCallback(() => setScale(s => s + ZOOM_SCALE_STEP), [])
-  const zoomOutScale = useCallback(() => setScale(s => s - ZOOM_SCALE_STEP), [])
+  const zoomInScale = useCallback(
+    () => setScale((s) => s + ZOOM_SCALE_STEP),
+    []
+  )
+  const zoomOutScale = useCallback(
+    () => setScale((s) => s - ZOOM_SCALE_STEP),
+    []
+  )
   const resetScaleZoom = useCallback(() => setScale(1), [])
 
   const [containerHeight, setContainerHeight] = useState(null)
   const pdfContainerRef = useRef()
   useEffect(() => {
-    console.log(pdfContainerRef.current)
     setContainerHeight(pdfContainerRef.current.clientHeight)
   }, [])
 
@@ -45,18 +56,20 @@ export default function DocumentInfoPdf({ doc }) {
       <div className={styles.InfoPdfContainer}>
         <div className={styles.PdfContainer}>
           <div ref={pdfContainerRef} className={styles.PdfDocumentContainer}>
-            {containerHeight && <Document
-              className={styles.pdfDocument}
-              file={pdfUrl}
-              onLoadSuccess={onDocumentLoadSuccess}
-            >
-              <Page
-                height={containerHeight}
-                scale={scale}
-                className={styles.pdfPage}
-                pageNumber={pageNumber || 1}
-              />
-            </Document>}
+            {containerHeight && (
+              <Document
+                className={styles.pdfDocument}
+                file={pdfUrl}
+                onLoadSuccess={onDocumentLoadSuccess}
+              >
+                <Page
+                  height={containerHeight}
+                  scale={scale}
+                  className={styles.pdfPage}
+                  pageNumber={pageNumber || 1}
+                />
+              </Document>
+            )}
           </div>
           <div className={styles.PdfControls}>
             <button
@@ -84,11 +97,25 @@ export default function DocumentInfoPdf({ doc }) {
             >
               <ArrowRight color="white"></ArrowRight>
             </button>
-            <div>
-              <button onClick={zoomInScale}>ZOOM-IN</button>
-              <button onClick={zoomOutScale}>ZOOM-OUT</button>
-              <button onClick={resetScaleZoom}>RESET ZOOM</button>
-            </div>
+
+            <button
+              className="btn btn-link btn-icon-round ml-2"
+              onClick={zoomInScale}
+            >
+              <ZoomIn color="white"></ZoomIn>
+            </button>
+            <button
+              className="btn btn-link btn-icon-round ml-2"
+              onClick={zoomOutScale}
+            >
+              <ZoomOut color="white"></ZoomOut>
+            </button>
+            <button
+              className="btn btn-link btn-icon-round ml-2"
+              onClick={resetScaleZoom}
+            >
+              <Minimize2 color="white"></Minimize2>
+            </button>
           </div>
         </div>
       </div>
