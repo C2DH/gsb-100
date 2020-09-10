@@ -40,7 +40,7 @@ export default function DocumentInfoMetadata({ data }) {
       } else {
         value = data[m] ? data[m] : null
       }
-      return { label: m, value: value }
+      return { label: m, value: value.toString() }
     }).filter((d) => d.value)
   }, [data, i18n.language])
 

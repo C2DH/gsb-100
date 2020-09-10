@@ -1,6 +1,20 @@
-import React, { useState, useContext, useRef, useImperativeHandle } from 'react'
+import React, {
+  useState,
+  useContext,
+  useRef,
+  useImperativeHandle,
+  useMemo,
+} from 'react'
 import ReactPlayer from 'react-player'
-import { Play, Pause, Maximize, VolumeX, Volume2 } from 'react-feather'
+import {
+  Play,
+  Pause,
+  Maximize,
+  VolumeX,
+  Volume2,
+  AlignCenter,
+} from 'react-feather'
+import classNames from 'classnames'
 import screenfull from 'screenfull'
 import styles from './Video.module.scss'
 
@@ -19,6 +33,9 @@ const Controls = ({ show }) => {
     volume,
     setVolume,
     extraProgress,
+    toggleSubtitle,
+    showSubtitle,
+    hasSub,
   } = useContext(ControlsContext)
   const seekLineRef = useRef()
 
@@ -42,14 +59,6 @@ const Controls = ({ show }) => {
       </div>
       <div className={styles.Volume} onClick={() => toggleMuted()}>
         {muted === true ? <VolumeX /> : <Volume2 />}
-        {/*<input
-          value={volume}
-          onChange={(e) => setVolume(+e.target.value)}
-          min={0}
-          max={1}
-          type="range"
-          step="any"
-        />*/}
       </div>
       <div
         onClick={handleClick}
@@ -62,9 +71,20 @@ const Controls = ({ show }) => {
         />
         {extraProgress}
       </div>
-      <div className={styles.fullScreen} onClick={goFullScreen}>
+      <div className={styles.controlIcon} onClick={goFullScreen}>
         <Maximize />
       </div>
+
+      {hasSub && (
+        <div
+          className={classNames(styles.controlIcon, {
+            [styles.disabled]: !showSubtitle,
+          })}
+          onClick={toggleSubtitle}
+        >
+          <AlignCenter />
+        </div>
+      )}
     </div>
   )
 }
@@ -93,17 +113,20 @@ const Wrapper = React.forwardRef(
   }
 )
 
-function Video({
-  onReady,
-  extraProgress = null,
-  extraVideoOverlay = null,
-  width = null,
-  height = null,
-  onProgress,
-  onPlay,
-  onPause,
-  ...props
-}, ref) {
+function Video(
+  {
+    onReady,
+    extraProgress = null,
+    extraVideoOverlay = null,
+    width = null,
+    height = null,
+    onProgress,
+    onPlay,
+    onPause,
+    ...props
+  },
+  ref
+) {
   const playerRef = useRef()
   const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
@@ -117,6 +140,7 @@ function Video({
   }
   const [volume, setVolume] = useState(1)
   const [muted, setMuted] = useState(false)
+  const [showSubtitle, setShowSubtitle] = useState(true)
   const toggleMuted = () => setMuted((a) => !a)
 
   const goFullScreen = () => {
@@ -126,14 +150,53 @@ function Video({
     }
   }
 
+  const toggleSubtitle = () => {
+    const video = playerRef.current.wrapper.querySelector('video')
+    for (var i = 0; i < video.textTracks.length; i++) {
+      const mode = video.textTracks[i].mode
+      video.textTracks[i].mode = mode === 'showing' ? 'hidden' : 'showing'
+    }
+    setShowSubtitle((a) => !a)
+  }
+
+  const moveSubtitles = () => {
+    const track = playerRef.current.wrapper.querySelector('track')
+    const cues = track.track.cues
+    for (var i = 0; i < cues.length; i++) {
+      cues[i].line = -4
+    }
+  }
+
   const handleOnReady = () => {
     onReady && onReady(playerRef.current)
+    hasSub && moveSubtitles()
   }
 
   useImperativeHandle(ref, () => ({
     togglePlay,
     setPlaying,
   }))
+
+  const config = useMemo(() => {
+    if (props.sub?.url) {
+      return {
+        file: {
+          tracks: [
+            {
+              kind: 'subtitles',
+              src: props.sub.url,
+              srcLang: props.sub.lang,
+              default: true,
+            },
+          ],
+        },
+      }
+    }
+  }, [props.sub])
+
+  const hasSub = useMemo(() => {
+    return props.sub?.url ? true : false
+  }, [props.sub])
 
   return (
     <ControlsContext.Provider
@@ -150,6 +213,9 @@ function Video({
         toggleMuted,
         extraProgress,
         extraVideoOverlay,
+        toggleSubtitle,
+        showSubtitle,
+        hasSub,
       }}
     >
       <ReactPlayer
@@ -176,6 +242,7 @@ function Video({
         width={null}
         height={null}
         playsinline
+        config={config}
         {...props}
       />
     </ControlsContext.Provider>

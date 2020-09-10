@@ -35,10 +35,6 @@
   margin-right: 0px;
 }
 
-.PlayPause {
-  cursor: pointer;
-}
-
 .ProggressLine {
   position: relative;
   height: 8px;
@@ -52,14 +48,20 @@
   }
 }
 
-.fullScreen {
+.controlIcon {
   cursor: pointer;
+  opacity: 1;
+}
+
+.controlIcon.disabled {
+  opacity: 0.5;
 }
 
 .Volume {
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
   input {
     margin-left: 0px;
     opacity: 0;
