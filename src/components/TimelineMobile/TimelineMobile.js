@@ -5,13 +5,16 @@ import { LocaleList } from '../../utils'
 import styles from './TimelineMobile.module.scss'
 
 const DATE_FORMAT = '%d %B %Y'
+const DATE_FORMAT_DE = '%d. %B %Y'
 
 function TimelineMobile({ documents, ...rest }) {
   const { i18n } = useTranslation()
 
   const formatter = useMemo(() => {
     d3TimeFormat.timeFormatDefaultLocale(LocaleList[i18n.language])
-    return d3TimeFormat.timeFormat(DATE_FORMAT)
+    return d3TimeFormat.timeFormat(
+      i18n.language === 'de_DE' ? DATE_FORMAT_DE : DATE_FORMAT
+    )
   }, [i18n.language])
 
   return (

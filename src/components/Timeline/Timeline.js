@@ -61,6 +61,7 @@ const dodge = (data, radius, x) => {
 }
 
 const DATE_FORMAT = '%d %B %Y'
+const DATE_FORMAT_DE = '%d. %B %Y'
 
 function Timeline({ documents, width }) {
   const { i18n } = useTranslation()
@@ -86,7 +87,9 @@ function Timeline({ documents, width }) {
 
   const formatter = useMemo(() => {
     d3TimeFormat.timeFormatDefaultLocale(LocaleList[i18n.language])
-    return d3TimeFormat.timeFormat(DATE_FORMAT)
+    return d3TimeFormat.timeFormat(
+      i18n.language === 'de_DE' ? DATE_FORMAT_DE : DATE_FORMAT
+    )
   }, [i18n.language])
 
   return (
