@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
+import Helmet from 'react-helmet'
 import groupBy from 'lodash/groupBy'
 import { Trail } from 'react-spring/renderprops'
 import { useTranslation } from 'react-i18next'
@@ -35,7 +36,7 @@ const DocsTypedGallery = ({ type, docs, style }) => {
 }
 
 export default function ExplorationsCategory() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const { category } = useParams()
   const [explorationsStory] = useCacheStory('explorations')
   const [categoryStory] = useCacheStory(category)
@@ -46,8 +47,6 @@ export default function ExplorationsCategory() {
     },
     limit: 500,
   })
-
-  console.log(categoryStory)
 
   const typesWithDocs = useMemo(() => {
     const docsByType = groupBy(documents, (d) => d.data.type)
@@ -60,54 +59,64 @@ export default function ExplorationsCategory() {
   }, [documents])
 
   return (
-    <div className={styles.categoryPage}>
-      <MenuResponsive
-        level={'03'}
-        title={explorationsStory.data.title}
-      ></MenuResponsive>
-      <div className={`${styles.catCont} container bg-secondary`}>
-        <div className="row">
-          <div className="col-12 col-lg-7">
-            <h1 className="d-flex align-items-center mt-4 mb-2">
-              <LangLink className="text-white" to="/explorations">
-                <Media queries={BREAKPOINTS}>
-                  {(matches) =>
-                    matches.md ? (
-                      <ArrowLeft size={25} />
-                    ) : (
-                      <ArrowLeft size={40} />
-                    )
-                  }
-                </Media>
-              </LangLink>
-              <span className="text-capitalize ml-2">{t(category)}</span>
-            </h1>
+    <React.Fragment>
+      <Helmet>
+        <html lang={i18n.language.split('_')[0]} />
+        <title itemProp="name">
+          {explorationsStory.data.title} - {t(category)}
+        </title>
+      </Helmet>
+      <div className={styles.categoryPage}>
+        <MenuResponsive
+          level={'03'}
+          title={explorationsStory.data.title}
+        ></MenuResponsive>
+        <div className={`${styles.catCont} container bg-secondary`}>
+          <div className="row">
+            <div className="col-12 col-lg-7">
+              <h1 className="d-flex align-items-center mt-4 mb-2">
+                <LangLink className="text-white" to="/explorations">
+                  <Media queries={BREAKPOINTS}>
+                    {(matches) =>
+                      matches.md ? (
+                        <ArrowLeft size={25} />
+                      ) : (
+                        <ArrowLeft size={40} />
+                      )
+                    }
+                  </Media>
+                </LangLink>
+                <span className="text-capitalize ml-2">{t(category)}</span>
+              </h1>
+            </div>
+          </div>
+          <div className="row">
+            <div className="offset-1 col-11 col-md-10 col-lg-8">
+              <p className={styles.description}>
+                {categoryStory.data.abstract}
+              </p>
+            </div>
           </div>
         </div>
-        <div className="row">
-          <div className="offset-1 col-11 col-md-10 col-lg-8">
-            <p className={styles.description}>{categoryStory.data.abstract}</p>
-          </div>
-        </div>
-      </div>
 
-      <div className={`${styles.categoriesContainer}`}>
-        <Trail
-          items={typesWithDocs}
-          keys={(item) => item.type}
-          from={{ opacity: 0 }}
-          to={{ opacity: 1 }}
-        >
-          {(item) => (props) => (
-            <DocsTypedGallery
-              key={item.type}
-              type={t(item.type)}
-              docs={item.docs}
-              style={props}
-            />
-          )}
-        </Trail>
+        <div className={`${styles.categoriesContainer}`}>
+          <Trail
+            items={typesWithDocs}
+            keys={(item) => item.type}
+            from={{ opacity: 0 }}
+            to={{ opacity: 1 }}
+          >
+            {(item) => (props) => (
+              <DocsTypedGallery
+                key={item.type}
+                type={t(item.type)}
+                docs={item.docs}
+                style={props}
+              />
+            )}
+          </Trail>
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }

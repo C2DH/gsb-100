@@ -2,6 +2,8 @@ import React, { useState, useMemo, useRef, useCallback } from 'react'
 import find from 'lodash/find'
 import classNames from 'classnames'
 import ReactPlayer from 'react-player'
+import Helmet from 'react-helmet'
+import { useTranslation } from 'react-i18next'
 import { Play, Pause, VolumeX, Volume2, SkipForward } from 'react-feather'
 import { Transition, Spring } from 'react-spring/renderprops'
 import { useSpring, animated } from 'react-spring'
@@ -45,6 +47,7 @@ function usePlayingDocument(story, playedSeconds) {
 }
 
 export default function Outline() {
+  const { i18n } = useTranslation()
   const [outlineStory] = useCacheStory('outline')
   const [outlineTheme] = useCacheStory('outline-1', {
     withChapters: true,
@@ -97,124 +100,130 @@ export default function Outline() {
   }
 
   return (
-    <div className={styles.PlayerPage}>
-      <MenuResponsive
-        level={'01'}
-        title={outlineStory.data.title}
-      ></MenuResponsive>
-      <div className={styles.PlayerWrapper}>
-        <ReactPlayer
-          className={styles.Player}
-          ref={playerRef}
-          onProgress={setProgress}
-          onEnded={skipNext}
-          muted={muted}
-          width="100%"
-          height="100%"
-          playing={playing}
-          url={playingVideoUrl}
-          onClick={() => {
-            togglePlay()
-          }}
-          playsinline
-        />
-        <Transition
-          items={playingDocument}
-          from={{ opacity: 0, transform: 'translateX(100%)' }}
-          enter={{ opacity: 1, transform: 'translateX(0%)' }}
-          leave={{ opacity: 0, transform: 'translateX(100%)' }}
-        >
-          {(playingDocument) =>
-            playingDocument &&
-            ((props) => (
-              <PlayingDocument
-                onClick={handlePlayingDocClick}
-                document={playingDocument}
-                style={props}
-              />
-            ))
-          }
-        </Transition>
-        <Transition
-          items={playing}
-          from={{ opacity: 0 }}
-          enter={{ opacity: 0.75 }}
-          leave={{ opacity: 0 }}
-          trail={300}
-        >
-          {(playing) =>
-            !playing &&
-            ((props) => (
-              <animated.div
-                className={classNames(
-                  `${styles.playControl} btn btn-secondary`
-                )}
-                onClick={() => {
-                  togglePlay()
-                }}
-                style={props}
-              >
-                <Play size={30} />
-              </animated.div>
-            ))
-          }
-        </Transition>
+    <React.Fragment>
+      <Helmet>
+        <html lang={i18n.language.split('_')[0]} />
+        <title itemProp="name">{outlineStory.data.title}</title>
+      </Helmet>
+      <div className={styles.PlayerPage}>
+        <MenuResponsive
+          level={'01'}
+          title={outlineStory.data.title}
+        ></MenuResponsive>
+        <div className={styles.PlayerWrapper}>
+          <ReactPlayer
+            className={styles.Player}
+            ref={playerRef}
+            onProgress={setProgress}
+            onEnded={skipNext}
+            muted={muted}
+            width="100%"
+            height="100%"
+            playing={playing}
+            url={playingVideoUrl}
+            onClick={() => {
+              togglePlay()
+            }}
+            playsinline
+          />
+          <Transition
+            items={playingDocument}
+            from={{ opacity: 0, transform: 'translateX(100%)' }}
+            enter={{ opacity: 1, transform: 'translateX(0%)' }}
+            leave={{ opacity: 0, transform: 'translateX(100%)' }}
+          >
+            {(playingDocument) =>
+              playingDocument &&
+              ((props) => (
+                <PlayingDocument
+                  onClick={handlePlayingDocClick}
+                  document={playingDocument}
+                  style={props}
+                />
+              ))
+            }
+          </Transition>
+          <Transition
+            items={playing}
+            from={{ opacity: 0 }}
+            enter={{ opacity: 0.75 }}
+            leave={{ opacity: 0 }}
+            trail={300}
+          >
+            {(playing) =>
+              !playing &&
+              ((props) => (
+                <animated.div
+                  className={classNames(
+                    `${styles.playControl} btn btn-secondary`
+                  )}
+                  onClick={() => {
+                    togglePlay()
+                  }}
+                  style={props}
+                >
+                  <Play size={30} />
+                </animated.div>
+              ))
+            }
+          </Transition>
 
-        <div
-          className={classNames(
-            `${styles.Controls} pb-2 pb-lg-3 px-2 px-lg-5 position-relative`
-          )}
-        >
           <div
-            id={styles.playerControl}
-            className="py-2 py-lg-4 d-none d-lg-flex justify-content-center justify-content-lg-start"
-          >
-            <button
-              type="button"
-              className="ml-2 btn btn-light btn-icon-round opacity-75"
-              onClick={togglePlay}
-            >
-              {playing ? <Pause /> : <Play />}
-            </button>
-            <button
-              type="button"
-              className="ml-3 btn btn-light btn-icon-round opacity-75"
-              onClick={skipNext}
-            >
-              <SkipForward />
-            </button>
-            <button
-              type="button"
-              className="ml-3 btn btn-light btn-icon-round opacity-75"
-              onClick={toggleMute}
-            >
-              {muted === true ? <VolumeX /> : <Volume2 />}
-            </button>
-          </div>
-          <Spring
-            from={{ transform: 'translateY(100%)' }}
-            to={{ transform: 'translateY(0%)' }}
-          >
-            {(props) => (
-              <div
-                style={props}
-                className="d-flex flex-column flex-lg-row flex-grow-0 flex-shrink-1 pt-2 pt-lg-0"
-              >
-                {chapters.map((chapter, i) => (
-                  <SeekLine
-                    key={i}
-                    onSeek={handleSeek}
-                    index={i}
-                    title={chapter.data.title}
-                    abstract={chapter.data.abstract}
-                    progress={i === chapterIndex ? progress.played : null}
-                  />
-                ))}
-              </div>
+            className={classNames(
+              `${styles.Controls} pb-2 pb-lg-3 px-2 px-lg-5 position-relative`
             )}
-          </Spring>
+          >
+            <div
+              id={styles.playerControl}
+              className="py-2 py-lg-4 d-none d-lg-flex justify-content-center justify-content-lg-start"
+            >
+              <button
+                type="button"
+                className="ml-2 btn btn-light btn-icon-round opacity-75"
+                onClick={togglePlay}
+              >
+                {playing ? <Pause /> : <Play />}
+              </button>
+              <button
+                type="button"
+                className="ml-3 btn btn-light btn-icon-round opacity-75"
+                onClick={skipNext}
+              >
+                <SkipForward />
+              </button>
+              <button
+                type="button"
+                className="ml-3 btn btn-light btn-icon-round opacity-75"
+                onClick={toggleMute}
+              >
+                {muted === true ? <VolumeX /> : <Volume2 />}
+              </button>
+            </div>
+            <Spring
+              from={{ transform: 'translateY(100%)' }}
+              to={{ transform: 'translateY(0%)' }}
+            >
+              {(props) => (
+                <div
+                  style={props}
+                  className="d-flex flex-column flex-lg-row flex-grow-0 flex-shrink-1 pt-2 pt-lg-0"
+                >
+                  {chapters.map((chapter, i) => (
+                    <SeekLine
+                      key={i}
+                      onSeek={handleSeek}
+                      index={i}
+                      title={chapter.data.title}
+                      abstract={chapter.data.abstract}
+                      progress={i === chapterIndex ? progress.played : null}
+                    />
+                  ))}
+                </div>
+              )}
+            </Spring>
+          </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }

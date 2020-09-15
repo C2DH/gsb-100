@@ -1,4 +1,5 @@
 import React from 'react'
+import Helmet from 'react-helmet'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
 import MenuResponsive from '../../components/MenuResponsive'
@@ -7,10 +8,14 @@ import styles from './TermsOfUse.module.scss'
 
 export default function About() {
   const [touStory] = useCacheStory('terms-of-use')
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
 
   return (
     <React.Fragment>
+      <Helmet>
+        <html lang={i18n.language.split('_')[0]} />
+        <title itemProp="name">{touStory.data.title}</title>
+      </Helmet>
       <MenuResponsive title={touStory.data.title}></MenuResponsive>
       <div className={styles.titleContainer}>
         <div className="container">

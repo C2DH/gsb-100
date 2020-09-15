@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import Media from 'react-media'
+import Helmet from 'react-helmet'
+import { useTranslation } from 'react-i18next'
 import { BREAKPOINTS } from '../../utils'
 import { useCacheStory, useCacheStories, usePrefetchStory } from '../../miller'
 import MenuResponsive from '../../components/MenuResponsive'
@@ -45,47 +47,54 @@ function ThemeListItem({ theme, ...props }) {
 }
 
 export default function Perspectives() {
+  const { i18n } = useTranslation()
   const [perspectivesStory] = useCacheStory('perspectives')
   const [{ stories: themes }] = useCacheStories(themesParams)
 
   return (
-    <div className="h-100 d-flex flex-column">
-      <MenuResponsive
-        level={'02'}
-        title={perspectivesStory.data.title}
-      ></MenuResponsive>
-      <div className={`${styles.ThemeListContainer} py-0 py-lg-4`}>
-        <Media queries={BREAKPOINTS}>
-          {(matches) =>
-            matches.md ? (
-              <div className="container">
-                <div className="row">
-                  <div className="col-12">
-                    <p className="mt-2">{perspectivesStory.data.abstract}</p>
+    <React.Fragment>
+      <Helmet>
+        <html lang={i18n.language.split('_')[0]} />
+        <title itemProp="name">{perspectivesStory.data.title}</title>
+      </Helmet>
+      <div className="h-100 d-flex flex-column">
+        <MenuResponsive
+          level={'02'}
+          title={perspectivesStory.data.title}
+        ></MenuResponsive>
+        <div className={`${styles.ThemeListContainer} py-0 py-lg-4`}>
+          <Media queries={BREAKPOINTS}>
+            {(matches) =>
+              matches.md ? (
+                <div className="container">
+                  <div className="row">
+                    <div className="col-12">
+                      <p className="mt-2">{perspectivesStory.data.abstract}</p>
+                    </div>
+                    {themes.map((theme, i) => {
+                      return (
+                        <ThemeListItem
+                          key={theme.id}
+                          theme={theme}
+                          className={classNames(
+                            'col-12 col-lg-6',
+                            styles.ThemeListItem
+                          )}
+                        />
+                      )
+                    })}
                   </div>
-                  {themes.map((theme, i) => {
-                    return (
-                      <ThemeListItem
-                        key={theme.id}
-                        theme={theme}
-                        className={classNames(
-                          'col-12 col-lg-6',
-                          styles.ThemeListItem
-                        )}
-                      />
-                    )
-                  })}
                 </div>
-              </div>
-            ) : (
-              <PerspectivesGrid
-                themes={themes}
-                description={perspectivesStory.data.abstract}
-              ></PerspectivesGrid>
-            )
-          }
-        </Media>
+              ) : (
+                <PerspectivesGrid
+                  themes={themes}
+                  description={perspectivesStory.data.abstract}
+                ></PerspectivesGrid>
+              )
+            }
+          </Media>
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }

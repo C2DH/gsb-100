@@ -1,6 +1,7 @@
 import React, { useMemo } from 'react'
 import groupBy from 'lodash/groupBy'
 import { shuffle } from 'seed-shuffle'
+import Helmet from 'react-helmet'
 import { Trail } from 'react-spring/renderprops'
 import { useTranslation } from 'react-i18next'
 import MenuResponsive from '../../components/MenuResponsive'
@@ -15,7 +16,7 @@ const NUMBER_OF_IMAGES_PER_CATEGORY = 5
 const RANDOM_SEED = 1 + Math.floor(Math.random() * 1000)
 
 export default function Explorations() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [explorationsStory] = useCacheStory('explorations')
 
   const [{ documents }] = useCacheDocuments({
@@ -45,44 +46,50 @@ export default function Explorations() {
   }, [documents])
 
   return (
-    <div className={styles.explorationPage}>
-      <MenuResponsive
-        level={'03'}
-        title={explorationsStory.data.title}
-      ></MenuResponsive>
-      <div className="container">
-        <div className="row">
-          <div className="col-12 col-md-9 col-lg-7">
-            <p className={`${styles.desc} mt-2 mt-md-5`}>
-              {explorationsStory.data.abstract}
-            </p>
+    <React.Fragment>
+      <Helmet>
+        <html lang={i18n.language.split('_')[0]} />
+        <title itemProp="name">{explorationsStory.data.title}</title>
+      </Helmet>
+      <div className={styles.explorationPage}>
+        <MenuResponsive
+          level={'03'}
+          title={explorationsStory.data.title}
+        ></MenuResponsive>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-md-9 col-lg-7">
+              <p className={`${styles.desc} mt-2 mt-md-5`}>
+                {explorationsStory.data.abstract}
+              </p>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        className={`${styles.stacks} flex-grow-1 d-flex flex-md-row flex-column position-relative align-items-center`}
-      >
-        <Trail
-          items={categoriesWithImages.concat([
-            { category: 'all' },
-            { category: 'alternative' },
-          ])}
-          keys={(item) => item.category}
-          from={{ opacity: 0 }}
-          to={{ opacity: 1 }}
+        <div
+          className={`${styles.stacks} flex-grow-1 d-flex flex-md-row flex-column position-relative align-items-center`}
         >
-          {(item) => (props) => (
-            <ImagesStack
-              category={t(item.category)}
-              docs={item.docs}
-              style={props}
-              empty={item.docs ? false : true}
-              link={item.category}
-            />
-          )}
-        </Trail>
-        <div style={{ flex: '0 0 1px', width: 1, height: 1 }}></div>
+          <Trail
+            items={categoriesWithImages.concat([
+              { category: 'all' },
+              { category: 'alternative' },
+            ])}
+            keys={(item) => item.category}
+            from={{ opacity: 0 }}
+            to={{ opacity: 1 }}
+          >
+            {(item) => (props) => (
+              <ImagesStack
+                category={t(item.category)}
+                docs={item.docs}
+                style={props}
+                empty={item.docs ? false : true}
+                link={item.category}
+              />
+            )}
+          </Trail>
+          <div style={{ flex: '0 0 1px', width: 1, height: 1 }}></div>
+        </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }

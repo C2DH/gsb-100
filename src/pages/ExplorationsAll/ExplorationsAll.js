@@ -2,6 +2,7 @@ import React from 'react'
 import { Waypoint } from 'react-waypoint'
 import { ArrowLeft } from 'react-feather'
 import Media from 'react-media'
+import Helmet from 'react-helmet'
 import { useTranslation } from 'react-i18next'
 import MenuResponsive from '../../components/MenuResponsive'
 import { useQueryString } from '../../hooks'
@@ -13,7 +14,7 @@ import { BREAKPOINTS } from '../../utils'
 import styles from './ExplorationsAll.module.scss'
 
 export default function ExplorationsAll() {
-  const { t } = useTranslation()
+  const { t, i18n } = useTranslation()
   const [queryString, setQueryString] = useQueryString()
   const [explorationsStory] = useCacheStory('explorations')
 
@@ -46,73 +47,81 @@ export default function ExplorationsAll() {
   }
 
   return (
-    <div className={styles.ExplorationsAllPage}>
-      <MenuResponsive
-        level={'03'}
-        title={explorationsStory.data.title}
-      ></MenuResponsive>
-      <div className="container">
-        <div className="row">
-          <div className="col-12 col-lg-7">
-            <h1 className="d-flex align-items-center my-4">
-              <LangLink className="text-white" to="/explorations">
-                <Media queries={BREAKPOINTS}>
-                  {(matches) =>
-                    matches.md ? (
-                      <ArrowLeft size={25} />
-                    ) : (
-                      <ArrowLeft size={40} />
-                    )
-                  }
-                </Media>
-              </LangLink>
-              <span className="text-capitalize ml-2">{t('all')}</span>
-            </h1>
+    <React.Fragment>
+      <Helmet>
+        <html lang={i18n.language.split('_')[0]} />
+        <title itemProp="name">
+          {explorationsStory.data.title} - {t('all')}
+        </title>
+      </Helmet>
+      <div className={styles.ExplorationsAllPage}>
+        <MenuResponsive
+          level={'03'}
+          title={explorationsStory.data.title}
+        ></MenuResponsive>
+        <div className="container">
+          <div className="row">
+            <div className="col-12 col-lg-7">
+              <h1 className="d-flex align-items-center my-4">
+                <LangLink className="text-white" to="/explorations">
+                  <Media queries={BREAKPOINTS}>
+                    {(matches) =>
+                      matches.md ? (
+                        <ArrowLeft size={25} />
+                      ) : (
+                        <ArrowLeft size={40} />
+                      )
+                    }
+                  </Media>
+                </LangLink>
+                <span className="text-capitalize ml-2">{t('all')}</span>
+              </h1>
+            </div>
           </div>
-        </div>
-        <div className={`${styles.rowSearch} row align-items-center`}>
-          <div className={`${styles.colSearch} col-12 col-lg-10`}>
-            <Autocomplete
-              initialSearch={queryString.q}
-              onSelected={(q) =>
-                setQueryString({
-                  q,
-                  type: queryString.type,
-                })
-              }
-              placeholder={t('search')}
-              suggestions={suggestions}
-              loadSuggestions={search}
-              clearSuggestions={clearSearch}
-            />
+          <div className={`${styles.rowSearch} row align-items-center`}>
+            <div className={`${styles.colSearch} col-12 col-lg-10`}>
+              <Autocomplete
+                initialSearch={queryString.q}
+                onSelected={(q) =>
+                  setQueryString({
+                    q,
+                    type: queryString.type,
+                  })
+                }
+                placeholder={t('search')}
+                suggestions={suggestions}
+                loadSuggestions={search}
+                clearSuggestions={clearSearch}
+              />
+            </div>
+            <div className="col-12 col-lg-2 pr-4 pr-lg-auto">
+              <select
+                className={`${styles.selectType} form-control`}
+                value={queryString.type ?? ''}
+                onChange={(e) => {
+                  setQueryString({
+                    type: e.target.value,
+                    q: queryString.q,
+                  })
+                }}
+              >
+                <option value="">{t('all types')}</option>
+                {allFacets.data__type.map((facet) => (
+                  <option value={facet.data__type} key={facet.data__type}>
+                    {t(facet.data__type)}
+                  </option>
+                ))}
+              </select>
+            </div>
           </div>
-          <div className="col-12 col-lg-2 pr-4 pr-lg-auto">
-            <select
-              className={`${styles.selectType} form-control`}
-              value={queryString.type ?? ''}
-              onChange={(e) => {
-                setQueryString({
-                  type: e.target.value,
-                  q: queryString.q,
-                })
-              }}
-            >
-              <option value="">{t('all types')}</option>
-              {allFacets.data__type.map((facet) => (
-                <option value={facet.data__type} key={facet.data__type}>
-                  {t(facet.data__type)}
-                </option>
-              ))}
-            </select>
-          </div>
-        </div>
-        <div className="row">
-          <div className="col-12">
-            <DocumentsGrid documents={documents} />
-            <div className="mb-4">{renderWaypoint()}</div>
+          <div className="row">
+            <div className="col-12">
+              <DocumentsGrid documents={documents} />
+              <div className="mb-4">{renderWaypoint()}</div>
+            </div>
           </div>
         </div>
       </div>
-    </div>
+    </React.Fragment>
   )
 }
