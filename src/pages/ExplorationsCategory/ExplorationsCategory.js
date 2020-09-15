@@ -38,6 +38,7 @@ export default function ExplorationsCategory() {
   const { t } = useTranslation()
   const { category } = useParams()
   const [explorationsStory] = useCacheStory('explorations')
+  const [categoryStory] = useCacheStory(category)
 
   const [{ documents }] = useCacheDocuments({
     filters: {
@@ -45,6 +46,8 @@ export default function ExplorationsCategory() {
     },
     limit: 500,
   })
+
+  console.log(categoryStory)
 
   const typesWithDocs = useMemo(() => {
     const docsByType = groupBy(documents, (d) => d.data.type)
@@ -65,7 +68,7 @@ export default function ExplorationsCategory() {
       <div className={`${styles.catCont} container bg-secondary`}>
         <div className="row">
           <div className="col-12 col-lg-7">
-            <h1 className="d-flex align-items-center my-4">
+            <h1 className="d-flex align-items-center mt-4 mb-2">
               <LangLink className="text-white" to="/explorations">
                 <Media queries={BREAKPOINTS}>
                   {(matches) =>
@@ -79,6 +82,11 @@ export default function ExplorationsCategory() {
               </LangLink>
               <span className="text-capitalize ml-2">{t(category)}</span>
             </h1>
+          </div>
+        </div>
+        <div className="row">
+          <div className="offset-1 col-11 col-md-10 col-lg-8">
+            <p className={styles.description}>{categoryStory.data.abstract}</p>
           </div>
         </div>
       </div>

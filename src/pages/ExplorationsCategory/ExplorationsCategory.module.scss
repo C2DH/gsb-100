@@ -15,6 +15,10 @@
   border-top: 1px solid var(--border-color);
 }
 
+.description {
+  font-size: 1rem;
+}
+
 .label::before {
   content: '─ ';
 }
@@ -58,6 +62,10 @@
 @media (min-width: 768px) {
   .rowPadding {
     padding-left: calc(50vw - (var(--max-width-md) / 2));
+  }
+
+  .description {
+    font-size: 1.5rem;
   }
 }
 
