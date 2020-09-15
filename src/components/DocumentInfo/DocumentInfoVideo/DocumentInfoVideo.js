@@ -3,6 +3,7 @@ import { useTranslation } from 'react-i18next'
 import styles from './DocumentInfoVideo.module.scss'
 import DocumentInfoBox from '../DocumentInfoBox'
 import Video from '../../Video'
+import YtVideo from '../../YtVideo'
 
 export default function DocumentInfoVideo({ doc }) {
   const { i18n } = useTranslation()
@@ -10,6 +11,14 @@ export default function DocumentInfoVideo({ doc }) {
     doc.data.translated_urls && doc.data.translated_urls instanceof String
       ? doc.data.translated_urls
       : doc.url
+
+  const yt = useMemo(() => {
+    return videoUrl.match(
+      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
+    )
+      ? true
+      : false
+  }, [videoUrl])
 
   const sub = useMemo(() => {
     if (doc.data.subtitles) {
@@ -30,8 +39,12 @@ export default function DocumentInfoVideo({ doc }) {
     <React.Fragment>
       <div className={styles.VideoContainer}>
         <div className={styles.PlayerWrapper}>
-          {videoUrl && (
-            <Video url={videoUrl} width="auto" height="auto" sub={sub} />
+          {videoUrl && yt ? (
+            <YtVideo url={videoUrl} detail></YtVideo>
+          ) : (
+            videoUrl && (
+              <Video url={videoUrl} width="auto" height="auto" sub={sub} />
+            )
           )}
         </div>
       </div>

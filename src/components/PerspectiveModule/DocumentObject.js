@@ -1,5 +1,6 @@
 import React from 'react'
 import { Video, AudioTrack } from './UniqueMedia'
+import YtVideo from '../YtVideo'
 import { Caption } from './ModuleUtils'
 import DocLink from '../DocLink'
 
@@ -24,10 +25,17 @@ export default function DocumentObject({ document, caption, className }) {
     )
   } else if (document.type === 'video') {
     const videoUrl = document.url ? document.url : document.data.translated_urls
+    const yt = videoUrl.match(
+      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
+    )
 
     return (
       <div className={className}>
-        {videoUrl && <Video url={videoUrl} />}
+        {videoUrl && yt ? (
+          <YtVideo url={videoUrl}></YtVideo>
+        ) : (
+          videoUrl && <Video url={videoUrl} />
+        )}
         <DocLink document={document}>
           <Caption caption={caption}></Caption>
         </DocLink>
