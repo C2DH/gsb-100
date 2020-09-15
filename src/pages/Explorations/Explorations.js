@@ -23,6 +23,9 @@ export default function Explorations() {
       data__category__isnull: false,
       data__resolutions__isnull: false,
     },
+    exclude: {
+      data__category: 'alternative sources',
+    },
     limit: 500,
   })
 
