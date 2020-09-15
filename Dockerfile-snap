@@ -1,0 +1,33 @@
+FROM buildkite/puppeteer as builder
+
+ARG MAPBOX_ACCESS_TOKEN
+ARG GIT_TAG
+ARG GIT_BRANCH
+ARG GIT_REVISION
+
+WORKDIR /gsb-100
+
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn install
+
+COPY public ./public
+COPY src ./src
+COPY snapWithProxyApi.js .
+COPY proxyApi.js .
+
+ENV NODE_ENV production
+ENV NODE_OPTIONS --max_old_space_size=4096
+
+ENV REACT_APP_MAPBOX_ACCESS_TOKEN=${MAPBOX_ACCESS_TOKEN}
+ENV REACT_APP_GIT_TAG=${GIT_TAG}
+ENV REACT_APP_GIT_BRANCH=${GIT_BRANCH}
+ENV REACT_APP_GIT_REVISION=${GIT_REVISION}
+
+RUN yarn build
+RUN yarn snap-docker
+
+FROM busybox
+WORKDIR /gsb-100
+COPY --from=builder /gsb-100/build-crawled ./
