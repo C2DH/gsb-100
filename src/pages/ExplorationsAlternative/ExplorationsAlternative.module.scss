@@ -13,9 +13,24 @@
   border-radius: 10px;
 }
 
+.rowBorder {
+  border-bottom: 1px solid var(--border-color);
+  padding-bottom: 30px;
+}
+
+.rowBorder:last-of-type {
+  border-bottom: none;
+  padding-bottom: 0px;
+}
+
 @media (min-width: 992px) {
   .titleCont {
     top: 0;
+  }
+
+  .rowBorder {
+    border-bottom: none;
+    padding-bottom: 0;
   }
 }
 

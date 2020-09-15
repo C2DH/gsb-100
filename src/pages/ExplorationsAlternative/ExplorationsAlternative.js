@@ -52,9 +52,11 @@ export default function ExplorationsAlternative() {
       <div className="container">
         {documents.map((doc) => {
           return (
-            <div className="row my-5" key={doc.id}>
+            <div className={`${styles.rowBorder} row my-5`} key={doc.id}>
               <div className="col-12 col-lg-7">
-                <div className={`${styles.imgCont} bg-dark p-4`}>
+                <div
+                  className={`${styles.imgCont} bg-dark p-3 p-lg-4 mb-3 mb-lg-0`}
+                >
                   <img
                     className={`${styles.img} img-fluid`}
                     src={doc.data.resolutions.preview.url}
