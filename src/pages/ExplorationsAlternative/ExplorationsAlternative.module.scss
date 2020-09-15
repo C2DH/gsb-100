@@ -5,6 +5,14 @@
   z-index: 1;
 }
 
+.img {
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.5) !important;
+}
+
+.imgCont {
+  border-radius: 10px;
+}
+
 @media (min-width: 992px) {
   .titleCont {
     top: 0;
