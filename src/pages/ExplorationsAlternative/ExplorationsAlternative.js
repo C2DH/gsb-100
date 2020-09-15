@@ -13,7 +13,7 @@ export default function ExplorationsAlternative() {
   const [explorationsStory] = useCacheStory('explorations')
   const [{ documents }] = useCacheDocuments({
     filters: {
-      data__category: 'alternative sources',
+      data__category: 'alternative-sources',
     },
     limit: 500,
   })
@@ -41,9 +41,7 @@ export default function ExplorationsAlternative() {
                     }
                   </Media>
                 </LangLink>
-                <span className="text-capitalize ml-2">
-                  {t('alternative sources')}
-                </span>
+                <span className="text-capitalize ml-2">{t('alternative')}</span>
               </h1>
             </div>
           </div>
