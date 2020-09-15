@@ -38,7 +38,7 @@ export default function DocumentInfoMetadata({ data }) {
       if (m === 'date') {
         value = getDate(data, d3TimeFormat.timeFormat(DATE_FORMAT))
       } else {
-        value = data[m] ? data[m] : null
+        value = data[m] ? data[m] : ''
       }
       return { label: m, value: value.toString() }
     }).filter((d) => d.value)
