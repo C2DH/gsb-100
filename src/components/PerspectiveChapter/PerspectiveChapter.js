@@ -1,17 +1,19 @@
-import React, { Suspense, useState } from 'react'
+import React, { Suspense, useCallback, useState } from 'react'
 import { Collapse, CardBody, Card } from 'reactstrap'
 import Media from 'react-media'
-import { ChevronDown, ChevronUp } from 'react-feather'
+import { ChevronDown } from 'react-feather'
 import PerspectiveModule from '../PerspectiveModule'
 import { useCacheStory } from '../../miller'
 import { BREAKPOINTS } from '../../utils'
 import styles from './PerspectiveChapter.module.scss'
 
-function PerspectiveChapterContent({ chapterId }) {
+function PerspectiveChapterContent({ chapterId, isOpen, setOpenChapter }) {
   const [chapter] = useCacheStory(chapterId)
   const { modules } = chapter.contents
-  const [isOpen, setIsOpen] = useState(false)
-  const toggle = () => setIsOpen(!isOpen)
+  const toggle = useCallback(
+    () => setOpenChapter((openId) => (openId === chapterId ? null : chapterId)),
+    [setOpenChapter, chapterId]
+  )
 
   return (
     <Media queries={BREAKPOINTS}>
@@ -59,7 +61,7 @@ function PerspectiveChapterContent({ chapterId }) {
   )
 }
 
-function PerspectiveChapter({ chapterId, isOpen }) {
+function PerspectiveChapter({ chapterId, ...props }) {
   return (
     <div
       className={`${styles.chapter} text-secondary px-md-4 pb-md-4 pt-md-0 pb-2 px-3 pt-2  position-relative`}
@@ -67,7 +69,7 @@ function PerspectiveChapter({ chapterId, isOpen }) {
       <Suspense
         fallback={<h3 className="text-secondary">Loading chapter....</h3>}
       >
-        <PerspectiveChapterContent chapterId={chapterId} />
+        <PerspectiveChapterContent chapterId={chapterId} {...props} />
       </Suspense>
     </div>
   )
