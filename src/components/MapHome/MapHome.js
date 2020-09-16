@@ -38,7 +38,7 @@ export default function MapHome({ setShowVideo, setPlaying, setShowPlay }) {
     return () => {
       map.remove()
     }
-  }, [])
+  }, [setShowVideo, setPlaying, setShowPlay])
 
   return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
 }

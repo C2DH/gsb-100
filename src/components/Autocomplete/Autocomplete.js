@@ -1,8 +1,6 @@
 import React, { useEffect, useRef, useReducer, useState } from 'react'
 import classNames from 'classnames'
 import Media from 'react-media'
-import Menu from '../../components/Menu'
-import MenuMobile from '../../components/MenuMobile'
 import { BREAKPOINTS } from '../../utils'
 import styles from './Autocomplete.module.scss'
 import { Search, X } from 'react-feather'

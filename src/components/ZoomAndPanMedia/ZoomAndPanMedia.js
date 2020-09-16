@@ -163,7 +163,7 @@ class ZoomAndPanMedia extends Component {
   }
 
   render() {
-    const { src, t } = this.props
+    const { src } = this.props
     return (
       <div className={styles.ZoomAndPanMedia}>
         <div

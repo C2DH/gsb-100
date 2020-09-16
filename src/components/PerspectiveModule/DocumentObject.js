@@ -26,7 +26,7 @@ export default function DocumentObject({ document, caption, className }) {
   } else if (document.type === 'video') {
     const videoUrl = document.url ? document.url : document.data.translated_urls
     const yt = videoUrl.match(
-      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w\-]+\?v=|embed\/|v\/)?)([\w\-]+)(\S+)?$/
+      /^((?:https?:)?\/\/)?((?:www|m)\.)?((?:youtube\.com|youtu.be))(\/(?:[\w-]+\?v=|embed\/|v\/)?)([\w-]+)(\S+)?$/
     )
 
     return (

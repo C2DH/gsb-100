@@ -1,24 +1,17 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { useLocation } from 'react-router-dom'
 import { usePrefetchDocument } from '../../miller'
 import IconSwitch from '../../components/IconSwitch'
-import PopoverPreview from '../../components/PopoverPreview'
 import LangLink from '../../components/LangLink'
 import styles from './ExplorationsCategory.module.scss'
 
 function ExplorationsCategoryImage({ doc }) {
-  const [show, setShow] = useState(false)
   const url = doc.data.resolutions?.thumbnail.url
   const location = useLocation()
   const prefetchDocument = usePrefetchDocument()
 
   return (
-    <div
-      key={doc.id}
-      onMouseEnter={() => setShow(true)}
-      onMouseLeave={() => setShow(false)}
-      className={styles.previewContainer}
-    >
+    <div key={doc.id} className={styles.previewContainer}>
       <LangLink
         onClick={() => {
           prefetchDocument(doc.id)
@@ -40,7 +33,6 @@ function ExplorationsCategoryImage({ doc }) {
           </div>
         )}
       </LangLink>
-      {/*{show && <PopoverPreview doc={doc}></PopoverPreview>}*/}
     </div>
   )
 }

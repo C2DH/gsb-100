@@ -50,9 +50,6 @@ export default function Home() {
         playsinline
         muted={muted}
         onEnded={onEnded}
-        onReady={() => {
-          console.log('ready')
-        }}
       />
       <div
         className={classNames(styles.mapContainer, {

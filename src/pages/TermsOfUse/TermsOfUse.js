@@ -8,7 +8,7 @@ import styles from './TermsOfUse.module.scss'
 
 export default function About() {
   const [touStory] = useCacheStory('terms-of-use')
-  const { t, i18n } = useTranslation()
+  const { i18n } = useTranslation()
 
   return (
     <React.Fragment>

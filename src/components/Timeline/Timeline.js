@@ -1,4 +1,4 @@
-import React, { useMemo, useEffect } from 'react'
+import React, { useMemo } from 'react'
 import { extent } from 'd3-array'
 import { scaleTime } from 'd3-scale'
 import * as d3TimeFormat from 'd3-time-format'
