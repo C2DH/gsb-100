@@ -1,3 +1,7 @@
+.aboutContainer {
+  height: 100%;
+  overflow-y: auto;
+}
 .pageContent {
   padding-top: 15px;
 
@@ -8,7 +12,7 @@
     content: '– ';
   }
   p {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
   a {
     color: white;
@@ -36,4 +40,24 @@
 
 .logoLink:hover {
   filter: grayscale(0);
+}
+
+@media (min-width: 576px) {
+}
+
+@media (min-width: 768px) {
+}
+
+@media (min-width: 992px) {
+  .pageContent {
+    p {
+      font-size: 1.3rem;
+    }
+  }
+}
+
+@media (min-width: 1200px) {
+}
+
+@media (min-width: 1400px) {
 }

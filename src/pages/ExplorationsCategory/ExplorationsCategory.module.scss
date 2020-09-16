@@ -1,3 +1,7 @@
+.categoryPage {
+  height: 100%;
+  overflow-y: auto;
+}
 .catCont {
   position: sticky;
   top: 55px;
@@ -8,6 +12,8 @@
 }
 
 .rowContainer {
+  will-change: opacity;
+  opacity: 1 !important;
   border-bottom: 1px solid var(--border-color);
 }
 
@@ -16,7 +22,7 @@
 }
 
 .description {
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 
 .label::before {
@@ -63,16 +69,19 @@
   .rowPadding {
     padding-left: calc(50vw - (var(--max-width-md) / 2));
   }
-
-  .description {
-    font-size: 1.5rem;
-  }
 }
 
 @media (min-width: 992px) {
   .catCont {
-    position: relative;
-    top: unset;
+    top: 0;
+  }
+
+  .description {
+    font-size: 1.25rem;
+  }
+
+  .rowContainer {
+    opacity: unset;
   }
 
   .rowPadding {

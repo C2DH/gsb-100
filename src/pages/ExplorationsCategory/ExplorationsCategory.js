@@ -71,25 +71,29 @@ export default function ExplorationsCategory() {
           level={'03'}
           title={explorationsStory.data.title}
         ></MenuResponsive>
-        <div className={`${styles.catCont} container bg-secondary`}>
-          <div className="row">
-            <div className="col-12 col-lg-7">
-              <h1 className="d-flex align-items-center mt-4 mb-2">
-                <LangLink className="text-white" to="/explorations">
-                  <Media queries={BREAKPOINTS}>
-                    {(matches) =>
-                      matches.md ? (
-                        <ArrowLeft size={25} />
-                      ) : (
-                        <ArrowLeft size={40} />
-                      )
-                    }
-                  </Media>
-                </LangLink>
-                <span className="text-capitalize ml-2">{t(category)}</span>
-              </h1>
+        <div className={`${styles.catCont} bg-secondary`}>
+          <div className={`container`}>
+            <div className="row">
+              <div className="col-12 col-lg-7">
+                <h1 className="d-flex align-items-center mt-4 mb-2">
+                  <LangLink className="text-white" to="/explorations">
+                    <Media queries={BREAKPOINTS}>
+                      {(matches) =>
+                        matches.md ? (
+                          <ArrowLeft size={25} />
+                        ) : (
+                          <ArrowLeft size={40} />
+                        )
+                      }
+                    </Media>
+                  </LangLink>
+                  <span className="text-capitalize ml-2">{t(category)}</span>
+                </h1>
+              </div>
             </div>
           </div>
+        </div>
+        <div className={`container`}>
           <div className="row">
             <div className="offset-1 col-11 col-md-10 col-lg-8">
               <p className={styles.description}>
@@ -99,7 +103,7 @@ export default function ExplorationsCategory() {
           </div>
         </div>
 
-        <div className={`${styles.categoriesContainer}`}>
+        <div className="w-100">
           <Trail
             items={typesWithDocs}
             keys={(item) => item.type}

@@ -16,26 +16,28 @@ export default function About() {
         <html lang={i18n.language.split('_')[0]} />
         <title itemProp="name">{touStory.data.title}</title>
       </Helmet>
-      <MenuResponsive title={touStory.data.title}></MenuResponsive>
-      <div className={styles.titleContainer}>
-        <div className="container">
-          <div className="row">
-            <div className="col">
-              <h1 className="my-3 my-md-4 text-center">
-                {touStory.data.title}
-              </h1>
+      <div className={styles.touCont}>
+        <MenuResponsive title={touStory.data.title}></MenuResponsive>
+        <div className={styles.titleContainer}>
+          <div className="container">
+            <div className="row">
+              <div className="col">
+                <h1 className="my-3 my-md-4 text-center text-truncate">
+                  {touStory.data.title}
+                </h1>
+              </div>
             </div>
           </div>
         </div>
-      </div>
-      <div className="container my-md-4">
-        <div className="row">
-          <div className="col-12 col-lg-8">
-            <div className={styles.pageContent}>
-              <ReactMarkdown
-                linkTarget="_blank"
-                source={touStory.data.abstract}
-              />
+        <div className="container my-md-4">
+          <div className="row">
+            <div className="col-12 col-lg-8">
+              <div className={styles.pageContent}>
+                <ReactMarkdown
+                  linkTarget="_blank"
+                  source={touStory.data.abstract}
+                />
+              </div>
             </div>
           </div>
         </div>
