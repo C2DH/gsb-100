@@ -62,7 +62,7 @@ export default function Perspectives() {
           level={'02'}
           title={perspectivesStory.data.title}
         ></MenuResponsive>
-        <div className={`${styles.ThemeListContainer} py-0 py-lg-4`}>
+        <div className={`${styles.ThemeListContainer} my-0 my-lg-4`}>
           <Media queries={BREAKPOINTS}>
             {(matches) =>
               matches.md ? (

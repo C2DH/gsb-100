@@ -13,7 +13,7 @@
     content: '– ';
   }
   p {
-    font-size: 1.3rem;
+    font-size: 1rem;
   }
   a {
     color: white;
@@ -27,4 +27,16 @@
 
 .titleContainer {
   border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  background-color: var(--secondary);
+  z-index: 1;
+}
+
+@media (min-width: 992px) {
+  .pageContent {
+    p {
+      font-size: 1.3rem;
+    }
+  }
 }

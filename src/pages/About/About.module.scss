@@ -26,6 +26,10 @@
 
 .titleContainer {
   border-bottom: 1px solid var(--border-color);
+  position: sticky;
+  top: 0;
+  background-color: var(--secondary);
+  z-index: 1;
 }
 
 .logoLink {
@@ -34,6 +38,7 @@
   background: white;
   height: 100%;
   display: flex;
+  flex-direction: column;
   filter: grayscale(1);
   transition: filter var(--transition);
 }

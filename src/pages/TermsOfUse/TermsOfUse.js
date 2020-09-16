@@ -18,7 +18,7 @@ export default function About() {
       </Helmet>
       <div className={styles.touCont}>
         <MenuResponsive title={touStory.data.title}></MenuResponsive>
-        <div className={styles.titleContainer}>
+        <div className={`${styles.titleContainer} d-none d-lg-block`}>
           <div className="container">
             <div className="row">
               <div className="col">
