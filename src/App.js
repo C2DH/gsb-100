@@ -152,7 +152,7 @@ function LangRoutes() {
             <Route exact path={`${path}/documents/:id`}>
               <DocumentDetail />
             </Route>
-            <Route path="*">
+            <Route path={`${path}*`}>
               <NotFound />
             </Route>
           </Switch>

@@ -1,4 +1,4 @@
-import React, { useRef, useMemo } from 'react'
+import React, { useRef, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import Helmet from 'react-helmet'
 import { useTranslation } from 'react-i18next'
@@ -16,6 +16,20 @@ import TimelineMobile from '../../components/TimelineMobile'
 import TimelineVideo from '../../components/TimelineVideo'
 import { BREAKPOINTS } from '../../utils'
 import styles from './PerspectiveDetail.module.scss'
+
+function Chapters({ chaptersIds, ...props }) {
+  const [openChapter, setOpenChapter] = useState(null)
+
+  return chaptersIds.map((chapterId) => (
+    <div key={chapterId} className={`${styles.chapter}`}>
+      <PerspectiveChapter
+        isOpen={openChapter === chapterId}
+        setOpenChapter={setOpenChapter}
+        chapterId={chapterId}
+      />
+    </div>
+  ))
+}
 
 export default function PerspectiveDetail() {
   const { slug } = useParams()
@@ -189,11 +203,7 @@ export default function PerspectiveDetail() {
                 className={`${styles.chapters} d-flex flex-column flex-md-row flex-grow-0 flex-grow-md-1`}
                 ref={chaptersRef}
               >
-                {chaptersIds.map((chapterId) => (
-                  <div key={chapterId} className={`${styles.chapter}`}>
-                    <PerspectiveChapter chapterId={chapterId} />
-                  </div>
-                ))}
+                <Chapters chaptersIds={chaptersIds} key={slug} />
               </div>
             </div>
           )}
