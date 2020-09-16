@@ -22,15 +22,11 @@ export default function Home() {
   const [showPlay, setShowPlay] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(true)
-  const [showSkip, setshowSkip] = useState(false)
   const toggleStart = () => {
-    playerRef.current.seekTo(0, 'fraction')
-    if (!playing) {
-      setPlaying(true)
-    }
-    setMuted(false)
     setShowPlay(false)
-    setshowSkip(true)
+    setPlaying(true)
+    setMuted(false)
+    playerRef.current.seekTo(0, 'fraction')
   }
 
   const onEnded = () => {
@@ -54,6 +50,9 @@ export default function Home() {
         playsinline
         muted={muted}
         onEnded={onEnded}
+        onReady={() => {
+          console.log('ready')
+        }}
       />
       <div
         className={classNames(styles.mapContainer, {
@@ -116,7 +115,7 @@ export default function Home() {
               'btn btn-primary d-flex align-items-center text-uppercase',
               styles.skip,
               {
-                [styles.showSkip]: showSkip,
+                [styles.showSkip]: !muted,
               }
             )}
             role="button"
