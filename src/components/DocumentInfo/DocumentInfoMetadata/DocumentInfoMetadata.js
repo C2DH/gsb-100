@@ -56,7 +56,7 @@ export default function DocumentInfoMetadata({ data }) {
               >
                 {t(d.label)}
               </th>
-              <td>{d.value}</td>
+              <td>{t(d.value)}</td>
             </tr>
           )
         })}
