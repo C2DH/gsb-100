@@ -5,7 +5,7 @@ import 'mapbox-gl/dist/mapbox-gl.css'
 const zoom = 4
 const center = [6.2, 50.4346632]
 
-export default function MapHome({ setShowVideo, setPlaying, setShowPlay }) {
+export default function MapHome({ setZoomed }) {
   const mapContainer = useRef(null)
 
   useEffect(() => {
@@ -29,16 +29,14 @@ export default function MapHome({ setShowVideo, setPlaying, setShowPlay }) {
     map.on('zoom', () => {
       const actualZoom = map.getZoom()
       if (actualZoom > 11) {
-        setShowVideo(true)
-        setPlaying(true)
-        setShowPlay(true)
+        setZoomed(true)
       }
     })
 
     return () => {
       map.remove()
     }
-  }, [setShowVideo, setPlaying, setShowPlay])
+  }, [setZoomed])
 
   return <div ref={mapContainer} style={{ width: '100%', height: '100%' }} />
 }

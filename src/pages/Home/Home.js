@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, useMemo } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
 import classNames from 'classnames'
@@ -22,6 +22,7 @@ export default function Home() {
   const [showPlay, setShowPlay] = useState(false)
   const [playing, setPlaying] = useState(false)
   const [muted, setMuted] = useState(true)
+  const [zoomed, setZoomed] = useState(false)
   const toggleStart = () => {
     setShowPlay(false)
     setPlaying(true)
@@ -32,6 +33,14 @@ export default function Home() {
   const onEnded = () => {
     setShowPlay(true)
   }
+
+  useMemo(() => {
+    if (zoomed) {
+      setShowVideo(true)
+      setPlaying(true)
+      setShowPlay(true)
+    }
+  }, [zoomed])
 
   return (
     <React.Fragment>
@@ -56,11 +65,7 @@ export default function Home() {
           [styles.hide]: showVideo,
         })}
       >
-        <MapHome
-          setShowVideo={setShowVideo}
-          setPlaying={setPlaying}
-          setShowPlay={setShowPlay}
-        ></MapHome>
+        <MapHome setZoomed={setZoomed}></MapHome>
       </div>
       <div
         className={classNames(
@@ -120,7 +125,7 @@ export default function Home() {
             to="/outline"
           >
             {t('explore')}
-            <ArrowRight size="1.1rem" className="ml-1"></ArrowRight>
+            <ArrowRight size={16} className="ml-1"></ArrowRight>
           </LangLink>
         </div>
         <div className="d-block d-lg-none">
