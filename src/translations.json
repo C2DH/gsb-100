@@ -42,7 +42,7 @@
       "something went wrong": "erreur",
       "got it": "J'ai compris",
       "more info": "plus d'infos",
-      "© All rights reserved.": "© Tous droits réservés.",
+      "© All rights reserved": "© Tous droits réservés",
       "cookie": "Nous utilisons des cookies afin d'améliorer le fonctionnement de notre site pour l'utilisateur. En continuant la navigation sur ce site, vous acceptez l'utilisation de ces cookies."
     }
   },
@@ -89,7 +89,7 @@
       "something went wrong": "something went wrong",
       "got it": "got it",
       "more info": "more info",
-      "© All rights reserved.": "© All rights reserved.",
+      "© All rights reserved": "© All rights reserved",
       "cookie": "This site uses cookies. By using this website, you agree to the use of cookies."
     }
   },
@@ -136,7 +136,7 @@
       "something went wrong": "Fehler",
       "got it": "Ich habe verstanden",
       "more info": "Mehr Infos",
-      "© All rights reserved.": "© Alle Rechte vorbehalten.",
+      "© All rights reserved": "© Alle Rechte vorbehalten",
       "cookie": "Diese Seite verwendet Cookies. Durch die Nutzung dieser Webseite erklären Sie sich mit der Verwendung von Cookies einverstanden."
     }
   },
@@ -183,7 +183,7 @@
       "something went wrong": "er is iets misgegaan",
       "got it": "Ik begrijp het",
       "more info": "Meer info",
-      "© All rights reserved.": "© Alle rechten voorbehouden.",
+      "© All rights reserved": "© Alle rechten voorbehouden",
       "cookie": "Deze site maakt gebruik van cookies. Door gebruik te maken van deze site gaat u akkoord met het gebruik van cookies."
     }
   }
