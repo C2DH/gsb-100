@@ -2,19 +2,19 @@ import React from 'react'
 import { Waypoint } from 'react-waypoint'
 import { ArrowLeft } from 'react-feather'
 import Media from 'react-media'
-import Helmet from 'react-helmet'
 import { useTranslation } from 'react-i18next'
 import MenuResponsive from '../../components/MenuResponsive'
 import { useQueryString } from '../../hooks'
 import { useCacheStory, useDocuments, useDocumentsSuggest } from '../../miller'
 import DocumentsGrid from '../../components/DocumentsGrid'
 import Autocomplete from '../../components/Autocomplete'
+import Header from '../../components/Header'
 import LangLink from '../../components/LangLink'
 import { BREAKPOINTS } from '../../utils'
 import styles from './ExplorationsAll.module.scss'
 
 export default function ExplorationsAll() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [queryString, setQueryString] = useQueryString()
   const [explorationsStory] = useCacheStory('explorations')
 
@@ -48,12 +48,10 @@ export default function ExplorationsAll() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">
-          {explorationsStory.data.title} - {t('all')}
-        </title>
-      </Helmet>
+      <Header
+        title={`${explorationsStory.data.title} - ${t('all')}`}
+        description={explorationsStory.data.abstract}
+      ></Header>
       <div className={styles.ExplorationsAllPage}>
         <MenuResponsive
           level={'03'}

@@ -1,8 +1,7 @@
 import React from 'react'
 import classNames from 'classnames'
 import Media from 'react-media'
-import Helmet from 'react-helmet'
-import { useTranslation } from 'react-i18next'
+import Header from '../../components/Header'
 import { BREAKPOINTS } from '../../utils'
 import { useCacheStory, useCacheStories, usePrefetchStory } from '../../miller'
 import MenuResponsive from '../../components/MenuResponsive'
@@ -47,16 +46,15 @@ function ThemeListItem({ theme, ...props }) {
 }
 
 export default function Perspectives() {
-  const { i18n } = useTranslation()
   const [perspectivesStory] = useCacheStory('perspectives')
   const [{ stories: themes }] = useCacheStories(themesParams)
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">{perspectivesStory.data.title}</title>
-      </Helmet>
+      <Header
+        title={perspectivesStory.data.title}
+        description={perspectivesStory.data.abstract}
+      ></Header>
       <div className="h-100 d-flex flex-column">
         <MenuResponsive
           level={'02'}

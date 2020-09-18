@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
 import { useTranslation } from 'react-i18next'
-import Helmet from 'react-helmet'
+import Header from '../../components/Header'
 import MenuResponsive from '../../components/MenuResponsive'
 import { useCacheStory } from '../../miller'
 import c2dh from './c2dh.jpg'
@@ -23,14 +23,11 @@ const logos = [
 
 export default function About() {
   const [aboutStory] = useCacheStory('about')
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">{aboutStory.data.title}</title>
-      </Helmet>
+      <Header title={aboutStory.data.title}></Header>
       <div className={styles.aboutContainer}>
         <MenuResponsive title={aboutStory.data.title}></MenuResponsive>
         <div className={`${styles.titleContainer} d-none d-lg-block`}>

@@ -1,8 +1,7 @@
 import React, { useMemo } from 'react'
-import Helmet from 'react-helmet'
-import { useTranslation } from 'react-i18next'
 import { useParams, useHistory } from 'react-router-dom'
 import { useCacheDocument } from '../../miller'
+import Header from '../../components/Header'
 import DocumentInfo from '../../components/DocumentInfo'
 import { X } from 'react-feather'
 import styles from './DocumentDetailModal.module.scss'
@@ -11,7 +10,6 @@ import { useBodyNoOverflow } from '../../hooks'
 export default function DocumentDetailModal({ previewDocument }) {
   const { id } = useParams()
   const history = useHistory()
-  const { i18n } = useTranslation()
 
   const [fullDocument] = useCacheDocument(id, undefined, {
     suspense: false,
@@ -31,10 +29,10 @@ export default function DocumentDetailModal({ previewDocument }) {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">{doc.data.title}</title>
-      </Helmet>
+      <Header
+        title={doc.data.title}
+        description={doc.data.description}
+      ></Header>
       <div className={styles.DocModalContent}>
         <div onClick={() => history.goBack()} className={styles.close}>
           <X size={30} />

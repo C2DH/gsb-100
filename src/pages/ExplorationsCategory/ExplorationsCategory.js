@@ -1,7 +1,6 @@
 import React, { useMemo } from 'react'
 import { useParams } from 'react-router-dom'
 import { ArrowLeft } from 'react-feather'
-import Helmet from 'react-helmet'
 import groupBy from 'lodash/groupBy'
 import { Trail } from 'react-spring/renderprops'
 import { useTranslation } from 'react-i18next'
@@ -9,6 +8,7 @@ import Media from 'react-media'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import { BREAKPOINTS } from '../../utils'
 import MenuResponsive from '../../components/MenuResponsive'
+import Header from '../../components/Header'
 import LangLink from '../../components/LangLink'
 import ExplorationsCategoryImage from './ExplorationsCategoryImage'
 import styles from './ExplorationsCategory.module.scss'
@@ -36,7 +36,7 @@ const DocsTypedGallery = ({ type, docs, style }) => {
 }
 
 export default function ExplorationsCategory() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const { category } = useParams()
   const [explorationsStory] = useCacheStory('explorations')
   const [categoryStory] = useCacheStory(category)
@@ -60,12 +60,10 @@ export default function ExplorationsCategory() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">
-          {explorationsStory.data.title} - {t(category)}
-        </title>
-      </Helmet>
+      <Header
+        title={`${explorationsStory.data.title} - ${t(category)}`}
+        description={explorationsStory.data.abstract}
+      ></Header>
       <div className={styles.categoryPage}>
         <MenuResponsive
           level={'03'}

@@ -1,6 +1,5 @@
 import React, { useRef, useMemo, useState } from 'react'
 import { useParams } from 'react-router-dom'
-import Helmet from 'react-helmet'
 import { useTranslation } from 'react-i18next'
 import sortBy from 'lodash/sortBy'
 import { ArrowLeft, ArrowRight } from 'react-feather'
@@ -8,6 +7,7 @@ import { ParentSize } from '@vx/responsive'
 import Media from 'react-media'
 import { Spring, config } from 'react-spring/renderprops'
 import { useCacheStory } from '../../miller'
+import Header from '../../components/Header'
 import PerspectiveChapter from '../../components/PerspectiveChapter'
 import MenuResponsive from '../../components/MenuResponsive'
 import LangLink from '../../components/LangLink'
@@ -33,7 +33,7 @@ function Chapters({ chaptersIds, ...props }) {
 
 export default function PerspectiveDetail() {
   const { slug } = useParams()
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [theme] = useCacheStory(slug)
   const [outlineTheme] = useCacheStory('outline-1')
   const [perspectivesStory] = useCacheStory('perspectives')
@@ -75,12 +75,10 @@ export default function PerspectiveDetail() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">
-          {perspectivesStory.data.title} - {theme.data.title}
-        </title>
-      </Helmet>
+      <Header
+        title={`${perspectivesStory.data.title} - ${theme.data.title}`}
+        description={theme.data.abstract}
+      ></Header>
       <div className={styles.perspectiveDetailCont}>
         <MenuResponsive
           level={'02'}

@@ -1,9 +1,9 @@
 import React, { useMemo } from 'react'
 import groupBy from 'lodash/groupBy'
 import { shuffle } from 'seed-shuffle'
-import Helmet from 'react-helmet'
 import { Trail } from 'react-spring/renderprops'
 import { useTranslation } from 'react-i18next'
+import Header from '../../components/Header'
 import MenuResponsive from '../../components/MenuResponsive'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import ImagesStack from '../../components/ImagesStack'
@@ -16,7 +16,7 @@ const NUMBER_OF_IMAGES_PER_CATEGORY = 5
 const RANDOM_SEED = 1 + Math.floor(Math.random() * 1000)
 
 export default function Explorations() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [explorationsStory] = useCacheStory('explorations')
 
   const [{ documents }] = useCacheDocuments({
@@ -47,10 +47,10 @@ export default function Explorations() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">{explorationsStory.data.title}</title>
-      </Helmet>
+      <Header
+        title={explorationsStory.data.title}
+        description={explorationsStory.data.abstract}
+      ></Header>
       <div className={styles.explorationPage}>
         <MenuResponsive
           level={'03'}

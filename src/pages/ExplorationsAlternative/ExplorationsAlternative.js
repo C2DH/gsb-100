@@ -1,16 +1,16 @@
 import React from 'react'
 import Media from 'react-media'
-import Helmet from 'react-helmet'
 import LangLink from '../../components/LangLink'
 import { useTranslation } from 'react-i18next'
 import { BREAKPOINTS } from '../../utils'
 import { ArrowLeft, ExternalLink } from 'react-feather'
 import MenuResponsive from '../../components/MenuResponsive'
+import Header from '../../components/Header'
 import { useCacheStory, useCacheDocuments } from '../../miller'
 import styles from './ExplorationsAlternative.module.scss'
 
 export default function ExplorationsAlternative() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [explorationsStory] = useCacheStory('explorations')
   const [{ documents }] = useCacheDocuments({
     filters: {
@@ -21,12 +21,10 @@ export default function ExplorationsAlternative() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">
-          {explorationsStory.data.title} - {t('alternative')}
-        </title>
-      </Helmet>
+      <Header
+        title={`${explorationsStory.data.title} - ${t('alternative')}`}
+        description={explorationsStory.data.abstract}
+      ></Header>
       <div className={styles.AlternativePage}>
         <MenuResponsive
           level={'03'}

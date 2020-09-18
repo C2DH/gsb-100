@@ -2,12 +2,11 @@ import React, { useState, useMemo, useRef, useCallback } from 'react'
 import find from 'lodash/find'
 import classNames from 'classnames'
 import ReactPlayer from 'react-player'
-import Helmet from 'react-helmet'
-import { useTranslation } from 'react-i18next'
 import { Play, Pause, VolumeX, Volume2, SkipForward } from 'react-feather'
 import { Transition, Spring } from 'react-spring/renderprops'
 import { animated } from 'react-spring'
 import { useCacheStory } from '../../miller'
+import Header from '../../components/Header'
 import PlayingDocument from '../../components/PlayingDocument'
 import SeekLine from '../../components/SeekLine'
 import MenuResponsive from '../../components/MenuResponsive'
@@ -47,7 +46,6 @@ function usePlayingDocument(story, playedSeconds) {
 }
 
 export default function Outline() {
-  const { i18n } = useTranslation()
   const [outlineStory] = useCacheStory('outline')
   const [outlineTheme] = useCacheStory('outline-1', {
     withChapters: true,
@@ -101,10 +99,7 @@ export default function Outline() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">{outlineStory.data.title}</title>
-      </Helmet>
+      <Header title={outlineStory.data.title}></Header>
       <div className={styles.PlayerPage}>
         <MenuResponsive
           level={'01'}

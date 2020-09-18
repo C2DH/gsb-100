@@ -5,8 +5,8 @@ import classNames from 'classnames'
 import { Play, ArrowRight } from 'react-feather'
 import { Transition } from 'react-spring/renderprops'
 import { animated } from 'react-spring'
-import Helmet from 'react-helmet'
 import { useCacheStory, useCacheDocument } from '../../miller'
+import Header from '../../components/Header'
 import SwitchLanguage from '../../components/SwitchLanguage'
 import SwitchLanguageMobile from '../../components/SwitchLanguageMobile'
 import MapHome from '../../components/MapHome'
@@ -14,7 +14,7 @@ import styles from './Home.module.scss'
 import LangLink from '../../components/LangLink'
 
 export default function Home() {
-  const { t, i18n } = useTranslation()
+  const { t } = useTranslation()
   const [homeStory] = useCacheStory('home')
   const [document] = useCacheDocument(350) //HC forever
   const playerRef = useRef()
@@ -44,10 +44,7 @@ export default function Home() {
 
   return (
     <React.Fragment>
-      <Helmet>
-        <html lang={i18n.language.split('_')[0]} />
-        <title itemProp="name">{homeStory.data.title}</title>
-      </Helmet>
+      <Header title={homeStory.data.title}></Header>
       <ReactPlayer
         ref={playerRef}
         className={styles.Player}
