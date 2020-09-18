@@ -14,6 +14,7 @@ import {
   Volume2,
   AlignCenter,
 } from 'react-feather'
+import { useTranslation } from 'react-i18next'
 import classNames from 'classnames'
 import screenfull from 'screenfull'
 import styles from './Video.module.scss'
@@ -48,8 +49,9 @@ const Controls = ({ show }) => {
 
   return (
     <div
-      className={styles.Controls}
-      style={{ display: show ? undefined : 'none' }}
+      className={classNames(styles.Controls, {
+        [styles.controlsShow]: show,
+      })}
     >
       <div className={styles.PlayPause} onClick={togglePlay}>
         {playing ? <Pause /> : <Play />}
@@ -92,18 +94,25 @@ const ExtraVideoOverlay = () => {
 }
 
 const Wrapper = React.forwardRef(
-  ({ children, customControls, ...props }, ref) => {
-    const [showControls, setShowControls] = useState(false)
+  ({ children, customControls, playing, ...props }, ref) => {
+    const videoContext = useContext(ControlsContext)
+    const [showControls, setShowControls] = useState(true)
+    const toggle = (show) => {
+      if (!videoContext.playing) {
+        setShowControls(true)
+      } else {
+        setShowControls(show)
+      }
+    }
     return (
       <div
         {...props}
         ref={ref}
-        onMouseEnter={() => setShowControls(true)}
-        onMouseLeave={() => setShowControls(false)}
+        onMouseEnter={() => toggle(true)}
+        onMouseLeave={() => toggle(false)}
       >
         {children}
-        {/*TODO: show when player is ready*/}
-        <Controls show={showControls || true} />
+        <Controls show={showControls} />
         <ExtraVideoOverlay />
       </div>
     )
@@ -124,6 +133,7 @@ function Video(
   },
   ref
 ) {
+  const { i18n } = useTranslation()
   const playerRef = useRef()
   const [playing, setPlaying] = useState(false)
   const togglePlay = () => setPlaying((a) => !a)
@@ -137,6 +147,7 @@ function Video(
   }
   const [volume, setVolume] = useState(1)
   const [muted, setMuted] = useState(false)
+  const [tracks, setTracks] = useState([])
   const [showSubtitle, setShowSubtitle] = useState(true)
   const toggleMuted = () => setMuted((a) => !a)
 
@@ -151,22 +162,29 @@ function Video(
     const video = playerRef.current.wrapper.querySelector('video')
     for (var i = 0; i < video.textTracks.length; i++) {
       const mode = video.textTracks[i].mode
-      video.textTracks[i].mode = mode === 'showing' ? 'hidden' : 'showing'
+      const lang = video.textTracks[i].language
+      if (lang === i18n.language.split('_')[0]) {
+        video.textTracks[i].mode = mode === 'showing' ? 'hidden' : 'showing'
+      }
     }
     setShowSubtitle((a) => !a)
   }
 
-  const moveSubtitles = () => {
-    const track = playerRef.current.wrapper.querySelector('track')
-    const cues = track.track.cues
-    for (var i = 0; i < cues.length; i++) {
-      cues[i].line = -4
+  const selectSubtitle = (lang) => {
+    const video = playerRef.current.wrapper.querySelector('video')
+    for (var i = 0; i < video.textTracks.length; i++) {
+      video.textTracks[i].mode =
+        lang === video.textTracks[i].language ? 'showing' : 'hidden'
+      video.textTracks[i].default =
+        lang === video.textTracks[i].language ? true : false
     }
   }
 
   const handleOnReady = () => {
     onReady && onReady(playerRef.current)
-    hasSub && moveSubtitles()
+    if (hasSub) {
+      selectSubtitle(i18n.language.split('_')[0])
+    }
   }
 
   useImperativeHandle(ref, () => ({
@@ -174,26 +192,29 @@ function Video(
     setPlaying,
   }))
 
-  const config = useMemo(() => {
-    if (props.sub?.url) {
-      return {
-        file: {
-          tracks: [
-            {
+  useMemo(() => {
+    if (props.tracks) {
+      setTracks(
+        props.tracks
+          .filter((d) => d.type === 'vtt')
+          .map((d) => {
+            return {
               kind: 'subtitles',
-              src: props.sub.url,
-              srcLang: props.sub.lang,
-              default: true,
-            },
-          ],
-        },
-      }
+              src: d.url,
+              srcLang: d.language.split('_')[0],
+            }
+          })
+      )
     }
-  }, [props.sub])
+  }, [props.tracks])
+
+  useMemo(() => {
+    playerRef.current && selectSubtitle(i18n.language.split('_')[0])
+  }, [i18n.language, playerRef])
 
   const hasSub = useMemo(() => {
-    return props.sub?.url ? true : false
-  }, [props.sub])
+    return tracks?.length > 0 ? true : false
+  }, [tracks])
 
   return (
     <ControlsContext.Provider
@@ -213,6 +234,7 @@ function Video(
         toggleSubtitle,
         showSubtitle,
         hasSub,
+        tracks,
       }}
     >
       <ReactPlayer
@@ -239,7 +261,11 @@ function Video(
         width={null}
         height={null}
         playsinline
-        config={config}
+        config={{
+          file: {
+            tracks: tracks,
+          },
+        }}
         {...props}
       />
     </ControlsContext.Provider>

@@ -1,29 +1,10 @@
-import React, { useMemo } from 'react'
-import { useTranslation } from 'react-i18next'
+import React from 'react'
 import { Video, AudioTrack } from './UniqueMedia'
 import YtVideo from '../YtVideo'
 import { Caption } from './ModuleUtils'
 import DocLink from '../DocLink'
 
 export default function DocumentObject({ document, caption, className }) {
-  const { i18n } = useTranslation()
-  const sub = useMemo(() => {
-    if (document.data.subtitles) {
-      const elm = document.data.subtitles.filter(
-        (d) => d.type === 'vtt' && d.language === i18n.language
-      )[0]
-      if (elm) {
-        return { url: elm.url, lang: i18n.language.split('_')[0] }
-      } else {
-        return { url: false }
-      }
-    } else {
-      return { url: false }
-    }
-  }, [i18n.language, document])
-
-  console.log(sub)
-
   if (document.type === 'image' || document.type === 'pdf') {
     const imagePreviewUrl = document.data.resolutions?.preview?.url
     return (
@@ -53,7 +34,7 @@ export default function DocumentObject({ document, caption, className }) {
         {videoUrl && yt ? (
           <YtVideo url={videoUrl}></YtVideo>
         ) : (
-          videoUrl && <Video url={videoUrl} sub={sub} />
+          videoUrl && <Video url={videoUrl} tracks={document.data.subtitles} />
         )}
         <DocLink document={document}>
           <Caption caption={caption}></Caption>

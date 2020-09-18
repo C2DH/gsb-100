@@ -12,6 +12,7 @@
     outline: none;
     // max-height: calc(80vh - 3rem);
   }
+  overflow: hidden;
 }
 
 .Controls {
@@ -25,6 +26,12 @@
   position: absolute;
   bottom: 0px;
   background: linear-gradient(0deg, black 0%, rgba(0, 0, 0, 0) 100%);
+  transform: translateY(100%);
+  transition: transform var(--transition);
+}
+
+.Controls.controlsShow {
+  transform: translateY(0%);
 }
 
 .Controls > div {
