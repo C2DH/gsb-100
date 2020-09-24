@@ -41,7 +41,6 @@ const DEFAULT_LANG = 'de_DE'
 
 const DEFAULT_LANG_SHORT = DEFAULT_LANG.split('_')[0]
 const LANG_PATH = `/:lang(${LANGS_SHORTS.join('|')})`
-const DEFAULT_LANG_PATH = `/${DEFAULT_LANG_SHORT}`
 
 const getStartLang = () => {
   // try to get language from path if any
@@ -59,10 +58,13 @@ const getStartLang = () => {
       ? browserLangShort
       : DEFAULT_LANG_SHORT
   }
-  return find(LANGS, (l) => l.indexOf(startLangShort) === 0)
+  return {
+    startLangShort,
+    startLang: find(LANGS, (l) => l.indexOf(startLangShort) === 0)
+  }
 }
 
-const startLang = getStartLang()
+const { startLang, startLangShort } = getStartLang()
 console.info('start language:', startLang)
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
@@ -189,7 +191,7 @@ function LangRoutes() {
 function AppRoutes() {
   return (
     <Switch>
-      <Redirect from="/" exact to={DEFAULT_LANG_PATH} />
+      <Redirect from="/" exact to={startLangShort} />
       <Route path={LANG_PATH}>
         <Suspense fallback={<PageLoader menu />}>
           <LangRoutes />
