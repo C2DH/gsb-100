@@ -36,20 +36,34 @@ import {
 } from './components/PerspectiveModule/UniqueMedia'
 
 const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
+const LANGS_SHORTS = LANGS.map((l) => l.split('_')[0])
 const DEFAULT_LANG = 'de_DE'
 
 const DEFAULT_LANG_SHORT = DEFAULT_LANG.split('_')[0]
-const LANG_PATH = `/:lang(${LANGS.map((l) => l.split('_')[0]).join('|')})`
+const LANG_PATH = `/:lang(${LANGS_SHORTS.join('|')})`
 const DEFAULT_LANG_PATH = `/${DEFAULT_LANG_SHORT}`
 
-const langMatch = matchPath(window.location.pathname, {
-  path: LANG_PATH,
-  exact: false,
-  strict: false,
-})
-const startLangShort = langMatch?.params?.lang ?? DEFAULT_LANG_SHORT
-const startLang = find(LANGS, (l) => l.indexOf(startLangShort) === 0)
+const getStartLang = () => {
+  // try to get language from path if any
+  const langMatch = matchPath(window.location.pathname, {
+    path: LANG_PATH,
+    exact: false,
+    strict: false,
+  })
+  let startLangShort = langMatch?.params?.lang
+  if (!startLangShort || !LANGS_SHORTS.includes(startLangShort)) {
+    // get default short language from browser
+    const browserLangShort = window.navigator?.language
+    console.info('browser language detected:', browserLangShort)
+    startLangShort = LANGS_SHORTS.includes(browserLangShort)
+      ? browserLangShort
+      : DEFAULT_LANG_SHORT
+  }
+  return find(LANGS, (l) => l.indexOf(startLangShort) === 0)
+}
 
+const startLang = getStartLang()
+console.info('start language:', startLang)
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
