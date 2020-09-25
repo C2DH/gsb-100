@@ -13,6 +13,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom'
 import find from 'lodash/find'
+import intersection from 'lodash/intersection'
 import Home from './pages/Home'
 import About from './pages/About'
 import TermsOfUse from './pages/TermsOfUse'
@@ -52,10 +53,11 @@ const getStartLang = () => {
   let startLangShort = langMatch?.params?.lang
   if (!startLangShort || !LANGS_SHORTS.includes(startLangShort)) {
     // get default short language from browser
-    const browserLangShort = window.navigator?.language
-    console.info('browser language detected:', browserLangShort)
-    startLangShort = LANGS_SHORTS.includes(browserLangShort)
-      ? browserLangShort
+    const browserLangsShort = window.navigator?.languages ?? []
+    console.info('browser languages detected:', browserLangsShort)
+    const availablesLangsShort = intersection(browserLangsShort, LANGS_SHORTS)
+    startLangShort = availablesLangsShort.length > 0
+      ? availablesLangsShort[0]
       : DEFAULT_LANG_SHORT
   }
   return {
