@@ -13,6 +13,7 @@ import {
   useRouteMatch,
 } from 'react-router-dom'
 import find from 'lodash/find'
+import intersection from 'lodash/intersection'
 import Home from './pages/Home'
 import About from './pages/About'
 import TermsOfUse from './pages/TermsOfUse'
@@ -36,20 +37,37 @@ import {
 } from './components/PerspectiveModule/UniqueMedia'
 
 const LANGS = ['de_DE', 'en_US', 'fr_FR', 'nl_BE']
+const LANGS_SHORTS = LANGS.map((l) => l.split('_')[0])
 const DEFAULT_LANG = 'de_DE'
 
 const DEFAULT_LANG_SHORT = DEFAULT_LANG.split('_')[0]
-const LANG_PATH = `/:lang(${LANGS.map((l) => l.split('_')[0]).join('|')})`
-const DEFAULT_LANG_PATH = `/${DEFAULT_LANG_SHORT}`
+const LANG_PATH = `/:lang(${LANGS_SHORTS.join('|')})`
 
-const langMatch = matchPath(window.location.pathname, {
-  path: LANG_PATH,
-  exact: false,
-  strict: false,
-})
-const startLangShort = langMatch?.params?.lang ?? DEFAULT_LANG_SHORT
-const startLang = find(LANGS, (l) => l.indexOf(startLangShort) === 0)
+const getStartLang = () => {
+  // try to get language from path if any
+  const langMatch = matchPath(window.location.pathname, {
+    path: LANG_PATH,
+    exact: false,
+    strict: false,
+  })
+  let startLangShort = langMatch?.params?.lang
+  if (!startLangShort || !LANGS_SHORTS.includes(startLangShort)) {
+    // get default short language from browser
+    const browserLangsShort = window.navigator?.languages ?? []
+    console.info('browser languages detected:', browserLangsShort)
+    const availablesLangsShort = intersection(browserLangsShort, LANGS_SHORTS)
+    startLangShort = availablesLangsShort.length > 0
+      ? availablesLangsShort[0]
+      : DEFAULT_LANG_SHORT
+  }
+  return {
+    startLangShort,
+    startLang: find(LANGS, (l) => l.indexOf(startLangShort) === 0)
+  }
+}
 
+const { startLang, startLangShort } = getStartLang()
+console.info('start language:', startLang)
 i18n
   .use(initReactI18next) // passes i18n down to react-i18next
   .init({
@@ -175,7 +193,7 @@ function LangRoutes() {
 function AppRoutes() {
   return (
     <Switch>
-      <Redirect from="/" exact to={DEFAULT_LANG_PATH} />
+      <Redirect from="/" exact to={startLangShort} />
       <Route path={LANG_PATH}>
         <Suspense fallback={<PageLoader menu />}>
           <LangRoutes />
