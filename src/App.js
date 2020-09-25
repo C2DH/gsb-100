@@ -209,10 +209,7 @@ function AppRoutes() {
 let headers
 
 // Disable miller cache when in DEV or in React SNAP Context
-if (
-  process.env.NODE_ENV !== 'production' ||
-  navigator.userAgent === 'ReactSnap'
-) {
+if (process.env.NODE_ENV !== 'production') {
   headers = () => ({
     'Cache-Control': 'no-cache',
   })
