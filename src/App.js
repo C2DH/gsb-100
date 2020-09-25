@@ -207,21 +207,30 @@ const apiUrl =
 export default function App() {
   const { i18n } = useTranslation()
   return (
-    <Miller
-      headers={headers}
-      lang={i18n.language}
-      langs={LANGS}
-      apiUrl={apiUrl}
-      cache
-      suspense
-    >
-      <Router>
-        <PageError>
+    // NOTE: Why another <PageError /> ?
+    // Cause <PageError /> render menu that need API to be displayed
+    // if API 4 menu don't work you see a black screen cause
+    // <PageError /> trigger another error...
+    // With this top <PageError /> without menu "menu={false}"
+    // we can hanlde ALL error and the final user has always a
+    // good message and a good user experience....
+    <PageError menu={false}>
+      <Miller
+        headers={headers}
+        lang={i18n.language}
+        langs={LANGS}
+        apiUrl={apiUrl}
+        cache
+        suspense
+      >
+        <Router>
           <Suspense fallback={<PageLoader />}>
-            <AppRoutes />
+            <PageError>
+              <AppRoutes />
+            </PageError>
           </Suspense>
-        </PageError>
-      </Router>
-    </Miller>
+        </Router>
+      </Miller>
+    </PageError>
   )
 }
