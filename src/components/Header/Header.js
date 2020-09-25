@@ -2,10 +2,15 @@ import React from 'react'
 import { useTranslation } from 'react-i18next'
 import Helmet from 'react-helmet'
 import { useCacheStory } from '../../miller'
+import { proxy as proxyLocationOrigin } from '../../../package.json'
+
+const LOCATION_ORIGIN = navigator.userAgent === 'ReactSnap'
+  ? proxyLocationOrigin
+  : window.location.origin
 
 function Header({ title, description, image }) {
   const { i18n } = useTranslation()
-  const fbImgUrl = window.location.origin + '/ob.png'
+  const fbImgUrl = LOCATION_ORIGIN + '/ob.png'
   const [homeStory] = useCacheStory('home')
   return (
     <Helmet>
@@ -29,7 +34,7 @@ function Header({ title, description, image }) {
       }
       <meta
         property="og:image"
-        content={image ? window.location.origin + image : fbImgUrl}
+        content={image ? LOCATION_ORIGIN + image : fbImgUrl}
       />
     </Helmet>
   )
