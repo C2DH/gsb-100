@@ -45,7 +45,9 @@
   "scripts": {
     "start": "react-scripts start",
     "snap": "node ./snapWithProxyApi.js",
+    "snap-desktop": "node ./snapWithProxyApi.js --desktop",
     "snap-docker": "node ./snapWithProxyApi.js --no-sandbox",
+    "snap-docker-desktop": "node ./snapWithProxyApi.js --desktop --no-sandbox",
     "proxy-api": "node ./proxyApi.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
