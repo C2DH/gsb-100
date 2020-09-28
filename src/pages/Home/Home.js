@@ -1,4 +1,4 @@
-import React, { useState, useRef, useMemo } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import { useTranslation } from 'react-i18next'
 import ReactPlayer from 'react-player'
 import classNames from 'classnames'
@@ -34,7 +34,7 @@ export default function Home() {
     setShowPlay(true)
   }
 
-  useMemo(() => {
+  useEffect(() => {
     if (zoomed) {
       setShowVideo(true)
       setPlaying(true)
