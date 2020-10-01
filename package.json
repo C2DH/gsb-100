@@ -2,11 +2,7 @@
   "name": "gsb-100",
   "version": "1.0.0",
   "private": true,
-<<<<<<< HEAD
-  "proxy": "https://zeitschichten.be",
-=======
-  "proxy": "https://timestrata.be",
->>>>>>> 84b1de7785ae19191c0525ff78011613ff533a1e
+  "proxy": "https://gsb100.dhlab.lu",
   "dependencies": {
     "@dschoon/react-waves": "^3.0.3",
     "@popperjs/core": "^2.4.4",
