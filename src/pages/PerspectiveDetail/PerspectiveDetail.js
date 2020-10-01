@@ -45,7 +45,7 @@ export default function PerspectiveDetail() {
   const periods = useMemo(() => {
     return sortBy(outlineTheme.stories, (s) =>
       Number(s.data.abstract.split('-')[0])
-    ).slice(3)
+    ).filter((d) => d.data.abstract.split('-').length > 1)
   }, [outlineTheme])
 
   const timelineDocs = theme.documents
