@@ -88,7 +88,7 @@ export default function Outline() {
 
   const selectSubtitle = (lang) => {
     const video = playerRef.current.wrapper.querySelector('video')
-    for (var i = 0; i < video.textTracks.length; i++) {
+    for (var i = 0; i < video?.textTracks.length; i++) {
       video.textTracks[i].mode =
         lang === video.textTracks[i].language ? 'showing' : 'hidden'
       video.textTracks[i].default =
@@ -135,6 +135,7 @@ export default function Outline() {
         played: 0,
         playedSeconds: null,
       })
+      setCue([])
     }
   }
 

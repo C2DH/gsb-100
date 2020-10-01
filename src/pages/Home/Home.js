@@ -174,7 +174,7 @@ export default function Home() {
             ))
           }
         </Transition>
-        <div className={`${styles.subtitles} mt-auto mb-2 px-4`}>
+        <div className={`${styles.subtitles} mt-auto mb-2 mb-lg-3 px-4`}>
           {cue.map((sub, index) => (
             <p key={index}>{sub}</p>
           ))}
@@ -185,14 +185,14 @@ export default function Home() {
               'btn btn-primary d-flex align-items-center text-uppercase',
               styles.skip,
               {
-                [styles.showSkip]: !muted,
+                [styles.showSkip]: true,
               }
             )}
             role="button"
             aria-pressed="true"
             to="/outline"
           >
-            {t('explore')}
+            {t('skip')}
             <ArrowRight size={16} className="ml-1"></ArrowRight>
           </LangLink>
         </div>

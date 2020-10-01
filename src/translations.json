@@ -1,6 +1,7 @@
 {
   "fr_FR": {
     "translation": {
+      "skip": "Accès direct",
       "start": "départ",
       "click to start": "appuyer pour démarrer",
       "photo": "photo",
@@ -48,6 +49,7 @@
   },
   "en_US": {
     "translation": {
+      "skip": "skip intro",
       "start": "start",
       "click to start": "click to start",
       "photo": "photo",
@@ -95,6 +97,7 @@
   },
   "de_DE": {
     "translation": {
+      "skip": "Intro überspringen",
       "start": "Start",
       "click to start": "Zum Starten clicken",
       "photo": "Foto",
@@ -142,6 +145,7 @@
   },
   "nl_BE": {
     "translation": {
+      "skip": "Directe toegang",
       "start": "start",
       "click to start": "klik om te starten",
       "photo": "foto",
