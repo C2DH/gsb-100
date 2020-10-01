@@ -1,5 +1,4 @@
 import qs from 'query-string'
-import i18n from 'i18next'
 import { useParams, useLocation, useHistory } from 'react-router-dom'
 import {
   useLayoutEffect,
@@ -8,6 +7,7 @@ import {
   useEffect,
   useState,
 } from 'react'
+import { useTranslation } from 'react-i18next'
 
 function namespacePath(path, lang) {
   let pathWithLang = `/${lang}`
@@ -57,6 +57,7 @@ export function usePreloadImage(imageUrl) {
 }
 
 export function useToWithLang(to) {
+  const { i18n } = useTranslation()
   let { lang } = useParams()
   if (!lang) {
     // NOTE: Workaround when no lang in current path

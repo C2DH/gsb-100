@@ -1,8 +1,12 @@
 {
   "name": "gsb-100",
-  "version": "0.2.0",
+  "version": "1.0.0",
   "private": true,
+<<<<<<< HEAD
   "proxy": "https://zeitschichten.be",
+=======
+  "proxy": "https://timestrata.be",
+>>>>>>> 84b1de7785ae19191c0525ff78011613ff533a1e
   "dependencies": {
     "@dschoon/react-waves": "^3.0.3",
     "@popperjs/core": "^2.4.4",
@@ -45,7 +49,9 @@
   "scripts": {
     "start": "react-scripts start",
     "snap": "node ./snapWithProxyApi.js",
+    "snap-desktop": "node ./snapWithProxyApi.js --desktop",
     "snap-docker": "node ./snapWithProxyApi.js --no-sandbox",
+    "snap-docker-desktop": "node ./snapWithProxyApi.js --desktop --no-sandbox",
     "proxy-api": "node ./proxyApi.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
