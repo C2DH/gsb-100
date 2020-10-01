@@ -14,13 +14,20 @@ function PlayingDocument({ document, onClick, style }) {
   )
   return (
     <React.Fragment>
-      <img
-        className={`${styles.PlayingDocument} customCursor`}
-        src={document.data.translated_thumb_urls}
-        onClick={toggleModal}
-        alt={document.data.title}
-        style={style}
-      />
+      {document.type === 'image' ? (
+        <img
+          className={`${styles.PlayingDocument} customCursor`}
+          src={document.data.translated_thumb_urls}
+          onClick={toggleModal}
+          alt={document.data.title}
+          style={style}
+        />
+      ) : (
+        <div className={`${styles.PlayingEntity}`} style={style}>
+          <h3 className="my-1 my-lg-2">{document.data.title}</h3>
+          <p className="m-0">{document.data.description}</p>
+        </div>
+      )}
       <Transition
         items={showModal}
         from={{ opacity: 0 }}

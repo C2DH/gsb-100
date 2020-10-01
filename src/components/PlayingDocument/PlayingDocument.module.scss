@@ -9,6 +9,24 @@
   object-fit: cover;
 }
 
+.PlayingEntity {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  border: 1px solid white;
+  padding: 5px;
+  background: var(--secondary);
+  max-width: 35%;
+
+  h3 {
+    font-size: 1rem;
+  }
+
+  p {
+    font-size: 0.75rem;
+  }
+}
+
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
 }
@@ -30,6 +48,20 @@
 
   .PlayingDocument:hover {
     height: 60%;
+  }
+
+  .PlayingEntity {
+    top: 20px;
+    right: 20px;
+    max-width: 35%;
+    border: 2px solid white;
+    h3 {
+      font-size: 1.75rem;
+    }
+
+    p {
+      font-size: 1rem;
+    }
   }
 }
 

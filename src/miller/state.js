@@ -261,6 +261,12 @@ function mapStoryWithRelatedModulesDocs(story) {
         objects: mappedModule.objects.map(mapId),
       }
     }
+    if (Array.isArray(mappedModule.speakers)) {
+      mappedModule = {
+        ...mappedModule,
+        speakers: mappedModule.speakers.map(mapId),
+      }
+    }
     if (Array.isArray(mappedModule.gallery?.objects)) {
       mappedModule = {
         ...mappedModule,

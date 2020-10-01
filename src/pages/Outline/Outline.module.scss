@@ -54,6 +54,21 @@
   transition: opacity var(--transition);
 }
 
+.controlsWrapper {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  background-color: var(--secondary);
+}
+
+.subtitles p {
+  text-align: center;
+  font-family: var(--font-family-sans-serif);
+  font-size: 0.85rem;
+  font-weight: normal;
+  margin: 0;
+}
+
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
   .Player {
@@ -105,6 +120,18 @@
       rgba(0, 0, 0, 1) 0%,
       rgba(0, 0, 0, 0) 100%
     );
+  }
+
+  .controlsWrapper {
+    position: relative;
+    background-color: unset;
+  }
+
+  .subtitles p {
+    font-size: 1.6rem;
+    font-weight: bold;
+    -webkit-text-stroke: 0.5px var(--secondary);
+    text-stroke: 1px var(--secondary);
   }
 }
 

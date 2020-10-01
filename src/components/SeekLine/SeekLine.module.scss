@@ -7,10 +7,10 @@
   transition: opacity var(--transition), color var(--transition);
 }
 .SeekContentSmall {
-  flex-basis: (100% / 9);
+  flex-basis: (100% / 11);
 }
 .SeekContentBig {
-  flex-basis: (100% / 9) * 2;
+  flex-basis: (100% / 11) * 2;
 }
 
 .SeekContent.active .SeekBackground,

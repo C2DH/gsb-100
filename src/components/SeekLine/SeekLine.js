@@ -33,7 +33,9 @@ function SeekLine({ index, progress, onSeek, title, abstract }) {
     <div
       className={classNames(
         styles.SeekContent,
-        index > 2 ? styles.SeekContentBig : styles.SeekContentSmall,
+        index > 3 && index < 7
+          ? styles.SeekContentBig
+          : styles.SeekContentSmall,
         { [styles.active]: progress > 0 }
       )}
     >
