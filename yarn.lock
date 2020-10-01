@@ -10319,10 +10319,10 @@ react-popper@^2.2.3:
     react-fast-compare "^3.0.1"
     warning "^4.0.2"
 
-react-rocketjump@^3.0.0-rc5:
-  version "3.0.0-rc5"
-  resolved "https://registry.yarnpkg.com/react-rocketjump/-/react-rocketjump-3.0.0-rc5.tgz#50ffc165048c71e5d4a266ea3cfbf0cb0eff945e"
-  integrity sha512-fxmdQW3hu6bpNl4Hefoo9Vn7O4i+ggUFH3/eRmb/ZJVHdjsWkiEK8RgPVANpZoicuRAiB1KactVaI9l00CW+HQ==
+react-rocketjump@^0.0.0-miller:
+  version "0.0.0-miller"
+  resolved "https://registry.yarnpkg.com/react-rocketjump/-/react-rocketjump-0.0.0-miller.tgz#3bc997ac91e4d2ae65ac96a25547dc84dbc034bb"
+  integrity sha512-2DTUcoGjqI5bdzhKLiZgxASR9yb6LNYEhZ2TvZ7Ba4DN/V0oO+VJMmJe6XOfW5uyIfLKRDhZSCUcFUjKZsDeZA==
   dependencies:
     hoist-non-react-statics "^3.3.0"
     object-path-immutable "^3.0.2"
