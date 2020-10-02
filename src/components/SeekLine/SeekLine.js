@@ -33,10 +33,10 @@ function SeekLine({ index, progress, onSeek, title, abstract }) {
     <div
       className={classNames(
         styles.SeekContent,
-        index > 3 && index < 7
+        index === 4 || index === 6
           ? styles.SeekContentBig
           : styles.SeekContentSmall,
-        { [styles.active]: progress > 0 }
+        { [styles.active]: progress > 0, [styles.SeekContentNS]: index === 5 }
       )}
     >
       <div className={styles.SeekLineContainer}>
@@ -56,7 +56,7 @@ function SeekLine({ index, progress, onSeek, title, abstract }) {
           />
           <div className={styles.SeekProgress} style={{ width }} />
         </div>
-        <p className={styles.SeekLineText}>{abstract}</p>
+        <p className={styles.SeekLineText}>{abstract ? abstract : '\u00A0'}</p>
       </div>
     </div>
   )

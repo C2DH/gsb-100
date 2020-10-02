@@ -177,9 +177,7 @@ export default function Home() {
         <div
           className={`${styles.subtitles} mt-auto mb-2 mb-lg-3 px-4 d-flex justify-content-center`}
         >
-          {cue.map((sub, index) => (
-            <p key={index}>{sub}</p>
-          ))}
+          {showVideo && cue.map((sub, index) => <p key={index}>{sub}</p>)}
         </div>
         <div className="d-flex justify-content-center position-relative px-4 pb-4 pb-lg-0">
           <LangLink
