@@ -261,7 +261,7 @@ export default function Outline() {
                 </button>
               </div>
               <div
-                className={`${styles.subtitles} mb-2 py-2 py-lg-0 px-2 px-lg-4 flex-grow-1 flex-shrink-1`}
+                className={`${styles.subtitles} d-block d-lg-flex justify-content-center mb-2 py-2 py-lg-0 px-2 px-lg-4 flex-grow-1 flex-shrink-1`}
               >
                 {cue.map((sub, index) => (
                   <p key={index}>{sub}</p>

@@ -174,12 +174,14 @@ export default function Home() {
             ))
           }
         </Transition>
-        <div className={`${styles.subtitles} mt-auto mb-2 mb-lg-3 px-4`}>
+        <div
+          className={`${styles.subtitles} mt-auto mb-2 mb-lg-3 px-4 d-flex justify-content-center`}
+        >
           {cue.map((sub, index) => (
             <p key={index}>{sub}</p>
           ))}
         </div>
-        <div className="d-flex justify-content-between justify-content-lg-center position-relative px-4 pb-4 pb-lg-0">
+        <div className="d-flex justify-content-center position-relative px-4 pb-4 pb-lg-0">
           <LangLink
             className={classNames(
               'btn btn-primary d-flex align-items-center text-uppercase',
