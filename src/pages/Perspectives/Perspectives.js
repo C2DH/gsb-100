@@ -60,7 +60,7 @@ export default function Perspectives() {
           level={'02'}
           title={perspectivesStory.data.title}
         ></MenuResponsive>
-        <div className={`${styles.ThemeListContainer} my-0 my-lg-4`}>
+        <div className={`${styles.ThemeListContainer} my-0`}>
           <Media queries={BREAKPOINTS}>
             {(matches) =>
               matches.md ? (
@@ -84,10 +84,26 @@ export default function Perspectives() {
                   </div>
                 </div>
               ) : (
-                <PerspectivesGrid
-                  themes={themes}
-                  description={perspectivesStory.data.abstract}
-                ></PerspectivesGrid>
+                <React.Fragment>
+                  {/*<div className="container h-100">
+                    <div className="row h-100">
+                      <div className="col-4">
+                        <p className="mt-5" style={{ fontSize: '1.5rem' }}>
+                          {perspectivesStory.data.abstract}
+                        </p>
+                      </div>
+                      <div className="col-8">
+                        <PerspectivesGrid themes={themes}></PerspectivesGrid>
+                      </div>
+                    </div>
+                  </div>*/}
+                  <div className="mt-5" style={{ height: '135%' }}>
+                    <PerspectivesGrid
+                      themes={themes}
+                      description={perspectivesStory.data.abstract}
+                    ></PerspectivesGrid>
+                  </div>
+                </React.Fragment>
               )
             }
           </Media>

@@ -1,9 +1,9 @@
 .grid {
-  --gap: 8px;
+  --gap: 16px;
   display: grid;
   width: 100%;
   height: 100%;
-  grid-auto-rows: calc(100% / 10 - var(--gap));
+  grid-auto-rows: calc(100% / 9 - var(--gap));
   grid-auto-columns: calc(100% / 18 - var(--gap));
   justify-content: center;
   align-content: center;
@@ -18,6 +18,9 @@
   color: white;
   text-decoration: none;
   overflow-y: auto;
+  transform: scale(1);
+  transition: transform var(--transition);
+  z-index: 0;
 }
 
 .shadow {
@@ -30,35 +33,34 @@
 }
 
 .gridItem p {
-  font-size: 1.1rem;
+  font-size: 1.5rem;
+  margin-bottom: 0;
+  max-width: 770px;
 }
 
 .gridItem.image:before {
-  position: absolute;
-  background-color: var(--secondary);
-  opacity: 0.6;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  content: '';
-  z-index: 1;
-  transition: opacity var(--transition);
-}
-
-.gridItem.image:hover:before {
-  opacity: 0.4;
+  // position: absolute;
+  // background-color: var(--secondary);
+  // opacity: 0.6;
+  // top: 0;
+  // bottom: 0;
+  // left: 0;
+  // right: 0;
+  // content: '';
+  // z-index: 1;
+  // transition: opacity var(--transition);
 }
 
 .gridItem.image:hover {
   text-decoration: none;
   color: white;
+  transform: scale(1.05);
+  z-index: 1;
 }
 
 .gridItem.image {
-  padding: 10px;
+  border-radius: 10px;
   overflow-y: hidden !important;
-  overflow-x: hidden;
 }
 
 .gridItem.image h3 {
@@ -66,6 +68,15 @@
   font-size: 1.5rem;
   z-index: 2;
   hyphens: auto;
+  margin: 0;
+  padding: 20% 10px 10px 10px;
+  width: 100%;
+  background: linear-gradient(
+    0deg,
+    rgba(var(--secondary-rgb), 0.8) 0%,
+    rgba(var(--secondary-rgb), 0.8) 50%,
+    rgba(var(--secondary-rgb), 0) 100%
+  );
 }
 
 .grid .gridItem:first-child {
@@ -78,34 +89,34 @@
   grid-area: 4 / 1 / 7 / 6;
 }
 .grid1 .gridItem:nth-child(4) {
-  grid-area: 3 / 6 / 7 / 10;
+  grid-area: 3 / 6 / 6 / 10;
 }
 .grid1 .gridItem:nth-child(5) {
-  grid-area: 3 / 10 / 8 / 15;
+  grid-area: 3 / 10 / 7 / 15;
 }
 .grid1 .gridItem:nth-child(6) {
-  grid-area: 4 / 15 / 8 / 18;
+  grid-area: 4 / 15 / 7 / 18;
 }
 .grid1 .gridItem:nth-child(7) {
-  grid-area: 7 / 3 / 10 / 6;
+  grid-area: 7 / 3 / 9 / 6;
 }
 .grid1 .gridItem:nth-child(8) {
-  grid-area: 7 / 6 / 11 / 10;
+  grid-area: 6 / 6 / 9 / 10;
 }
 .grid1 .gridItem:nth-child(9) {
-  grid-area: 8 / 10 / 11 / 13;
+  grid-area: 7 / 10 / 10 / 14;
 }
 .grid1 .gridItem:nth-child(10) {
-  grid-area: 8 / 13 / 10 / 16;
+  grid-area: 7 / 14 / 9 / 17;
 }
 .grid1 .gridItem:nth-child(11) {
-  grid-area: 6 / 15 / 9 / 18;
+  grid-area: 6 / 15 / 8 / 18;
 }
 
 // grid 2
 
 .grid2 .gridItem:nth-child(2) {
-  grid-area: 4 / 1 / 7 / 4;
+  grid-area: 1 / 2 / 3 / 6;
 }
 .grid2 .gridItem:nth-child(3) {
   grid-area: 3 / 4 / 7 / 8;
@@ -120,10 +131,10 @@
   grid-area: 5 / 16 / 8 / 18;
 }
 .grid2 .gridItem:nth-child(7) {
-  grid-area: 7 / 2 / 9 / 6;
+  grid-area: 3 / 1 / 8 / 4;
 }
 .grid2 .gridItem:nth-child(8) {
-  grid-area: 7 / 6 / 10 / 9;
+  grid-area: 7 / 4 / 10 / 9;
 }
 .grid2 .gridItem:nth-child(9) {
   grid-area: 7 / 9 / 11 / 13;

@@ -43,7 +43,7 @@ function DocumentGridItem({ doc, mobile }) {
           {imageUrl ? (
             <img
               className={styles.smallImage}
-              alt={doc.data.title.substring(0, 10)}
+              alt={doc.data.title}
               src={imageUrl}
             />
           ) : (

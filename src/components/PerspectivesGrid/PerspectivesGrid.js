@@ -11,14 +11,9 @@ const RANDOM_SEED = 1 + Math.floor(Math.random() * 1000)
 function PerspectivesGrid({ themes, description }) {
   const prefetchStory = usePrefetchStory()
   return (
-    <div
-      className={`${styles.grid} ${
-        styles['grid' + (Math.floor(Math.random() * 2) + 1)]
-      }`}
-    >
+    <div className={`${styles.grid} ${styles['grid1']}`}>
       <div className={styles.gridItem}>
-        <p className="mb-0">{description}</p>
-        <div className={styles.shadow}></div>
+        <p>{description}</p>
       </div>
       <Trail
         items={shuffle(themes, RANDOM_SEED)}
@@ -32,7 +27,11 @@ function PerspectivesGrid({ themes, description }) {
               prefetchStory(theme.slug)
             }}
             to={`/perspectives/${theme.slug}`}
-            className={classNames(styles.gridItem, styles.image)}
+            className={classNames(
+              styles.gridItem,
+              styles.image,
+              'd-flex align-items-end'
+            )}
             style={{
               backgroundImage:
                 'url(' +
