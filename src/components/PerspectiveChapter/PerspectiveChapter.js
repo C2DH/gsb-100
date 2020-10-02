@@ -38,7 +38,7 @@ function PerspectiveChapterContent({ chapterId, isOpen, setOpenChapter }) {
               <Card className="border-0 bg-gray">
                 <CardBody className="p-0">
                   {modules.map((module, index) => (
-                    <div className="my-4" key={index}>
+                    <div key={index}>
                       <PerspectiveModule module={module} />
                     </div>
                   ))}
@@ -50,7 +50,7 @@ function PerspectiveChapterContent({ chapterId, isOpen, setOpenChapter }) {
           <React.Fragment>
             <h3 className={`${styles.title} m-0 py-4`}>{chapter.data.title}</h3>
             {modules.map((module, index) => (
-              <div className="my-4" key={index}>
+              <div key={index}>
                 <PerspectiveModule module={module} />
               </div>
             ))}

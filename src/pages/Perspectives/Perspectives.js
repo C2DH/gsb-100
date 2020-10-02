@@ -84,26 +84,12 @@ export default function Perspectives() {
                   </div>
                 </div>
               ) : (
-                <React.Fragment>
-                  {/*<div className="container h-100">
-                    <div className="row h-100">
-                      <div className="col-4">
-                        <p className="mt-5" style={{ fontSize: '1.5rem' }}>
-                          {perspectivesStory.data.abstract}
-                        </p>
-                      </div>
-                      <div className="col-8">
-                        <PerspectivesGrid themes={themes}></PerspectivesGrid>
-                      </div>
-                    </div>
-                  </div>*/}
-                  <div className="mt-5" style={{ height: '135%' }}>
-                    <PerspectivesGrid
-                      themes={themes}
-                      description={perspectivesStory.data.abstract}
-                    ></PerspectivesGrid>
-                  </div>
-                </React.Fragment>
+                <div className="mt-5" style={{ height: '140%' }}>
+                  <PerspectivesGrid
+                    themes={themes}
+                    description={perspectivesStory.data.abstract}
+                  ></PerspectivesGrid>
+                </div>
               )
             }
           </Media>

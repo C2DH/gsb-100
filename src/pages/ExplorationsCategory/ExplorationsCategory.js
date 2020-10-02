@@ -73,7 +73,9 @@ export default function ExplorationsCategory() {
           <div className={`container`}>
             <div className="row">
               <div className="col-12 col-lg-7">
-                <h1 className="d-flex align-items-center mt-4 mb-2">
+                <h1
+                  className={`${styles.title} d-flex align-items-center mt-4 mb-2 mt-lg-5 mb-lg-5`}
+                >
                   <LangLink className="text-white" to="/explorations">
                     <Media queries={BREAKPOINTS}>
                       {(matches) =>
@@ -93,7 +95,7 @@ export default function ExplorationsCategory() {
         </div>
         <div className={`container`}>
           <div className="row">
-            <div className="offset-1 col-11 col-md-10 col-lg-8">
+            <div className="offset-1 col-11 offset-md-2 col-md-10 offset-lg-4 col-lg-7">
               <p className={styles.description}>
                 {categoryStory.data.abstract}
               </p>

@@ -20,7 +20,7 @@ export default function ModuleTextObject({ module }) {
               ? module.object.caption
               : module.object.document.data.title
           }
-          className={classNames('mt-3', {
+          className={classNames('my-3', {
             'order-0': module.layout === 'object-text',
           })}
         />
