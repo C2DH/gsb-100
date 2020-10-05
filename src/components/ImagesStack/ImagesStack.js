@@ -69,7 +69,9 @@ function ImagesStack({ category, docs, empty, style, link }) {
           docs.map((doc, i) => (
             <RandImage randomize={randomize} doc={doc} key={doc.id}></RandImage>
           ))}
-        <h3 className="text-capitalize m-0 text-white">{category}</h3>
+        <h3 className="text-capitalize m-0 text-white text-center">
+          {category}
+        </h3>
       </div>
     </LangLink>
   )

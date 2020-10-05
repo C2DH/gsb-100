@@ -33,7 +33,7 @@ export default function ExplorationsAlternative() {
         <div className={`${styles.titleCont} bg-secondary`}>
           <div className={`container`}>
             <div className="row">
-              <div className="col-12 col-lg-7">
+              <div className="col-12 col-lg-10">
                 <h1 className="d-flex align-items-center my-4">
                   <LangLink className="text-white" to="/explorations">
                     <Media queries={BREAKPOINTS}>

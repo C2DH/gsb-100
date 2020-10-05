@@ -50,12 +50,11 @@ export default function ExplorationsCategory() {
 
   const typesWithDocs = useMemo(() => {
     const docsByType = groupBy(documents, (d) => d.data.type)
-    const sortedTypes = Object.keys(docsByType).sort()
-
-    return sortedTypes.map((type) => ({
-      type,
-      docs: docsByType[type],
-    }))
+    return Object.entries(docsByType)
+      .sort((a, b) => b[1].length - a[1].length)
+      .map((d) => {
+        return { type: d[0], docs: d[1] }
+      })
   }, [documents])
 
   return (
