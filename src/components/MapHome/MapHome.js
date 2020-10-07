@@ -12,7 +12,7 @@ export default function MapHome({ setZoomed }) {
     mapboxgl.accessToken = process.env.REACT_APP_MAPBOX_ACCESS_TOKEN
     const map = new mapboxgl.Map({
       container: mapContainer.current,
-      style: 'mapbox://styles/giorgiouboldi/ckcp2ku8202851ip2tdid4lxv', // stylesheet location
+      style: 'mapbox://styles/175post/ckfzkpvym1bo419qvbv77mn4f', // stylesheet location
       center: center,
       zoom: zoom,
       attributionControl: false,
