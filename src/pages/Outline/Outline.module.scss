@@ -61,6 +61,13 @@
   background-color: var(--secondary);
 }
 
+.subtitles{
+  position: absolute;
+  left: 50%;
+  margin-left: -35%;
+  width: 70%;
+}
+
 .subtitles p {
   text-align: center;
   font-family: var(--font-family-sans-serif);
