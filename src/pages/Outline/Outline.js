@@ -152,7 +152,7 @@ export default function Outline() {
         }
       }
     }
-  })
+  }, [])
 
   return (
     <React.Fragment>
