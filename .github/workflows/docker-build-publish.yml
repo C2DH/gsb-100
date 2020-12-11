@@ -5,8 +5,6 @@ on:
   push:
     branches:
       - master
-    tags:
-      - v*
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -24,7 +22,7 @@ jobs:
       id: extract_hash
     - name: Extract latest tag
       shell: bash
-      run: echo ::set-env name=RELEASE_VERSION::$(git describe --tags --abbrev=0 ${GITHUB_SHA})
+      run: echo "RELEASE_VERSION="$(git describe --tags --abbrev=0 ${GITHUB_SHA}) >> $GITHUB_ENV
     - name: Publish to Registry
       uses: elgohr/Publish-Docker-Github-Action@master
       env:
@@ -37,4 +35,4 @@ jobs:
         username: ${{ secrets.DOCKERHUB_USERNAME }}
         password: ${{ secrets.DOCKERHUB_PASSWORD }}
         buildargs: MAPBOX_ACCESS_TOKEN,GIT_TAG,GIT_BRANCH,GIT_REVISION
-        tags: "${{ env.RELEASE_VERSION }},latest"
+        tags: "latest"
