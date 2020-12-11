@@ -8,7 +8,12 @@ import styles from './TimelineVideo.module.scss'
 
 const PeriodVideo = React.forwardRef(({ id, title }, ref) => {
   const [story] = useCacheStory(id)
-  const videoUrl = story.contents?.modules?.[0]?.object?.document?.url ?? null
+  const doc = story.contents?.modules?.[0]?.object?.document ?? null
+  if (!doc) return null
+  const videoUrl =
+    doc.data.translated_urls && typeof doc.data.translated_urls === 'string'
+      ? doc.data.translated_urls
+      : doc.url
   return (
     <div className={styles.PeriodVideoBox}>
       <Video url={videoUrl} ref={ref} />
